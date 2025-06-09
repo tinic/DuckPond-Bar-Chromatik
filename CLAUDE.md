@@ -142,7 +142,7 @@ Each fixture implements `calc(Effect effect, int index, double time, LXFloat4 po
 - `centerOffset` - Center offset for LED positioning (default: 0.045m)
 
 ### Pattern Parameters
-- `effect` - Selected visual effect
+- `visualMode` - Selected visual effect (renamed from `effect` to avoid LX framework conflicts)
 - `speed` - Animation speed multiplier (-10 to +10)
 
 ## Development Notes
@@ -172,10 +172,13 @@ Each fixture implements `calc(Effect effect, int index, double time, LXFloat4 po
 This project has been migrated from the original `heronarts.lx.headless.duckpond` package structure to the simplified `duckpond` package for easier maintenance. Key improvements:
 
 - **Simplified package structure:** All classes now in `duckpond` package
-- **Modern LX API usage:** Updated to LX framework v1.1.0 APIs
+- **Modern LX API usage:** Updated to LX framework v1.1.0 APIs with proper parameter registration
+- **Parameter naming:** Renamed `effect` parameter to `visualMode` to avoid LX framework conflicts
+- **Deprecation fixes:** Updated from deprecated `addParameter(parameter)` to modern `addParameter(path, parameter)`
 - **ArtNet output:** Properly configured for individual fixture IP addresses
 - **Convenience script:** `DuckPondBarHeadless` executable for easy deployment
 - **Clean build system:** Standard Maven-style directory structure with Ant
+- **LX Framework source:** Added as git submodule for development reference
 
 ## Troubleshooting
 
