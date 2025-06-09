@@ -48,9 +48,9 @@ public class DuckPondBarPattern extends LXPattern {
     TestStrip,
   };
 
-  public final EnumParameter<Effect> effect =
-    new EnumParameter<Effect>("Effect", Effect.Spring)
-    .setDescription("Which built-in Effect?");
+  public final EnumParameter<Effect> visualMode =
+    new EnumParameter<Effect>("Visual Mode", Effect.Spring)
+    .setDescription("Which built-in visual effect?");
 
   public final BoundedParameter speed = 
       new BoundedParameter("Speed", 0, -10, 10)
@@ -59,8 +59,8 @@ public class DuckPondBarPattern extends LXPattern {
 
   public DuckPondBarPattern(LX lx) {
     super(lx);
-    addParameter(this.effect);
-    addParameter(this.speed);
+    addParameter("visualMode", this.visualMode);
+    addParameter("speed", this.speed);
   }
 
   @Override
@@ -80,7 +80,7 @@ public class DuckPondBarPattern extends LXPattern {
         if (fixture != null) {
           int localIndex = getLocalIndexForPoint(fixture, point);
           LXFloat4 globPos = new LXFloat4(point.x, point.y, point.z);
-          LXFloat4 result = fixture.calc(effect.getEnum(), localIndex, tm, globPos);
+          LXFloat4 result = fixture.calc(visualMode.getEnum(), localIndex, tm, globPos);
           
           // Convert LXFloat4 to RGB color
           int r = (int) Math.max(0, Math.min(255, result.x * 255.0));

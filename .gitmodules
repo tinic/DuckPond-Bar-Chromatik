@@ -1,0 +1,3 @@
+[submodule "LX"]
+	path = LX
+	url = https://github.com/heronarts/LX.git

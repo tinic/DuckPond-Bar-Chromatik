@@ -169,7 +169,7 @@ public class DuckPondBarHeadless {
             LXFloat4 globPos = new LXFloat4(point.x, point.y, point.z);
             
             // Calculate the effect color
-            LXFloat4 result = fixture.calc(effect.getEnum(), localIndex, tm, globPos);
+            LXFloat4 result = fixture.calc(visualMode.getEnum(), localIndex, tm, globPos);
             
             // Convert to RGB color with proper clamping
             int r = (int) Math.max(0, Math.min(255, result.x * 255.0));
