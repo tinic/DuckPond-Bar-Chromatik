@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# DuckPond Bar Chromatik Headless Script
+# Migrated from original DuckPond-Bar-LXStudio project
+
+# Use system-installed Java and Ant
+
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# Change to the project directory
+cd "$SCRIPT_DIR"
+
+# Build the project if JAR doesn't exist
+if [ ! -f "build/duckpond-bar-chromatik.jar" ]; then
+    echo "JAR not found, building project..."
+    ant jar
+    if [ $? -ne 0 ]; then
+        echo "Build failed!"
+        exit 1
+    fi
+fi
+
+# Run the headless application
+# Pass any command line arguments (like project file) to the Java application
+java -cp "lib/lx-1.1.0-jar-with-dependencies.jar:build/duckpond-bar-chromatik.jar" \
+     duckpond.DuckPondBarHeadless "$@"

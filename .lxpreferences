@@ -1,0 +1,19 @@
+{
+  "version": "1.1.0",
+  "projectFileName": "/home/turo/migrate/DuckPond-Bar-Chromatik/DuckPond.lxp",
+  "eulaAccepted": false,
+  "windowWidth": -1,
+  "windowHeight": -1,
+  "windowPosX": -1,
+  "windowPosY": -1,
+  "uiZoom": 100,
+  "focusChannelOnCue": false,
+  "focusActivePattern": false,
+  "sendCueToOutput": false,
+  "showHelpMessages": true,
+  "schedulerEnabled": false,
+  "showCpuLoad": false,
+  "registry": {
+    "plugins": []
+  }
+}
