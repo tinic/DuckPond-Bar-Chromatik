@@ -50,6 +50,46 @@
       "class": "com.duckpond.lx.pattern.TestStripPattern",
       "name": "Test Strip",
       "description": "Cycles through LEDs one at a time for testing"
+    },
+    {
+      "class": "com.duckpond.lx.pattern.MidnightMiragePattern",
+      "name": "Midnight Mirage",
+      "description": "Deep midnight blues and purples with silver shimmer effects"
+    },
+    {
+      "class": "com.duckpond.lx.pattern.FireBreathingPattern",
+      "name": "Fire Breathing",
+      "description": "Warm ember colors with flickering flame motion"
+    },
+    {
+      "class": "com.duckpond.lx.pattern.CosmicDustPattern",
+      "name": "Cosmic Dust",
+      "description": "Galaxy colors with spiral arm patterns and stellar dust"
+    },
+    {
+      "class": "com.duckpond.lx.pattern.SunsetPlayaPattern",
+      "name": "Sunset Playa",
+      "description": "Desert sunset colors with heat wave distortion"
+    },
+    {
+      "class": "com.duckpond.lx.pattern.AuroraFlowPattern",
+      "name": "Aurora Flow",
+      "description": "Northern lights with flowing curtains and particle shimmer"
+    },
+    {
+      "class": "com.duckpond.lx.pattern.DeepOceanPattern",
+      "name": "Deep Ocean",
+      "description": "Underwater blues and greens with bioluminescent effects"
+    },
+    {
+      "class": "com.duckpond.lx.pattern.StarFieldPattern",
+      "name": "Star Field",
+      "description": "Twinkling night sky with nebula glow and Milky Way band"
+    },
+    {
+      "class": "com.duckpond.lx.pattern.LavaDreamsPattern",
+      "name": "Lava Dreams",
+      "description": "Molten rock colors with volcanic bubbling and thermal radiation"
     }
   ],
   "fixtures": [
