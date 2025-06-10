@@ -1,6 +1,8 @@
 # Build outputs
 build/
+target/
 *.jar
+!LXPackage/target/duckpond-lx-1.0.0.jar
 
 # Java compiled classes
 *.class
