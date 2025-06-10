@@ -1,6 +1,6 @@
 {
   "version": "1.1.0",
-  "timestamp": 1749530636653,
+  "timestamp": 1749532441714,
   "model": {
     "id": 2,
     "class": "heronarts.lx.structure.LXStructure",
@@ -985,7 +985,7 @@
               "transitionEnabled": true,
               "transitionTimeSecs": 20.0,
               "transitionBlendMode": 0,
-              "focusedPattern": 15,
+              "focusedPattern": 13,
               "triggerPatternCycle": false,
               "launchPatternCycle": false
             },
@@ -1009,7 +1009,7 @@
             },
             "effects": [],
             "clips": [],
-            "patternIndex": 15,
+            "patternIndex": 13,
             "patterns": [
               {
                 "id": 48751,
@@ -2013,7 +2013,7 @@
         "depth": 2.0,
         "camera": {
           "active": false,
-          "radius": 2.2903830398260085,
+          "radius": 2.9279657774606878,
           "theta": 357.73994709551334,
           "phi": -3.6019017696380615,
           "x": 0.0,
@@ -2023,7 +2023,7 @@
         "cue": [
           {
             "active": false,
-            "radius": 2.2903830398260085,
+            "radius": 2.9279657774606878,
             "theta": 357.73994709551334,
             "phi": -3.6019017696380615,
             "x": 0.0,
