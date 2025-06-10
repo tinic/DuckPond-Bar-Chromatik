@@ -36,38 +36,60 @@ public class LavaDreamsPattern extends UmbrellaPattern {
     @Override
     protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
         double geologicalTime = time * 0.2;
-        double flow1 = Math.sin(localPos.x * 1.5 + geologicalTime * 0.7) * 0.8;
-        double flow2 = Math.cos(localPos.y * 1.8 + geologicalTime * 0.5) * 0.7;
-        double flow3 = Math.sin(localPos.len() * 2.2 + geologicalTime * 0.6) * 0.6;
+        
+        // Global volcanic activity - different regions have different activity levels
+        double volcanicRegion = Math.sin(globalPos.x * 0.06) * Math.cos(globalPos.y * 0.05) * 0.3 + 0.7;
+        double globalFlow = Math.sin(globalPos.len() * 0.08 + geologicalTime * 0.1) * volcanicRegion;
+        
+        // Lava flows influenced by global topography
+        double slope = Math.atan2(globalPos.y, globalPos.x) * 0.3;
+        double flow1 = Math.sin(localPos.x * 1.5 + geologicalTime * 0.7 + slope) * 0.8;
+        double flow2 = Math.cos(localPos.y * 1.8 + geologicalTime * 0.5 + globalFlow) * 0.7;
+        double flow3 = Math.sin(localPos.len() * 2.2 + geologicalTime * 0.6 + globalPos.len() * 0.1) * 0.6;
         double lavaFlow = (flow1 + flow2 + flow3) / 2.9;
-        double bubble1 = Math.sin(localPos.x * 4.0 + geologicalTime * 1.5) * 0.4;
-        double bubble2 = Math.cos(localPos.y * 5.0 + geologicalTime * 1.8) * 0.3;
-        double bubble3 = Math.sin((localPos.x + localPos.y) * 3.5 + geologicalTime * 1.2) * 0.35;
-        double bubbling = (bubble1 + bubble2 + bubble3) / 1.05;
-        double crust1 = Math.sin(localPos.len() * 2.5 + geologicalTime * 0.3) * 0.5;
-        double crust2 = Math.cos(localPos.x * 1.2 - geologicalTime * 0.4) * 0.4;
+        
+        // Bubble activity varies across the volcanic field
+        double bubbleActivity = volcanicRegion * (Math.sin(globalPos.x * 0.1) * 0.3 + 0.8);
+        double bubble1 = Math.sin(localPos.x * 4.0 + geologicalTime * 1.5 + globalPos.y * 0.2) * 0.4;
+        double bubble2 = Math.cos(localPos.y * 5.0 + geologicalTime * 1.8 + globalPos.x * 0.15) * 0.3;
+        double bubble3 = Math.sin((localPos.x + localPos.y) * 3.5 + geologicalTime * 1.2 + globalFlow * 2.0) * 0.35;
+        double bubbling = (bubble1 + bubble2 + bubble3) / 1.05 * bubbleActivity;
+        
+        // Crust formation varies by global elevation
+        double elevation = globalPos.len() * 0.1;
+        double crust1 = Math.sin(localPos.len() * 2.5 + geologicalTime * 0.3 + elevation * 3.0) * 0.5;
+        double crust2 = Math.cos(localPos.x * 1.2 - geologicalTime * 0.4 + globalPos.y * 0.1) * 0.4;
         double crustPattern = (crust1 + crust2) / 1.9;
+        
         double distance = localPos.len();
         double heatIntensity = Math.exp(-distance * 1.2);
-        double volcanicPulse = Math.sin(geologicalTime * 0.3) * 0.4 + 0.6;
+        
+        // Volcanic pulse synchronized across regions but with different intensities
+        double volcanicPulse = Math.sin(geologicalTime * 0.3 + globalPos.x * 0.02) * 0.4 + 0.6;
+        volcanicPulse *= volcanicRegion;
+        
         double coreTemp = heatIntensity * volcanicPulse;
         double surfaceTemp = (1.0 - heatIntensity) * 0.7;
+        
         LXFloat4 moltenColor = moltenGradient.reflect(lavaFlow * 0.5 + 0.5);
         LXFloat4 crustColor = crustGradient.reflect(crustPattern * 0.5 + 0.5);
         double moltenMix = coreTemp * (0.7 + Math.abs(bubbling) * 0.3);
         LXFloat4 baseColor = moltenColor.lerp(crustColor, 1.0 - moltenMix);
-        double heatGlow = Math.max(0.0, coreTemp - 0.3) * 1.5;
+        
+        double heatGlow = Math.max(0.0, coreTemp - 0.3) * 1.5 * volcanicRegion;
         if (heatGlow > 0.0) {
             LXFloat4 glowColor = new LXFloat4(1.0, 0.6, 0.2, 1.0);
             baseColor = baseColor.lerp(glowColor, heatGlow * 0.4);
         }
+        
         double bubbleHighlight = Math.max(0.0, bubbling) * coreTemp;
         if (bubbleHighlight > 0.3) {
             LXFloat4 bubbleColor = new LXFloat4(1.0, 0.8, 0.4, 1.0);
             baseColor = baseColor.lerp(bubbleColor, (bubbleHighlight - 0.3) * 0.5);
         }
-        double intensity = 0.4 + coreTemp * 0.5 + Math.abs(lavaFlow) * 0.1;
-        double thermalRadiation = Math.sin(geologicalTime * 2.5 + distance * 8.0) * 0.05 + 0.95;
+        
+        double intensity = (0.4 + coreTemp * 0.5 + Math.abs(lavaFlow) * 0.1) * volcanicRegion;
+        double thermalRadiation = Math.sin(geologicalTime * 2.5 + distance * 8.0 + globalFlow * 10.0) * 0.05 + 0.95;
         return baseColor.mul(intensity * thermalRadiation).clamp().gamma();
     }
 }

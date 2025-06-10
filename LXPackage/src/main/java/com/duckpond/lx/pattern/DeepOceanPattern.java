@@ -37,29 +37,48 @@ public class DeepOceanPattern extends UmbrellaPattern {
     @Override
     protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
         double oceanTime = time * 0.3;
-        double current1 = Math.sin(localPos.x * 1.8 + oceanTime * 0.6) * 0.7;
-        double current2 = Math.cos(localPos.y * 1.2 + oceanTime * 0.8) * 0.6;
-        double current3 = Math.sin(localPos.len() * 2.5 + oceanTime * 0.4) * 0.5;
+        
+        // Global ocean currents - creating different flow patterns across umbrellas
+        double globalCurrentAngle = Math.atan2(globalPos.y, globalPos.x);
+        double globalCurrent1 = Math.sin(globalCurrentAngle + oceanTime * 0.1) * 0.5;
+        double globalCurrent2 = Math.cos(globalPos.x * 0.1 + globalPos.y * 0.08 + oceanTime * 0.15) * 0.4;
+        double globalFlow = (globalCurrent1 + globalCurrent2) * 0.8;
+        
+        // Local currents modulated by global position
+        double current1 = Math.sin(localPos.x * 1.8 + oceanTime * 0.6 + globalFlow) * 0.7;
+        double current2 = Math.cos(localPos.y * 1.2 + oceanTime * 0.8 + globalPos.x * 0.3) * 0.6;
+        double current3 = Math.sin(localPos.len() * 2.5 + oceanTime * 0.4 + globalPos.y * 0.2) * 0.5;
         double oceanFlow = (current1 + current2 + current3) / 2.8;
-        double bio1 = Math.sin(localPos.x * 5.0 + oceanTime * 1.5) * 0.4;
-        double bio2 = Math.cos(localPos.y * 6.0 + oceanTime * 1.8) * 0.3;
-        double bio3 = Math.sin((localPos.x + localPos.y) * 4.0 + oceanTime * 1.2) * 0.35;
-        double bioluminescence = (bio1 + bio2 + bio3) / 1.05;
+        
+        // Bioluminescence clusters vary by global position
+        double bioRegion = Math.sin(globalPos.x * 0.15) * Math.cos(globalPos.y * 0.12) * 0.4 + 0.6;
+        double bio1 = Math.sin(localPos.x * 5.0 + oceanTime * 1.5 + globalPos.len() * 0.8) * 0.4;
+        double bio2 = Math.cos(localPos.y * 6.0 + oceanTime * 1.8 + globalFlow * 2.0) * 0.3;
+        double bio3 = Math.sin((localPos.x + localPos.y) * 4.0 + oceanTime * 1.2 + globalCurrentAngle) * 0.35;
+        double bioluminescence = (bio1 + bio2 + bio3) / 1.05 * bioRegion;
+        
         double depth = localPos.len();
         double depthPressure = Math.exp(-depth * 0.8);
-        double thermalVent = Math.sin(oceanTime * 0.3 + depth * 2.0) * 0.2;
-        thermalVent = Math.max(0.0, thermalVent - 0.15);
-        double oceanBreath = Math.sin(oceanTime * 0.2) * 0.25 + 0.75;
+        
+        // Thermal vents at specific global positions
+        double ventRegion = Math.sin(globalPos.x * 0.2) * Math.sin(globalPos.y * 0.18);
+        double thermalVent = Math.sin(oceanTime * 0.3 + depth * 2.0 + globalPos.len() * 0.5) * 0.2;
+        thermalVent = Math.max(0.0, thermalVent - 0.15) * Math.max(0.0, ventRegion);
+        
+        double oceanBreath = Math.sin(oceanTime * 0.2 + globalPos.x * 0.05) * 0.25 + 0.75;
+        
         LXFloat4 oceanColor = oceanDepthGradient.reflect(oceanFlow * 0.5 + 0.5);
         LXFloat4 bioColor = bioluminescentGradient.reflect(bioluminescence * 0.5 + 0.5);
         double bioActivity = Math.abs(bioluminescence) * depthPressure;
         LXFloat4 finalColor = oceanColor.lerp(bioColor, bioActivity * 0.7);
+        
         if (thermalVent > 0.0) {
             LXFloat4 thermalGlow = new LXFloat4(0.3, 0.6, 0.8, 1.0);
             finalColor = finalColor.lerp(thermalGlow, thermalVent * 0.4);
         }
+        
         double intensity = oceanBreath * depthPressure * (0.6 + bioActivity * 0.3);
-        double refraction = Math.sin(oceanTime * 2.0 + oceanFlow) * 0.05 + 0.95;
+        double refraction = Math.sin(oceanTime * 2.0 + oceanFlow + globalFlow) * 0.05 + 0.95;
         return finalColor.mul(intensity * refraction).clamp().gamma();
     }
 }

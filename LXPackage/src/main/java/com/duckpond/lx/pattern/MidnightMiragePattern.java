@@ -35,18 +35,46 @@ public class MidnightMiragePattern extends UmbrellaPattern {
     @Override
     protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
         double slowTime = time * 0.3;
-        double wave1 = Math.sin(localPos.x * 1.2 + slowTime);
-        double wave2 = Math.cos(localPos.y * 0.8 + slowTime * 0.7);
-        double wave3 = Math.sin(localPos.len() * 2.0 + slowTime * 0.5);
+        
+        // Global desert heat patterns - mirages appear at different locations
+        double desertAngle = Math.atan2(globalPos.y, globalPos.x);
+        double heatDistortion = Math.sin(globalPos.len() * 0.05 + slowTime * 0.1) * 0.4;
+        double globalMirage = Math.sin(desertAngle + slowTime * 0.2) * Math.cos(globalPos.x * 0.03) * 0.3;
+        
+        // Atmospheric layers at different global heights
+        double atmosphericLayer = Math.sin(globalPos.y * 0.04 + slowTime * 0.15) * 0.2 + 0.8;
+        
+        // Local waves influenced by global heat patterns
+        double wave1 = Math.sin(localPos.x * 1.2 + slowTime + globalMirage);
+        double wave2 = Math.cos(localPos.y * 0.8 + slowTime * 0.7 + heatDistortion);
+        double wave3 = Math.sin(localPos.len() * 2.0 + slowTime * 0.5 + globalPos.len() * 0.1);
         double wavePattern = (wave1 + wave2 * 0.7 + wave3 * 0.5) / 2.2;
-        double radialPulse = Math.sin(slowTime * 0.3) * 0.3;
+        
+        // Radial pulse varies across the desert
+        double radialPulse = Math.sin(slowTime * 0.3 + globalPos.x * 0.02) * 0.3;
         double distance = localPos.len() + radialPulse;
-        double shimmer = Math.sin(distance * 3.0 + slowTime * 1.2) * 0.4 + 0.6;
+        
+        // Shimmer intensity varies by global temperature regions
+        double temperatureRegion = Math.sin(globalPos.x * 0.08) * Math.cos(globalPos.y * 0.06) * 0.3 + 0.7;
+        double shimmer = Math.sin(distance * 3.0 + slowTime * 1.2 + globalMirage * 2.0) * 0.4 + 0.6;
+        shimmer *= temperatureRegion;
+        
+        // Heat waves create different mirage qualities
+        double heatWave = Math.sin(globalPos.len() * 0.1 + slowTime * 0.25) * atmosphericLayer;
+        
         LXFloat4 baseColor = deepNightGradient.reflect(wavePattern * 0.5 + 0.5);
         LXFloat4 shimmerColor = mirageShimmer.reflect(shimmer);
-        double mixRatio = Math.pow(1.0 - Math.min(distance, 1.0), 2.0);
+        
+        double mixRatio = Math.pow(1.0 - Math.min(distance, 1.0), 2.0) * temperatureRegion;
         LXFloat4 finalColor = baseColor.lerp(shimmerColor, mixRatio * 0.6);
-        double brightness = 0.7 + Math.sin(slowTime * 0.4) * 0.2;
+        
+        // Add heat distortion effect
+        if (Math.abs(heatWave) > 0.2) {
+            LXFloat4 heatColor = new LXFloat4(0.6, 0.5, 0.9, 1.0);
+            finalColor = finalColor.lerp(heatColor, Math.abs(heatWave - 0.2) * 0.3);
+        }
+        
+        double brightness = (0.7 + Math.sin(slowTime * 0.4 + globalPos.y * 0.02) * 0.2) * atmosphericLayer;
         return finalColor.mul(brightness).clamp().gamma();
     }
 }

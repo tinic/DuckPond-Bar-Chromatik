@@ -36,20 +36,42 @@ public class FireBreathingPattern extends UmbrellaPattern {
     @Override
     protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
         double slowTime = time * 0.4;
-        double flicker1 = Math.sin(localPos.x * 2.5 + slowTime * 1.3) * 0.7;
-        double flicker2 = Math.cos(localPos.y * 1.8 + slowTime * 0.9) * 0.5;
-        double flicker3 = Math.sin(localPos.len() * 1.5 + slowTime * 1.1) * 0.6;
+        
+        // Global fire wind patterns - different umbrellas have different wind directions
+        double windAngle = Math.atan2(globalPos.y, globalPos.x);
+        double windStrength = Math.sin(globalPos.len() * 0.1 + slowTime * 0.2) * 0.3 + 0.7;
+        double globalWind = Math.sin(windAngle + slowTime * 0.3) * windStrength;
+        
+        // Flame intensity varies across the installation
+        double fireRegion = Math.sin(globalPos.x * 0.08) * Math.cos(globalPos.y * 0.06) * 0.4 + 0.8;
+        
+        // Local flicker influenced by global wind
+        double flicker1 = Math.sin(localPos.x * 2.5 + slowTime * 1.3 + globalWind * 0.8) * 0.7;
+        double flicker2 = Math.cos(localPos.y * 1.8 + slowTime * 0.9 + windAngle * 0.5) * 0.5;
+        double flicker3 = Math.sin(localPos.len() * 1.5 + slowTime * 1.1 + globalPos.len() * 0.2) * 0.6;
         double flameMotion = (flicker1 + flicker2 + flicker3) / 2.8;
-        double emberBreath = Math.sin(slowTime * 0.4) * 0.4 + 0.6;
+        
+        // Breathing embers synchronized across regions
+        double emberBreath = Math.sin(slowTime * 0.4 + globalPos.x * 0.05) * 0.4 + 0.6;
+        emberBreath *= fireRegion;
+        
         double distanceFromCenter = localPos.len();
         double emberCore = Math.exp(-distanceFromCenter * 1.5) * emberBreath;
-        double flameRise = Math.sin(distanceFromCenter * 2.0 + slowTime + flameMotion) * 0.5 + 0.5;
-        double flameMix = Math.pow(flameRise, 2.0) * (1.0 - distanceFromCenter * 0.3);
+        
+        // Flame rise affected by global wind
+        double flameRise = Math.sin(distanceFromCenter * 2.0 + slowTime + flameMotion + globalWind) * 0.5 + 0.5;
+        double flameMix = Math.pow(flameRise, 2.0) * (1.0 - distanceFromCenter * 0.3) * fireRegion;
+        
         LXFloat4 emberColor = emberGradient.reflect(emberCore + flameMotion * 0.3);
         LXFloat4 flameColor = flameGradient.reflect(flameRise);
         LXFloat4 finalColor = emberColor.lerp(flameColor, flameMix * 0.7);
-        double intensity = 0.6 + emberBreath * 0.3 + Math.abs(flameMotion) * 0.1;
+        
+        double intensity = (0.6 + emberBreath * 0.3 + Math.abs(flameMotion) * 0.1) * fireRegion;
         double heatGlow = Math.max(0.0, 1.0 - distanceFromCenter * 0.8);
-        return finalColor.mul(intensity * (0.7 + heatGlow * 0.3)).clamp().gamma();
+        
+        // Heat shimmer varies by global position
+        double heatShimmer = Math.sin(slowTime * 4.0 + globalPos.len() * 0.5) * 0.1 * fireRegion + 0.9;
+        
+        return finalColor.mul(intensity * (0.7 + heatGlow * 0.3) * heatShimmer).clamp().gamma();
     }
 }
