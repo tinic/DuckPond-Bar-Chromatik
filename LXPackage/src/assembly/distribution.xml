@@ -1,0 +1,55 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.1.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.1.0
+                              http://maven.apache.org/xsd/assembly-2.1.0.xsd">
+    <id>distribution</id>
+    <formats>
+        <format>zip</format>
+        <format>tar.gz</format>
+    </formats>
+    
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <baseDirectory>duckpond-bar-chromatik-${project.version}</baseDirectory>
+    
+    <files>
+        <!-- Main project file -->
+        <file>
+            <source>DuckPond.lxp</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
+        
+        <!-- Launcher script -->
+        <file>
+            <source>DuckPondBarHeadless</source>
+            <outputDirectory>/</outputDirectory>
+            <fileMode>0755</fileMode>
+        </file>
+        
+        <!-- Documentation -->
+        <file>
+            <source>CLAUDE.md</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
+        
+        <!-- LX Framework JAR -->
+        <file>
+            <source>lib/lx-1.1.0-jar-with-dependencies.jar</source>
+            <outputDirectory>/lib</outputDirectory>
+        </file>
+    </files>
+    
+    <moduleSets>
+        <!-- Include the LXPackage JAR -->
+        <moduleSet>
+            <useAllReactorProjects>true</useAllReactorProjects>
+            <includes>
+                <include>com.duckpond:duckpond-lx</include>
+            </includes>
+            <binaries>
+                <outputDirectory>/lib</outputDirectory>
+                <unpack>false</unpack>
+                <includeDependencies>false</includeDependencies>
+            </binaries>
+        </moduleSet>
+    </moduleSets>
+</assembly>

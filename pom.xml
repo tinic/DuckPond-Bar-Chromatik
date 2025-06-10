@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.duckpond</groupId>
+    <artifactId>duckpond-bar-chromatik</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <name>DuckPond Bar Chromatik</name>
+    <description>DuckPond Bar LED Art Installation System</description>
+    
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <lx.version>1.1.0</lx.version>
+        <main.class>com.duckpond.lx.DuckPondHeadless</main.class>
+    </properties>
+
+    <modules>
+        <module>LXPackage</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>heronarts</groupId>
+            <artifactId>lx</artifactId>
+            <version>${lx.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/lx-1.1.0-jar-with-dependencies.jar</systemPath>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <!-- Exec plugin for running the headless application -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>${main.class}</mainClass>
+                    <classpathScope>compile</classpathScope>
+                    <args>
+                        <arg>DuckPond.lxp</arg>
+                    </args>
+                </configuration>
+            </plugin>
+
+            <!-- Assembly plugin to create distribution -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.4.2</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>LXPackage/src/assembly/distribution.xml</descriptor>
+                    </descriptors>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- Profile for running with custom project file -->
+        <profile>
+            <id>run-project</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <configuration>
+                            <mainClass>${main.class}</mainClass>
+                            <args>
+                                <arg>${project.file}</arg>
+                            </args>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
