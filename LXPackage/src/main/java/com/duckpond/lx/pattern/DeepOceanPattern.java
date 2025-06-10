@@ -16,21 +16,21 @@ public class DeepOceanPattern extends UmbrellaPattern {
         super(lx);
         
         this.oceanDepthGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0.0, 0.05, 0.15, 1.0),
-            new LXFloat4(0.0, 0.15, 0.3, 1.0),
-            new LXFloat4(0.05, 0.25, 0.4, 1.0),
-            new LXFloat4(0.1, 0.4, 0.5, 1.0),
-            new LXFloat4(0.2, 0.5, 0.6, 1.0),
-            new LXFloat4(0.1, 0.3, 0.45, 1.0)
+            new LXFloat4(0x000d26, 0.0),
+            new LXFloat4(0x00264d, 0.2),
+            new LXFloat4(0x0d4066, 0.4),
+            new LXFloat4(0x1a6680, 0.6),
+            new LXFloat4(0x338099, 0.8),
+            new LXFloat4(0x1a4d73, 1.0)
         }, Gradient.ColorMode.RGB);
         
         this.bioluminescentGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0.0, 0.1, 0.2, 1.0),
-            new LXFloat4(0.1, 0.6, 0.8, 1.0),
-            new LXFloat4(0.2, 0.8, 0.6, 1.0),
-            new LXFloat4(0.4, 0.9, 0.7, 1.0),
-            new LXFloat4(0.0, 0.7, 0.9, 1.0),
-            new LXFloat4(0.3, 0.8, 0.5, 1.0)
+            new LXFloat4(0x001a33, 0.0),
+            new LXFloat4(0x1a99cc, 0.2),
+            new LXFloat4(0x33cc99, 0.4),
+            new LXFloat4(0x66e6b3, 0.6),
+            new LXFloat4(0x00b3e6, 0.8),
+            new LXFloat4(0x4dcc80, 1.0)
         }, Gradient.ColorMode.RGB);
     }
     

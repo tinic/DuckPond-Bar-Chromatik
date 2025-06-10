@@ -16,21 +16,21 @@ public class CosmicDustPattern extends UmbrellaPattern {
         super(lx);
         
         this.galaxyGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0.02, 0.02, 0.05, 1.0),
-            new LXFloat4(0.1, 0.05, 0.2, 1.0),
-            new LXFloat4(0.3, 0.1, 0.4, 1.0),
-            new LXFloat4(0.2, 0.3, 0.6, 1.0),
-            new LXFloat4(0.6, 0.2, 0.8, 1.0),
-            new LXFloat4(0.1, 0.4, 0.7, 1.0)
+            new LXFloat4(0x05050d, 0.0),
+            new LXFloat4(0x1a0d33, 0.2),
+            new LXFloat4(0x4d1a66, 0.4),
+            new LXFloat4(0x334d99, 0.6),
+            new LXFloat4(0x9933cc, 0.8),
+            new LXFloat4(0x1a66b3, 1.0)
         }, Gradient.ColorMode.RGB);
         
         this.nebulaGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0.05, 0.02, 0.1, 1.0),
-            new LXFloat4(0.4, 0.1, 0.6, 1.0),
-            new LXFloat4(0.7, 0.3, 0.9, 1.0),
-            new LXFloat4(0.3, 0.6, 0.9, 1.0),
-            new LXFloat4(0.8, 0.4, 0.9, 1.0),
-            new LXFloat4(0.2, 0.5, 0.8, 1.0)
+            new LXFloat4(0x0d051a, 0.0),
+            new LXFloat4(0x661a99, 0.2),
+            new LXFloat4(0xb34de6, 0.4),
+            new LXFloat4(0x4d99e6, 0.6),
+            new LXFloat4(0xcc66e6, 0.8),
+            new LXFloat4(0x3380cc, 1.0)
         }, Gradient.ColorMode.RGB);
     }
     

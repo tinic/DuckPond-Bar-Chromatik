@@ -16,20 +16,20 @@ public class FireBreathingPattern extends UmbrellaPattern {
         super(lx);
         
         this.emberGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0.1, 0.02, 0.0, 1.0),
-            new LXFloat4(0.3, 0.1, 0.0, 1.0),
-            new LXFloat4(0.6, 0.2, 0.05, 1.0),
-            new LXFloat4(0.8, 0.4, 0.1, 1.0),
-            new LXFloat4(1.0, 0.6, 0.2, 1.0),
-            new LXFloat4(0.9, 0.3, 0.0, 1.0)
+            new LXFloat4(0x1a0500, 0.0),
+            new LXFloat4(0x4d1a00, 0.2),
+            new LXFloat4(0x99330d, 0.4),
+            new LXFloat4(0xcc661a, 0.6),
+            new LXFloat4(0xff9933, 0.8),
+            new LXFloat4(0xe64d00, 1.0)
         }, Gradient.ColorMode.RGB);
         
         this.flameGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0.4, 0.1, 0.0, 1.0),
-            new LXFloat4(0.8, 0.3, 0.0, 1.0),
-            new LXFloat4(1.0, 0.7, 0.1, 1.0),
-            new LXFloat4(1.0, 0.9, 0.4, 1.0),
-            new LXFloat4(0.9, 0.4, 0.0, 1.0)
+            new LXFloat4(0x661a00, 0.0),
+            new LXFloat4(0xcc4d00, 0.25),
+            new LXFloat4(0xffb31a, 0.5),
+            new LXFloat4(0xffe666, 0.75),
+            new LXFloat4(0xe66600, 1.0)
         }, Gradient.ColorMode.RGB);
     }
     

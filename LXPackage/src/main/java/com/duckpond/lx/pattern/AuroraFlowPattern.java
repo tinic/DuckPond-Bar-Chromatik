@@ -16,20 +16,20 @@ public class AuroraFlowPattern extends UmbrellaPattern {
         super(lx);
         
         this.auroraGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0.0, 0.1, 0.2, 1.0),
-            new LXFloat4(0.0, 0.4, 0.6, 1.0),
-            new LXFloat4(0.1, 0.7, 0.3, 1.0),
-            new LXFloat4(0.3, 0.9, 0.5, 1.0),
-            new LXFloat4(0.5, 0.8, 0.9, 1.0),
-            new LXFloat4(0.2, 0.6, 0.8, 1.0)
+            new LXFloat4(0x001a33, 0.0),
+            new LXFloat4(0x006699, 0.2),
+            new LXFloat4(0x1ab34d, 0.4),
+            new LXFloat4(0x4de680, 0.6),
+            new LXFloat4(0x80cce6, 0.8),
+            new LXFloat4(0x3399cc, 1.0)
         }, Gradient.ColorMode.RGB);
         
         this.polarGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0.05, 0.05, 0.15, 1.0),
-            new LXFloat4(0.2, 0.3, 0.7, 1.0),
-            new LXFloat4(0.4, 0.8, 0.6, 1.0),
-            new LXFloat4(0.6, 0.9, 0.8, 1.0),
-            new LXFloat4(0.3, 0.5, 0.9, 1.0)
+            new LXFloat4(0x0d0d26, 0.0),
+            new LXFloat4(0x334db3, 0.25),
+            new LXFloat4(0x66cc99, 0.5),
+            new LXFloat4(0x99e6cc, 0.75),
+            new LXFloat4(0x4d80e6, 1.0)
         }, Gradient.ColorMode.RGB);
     }
     

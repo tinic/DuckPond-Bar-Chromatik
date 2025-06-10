@@ -16,19 +16,19 @@ public class MidnightMiragePattern extends UmbrellaPattern {
         super(lx);
         
         this.deepNightGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0.05, 0.05, 0.15, 1.0),
-            new LXFloat4(0.1, 0.05, 0.3, 1.0),
-            new LXFloat4(0.15, 0.1, 0.4, 1.0),
-            new LXFloat4(0.3, 0.25, 0.6, 1.0),
-            new LXFloat4(0.6, 0.6, 0.8, 1.0),
-            new LXFloat4(0.2, 0.15, 0.5, 1.0)
+            new LXFloat4(0x0d0d26, 0.0),
+            new LXFloat4(0x1a0d4d, 0.2),
+            new LXFloat4(0x261a66, 0.4),
+            new LXFloat4(0x4d4099, 0.6),
+            new LXFloat4(0x9999cc, 0.8),
+            new LXFloat4(0x332680, 1.0)
         }, Gradient.ColorMode.RGB);
         
         this.mirageShimmer = new Gradient(new LXFloat4[] {
-            new LXFloat4(0.1, 0.1, 0.2, 1.0),
-            new LXFloat4(0.4, 0.3, 0.7, 1.0),
-            new LXFloat4(0.7, 0.7, 0.9, 1.0),
-            new LXFloat4(0.3, 0.2, 0.6, 1.0)
+            new LXFloat4(0x1a1a33, 0.0),
+            new LXFloat4(0x664db3, 0.33),
+            new LXFloat4(0xb3b3e6, 0.67),
+            new LXFloat4(0x4d3399, 1.0)
         }, Gradient.ColorMode.RGB);
     }
     

@@ -16,21 +16,21 @@ public class StarFieldPattern extends UmbrellaPattern {
         super(lx);
         
         this.starFieldGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0.0, 0.0, 0.05, 1.0),
-            new LXFloat4(0.05, 0.05, 0.15, 1.0),
-            new LXFloat4(0.15, 0.15, 0.3, 1.0),
-            new LXFloat4(0.4, 0.4, 0.6, 1.0),
-            new LXFloat4(0.8, 0.8, 0.9, 1.0),
-            new LXFloat4(0.6, 0.7, 0.9, 1.0)
+            new LXFloat4(0x00000d, 0.0),
+            new LXFloat4(0x0d0d26, 0.2),
+            new LXFloat4(0x26264d, 0.4),
+            new LXFloat4(0x666699, 0.6),
+            new LXFloat4(0xcccce6, 0.8),
+            new LXFloat4(0x99b3e6, 1.0)
         }, Gradient.ColorMode.RGB);
         
         this.twinkleGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0.0, 0.0, 0.02, 1.0),
-            new LXFloat4(0.9, 0.9, 0.95, 1.0),
-            new LXFloat4(0.8, 0.9, 1.0, 1.0),
-            new LXFloat4(1.0, 0.95, 0.8, 1.0),
-            new LXFloat4(0.9, 0.8, 1.0, 1.0),
-            new LXFloat4(0.7, 0.8, 0.9, 1.0)
+            new LXFloat4(0x000005, 0.0),
+            new LXFloat4(0xe6e6f2, 0.2),
+            new LXFloat4(0xcce6ff, 0.4),
+            new LXFloat4(0xfff2cc, 0.6),
+            new LXFloat4(0xe6ccff, 0.8),
+            new LXFloat4(0xb3cce6, 1.0)
         }, Gradient.ColorMode.RGB);
     }
     

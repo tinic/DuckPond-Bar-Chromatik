@@ -16,20 +16,20 @@ public class SunsetPlayaPattern extends UmbrellaPattern {
         super(lx);
         
         this.desertSunsetGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0.2, 0.1, 0.3, 1.0),
-            new LXFloat4(0.6, 0.2, 0.4, 1.0),
-            new LXFloat4(0.9, 0.4, 0.2, 1.0),
-            new LXFloat4(1.0, 0.7, 0.3, 1.0),
-            new LXFloat4(0.8, 0.3, 0.1, 1.0),
-            new LXFloat4(0.4, 0.15, 0.2, 1.0)
+            new LXFloat4(0x331a4d, 0.0),
+            new LXFloat4(0x993366, 0.2),
+            new LXFloat4(0xe66633, 0.4),
+            new LXFloat4(0xffb34d, 0.6),
+            new LXFloat4(0xcc4d1a, 0.8),
+            new LXFloat4(0x662633, 1.0)
         }, Gradient.ColorMode.RGB);
         
         this.dustStormGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0.3, 0.25, 0.2, 1.0),
-            new LXFloat4(0.7, 0.5, 0.3, 1.0),
-            new LXFloat4(0.9, 0.7, 0.4, 1.0),
-            new LXFloat4(0.6, 0.4, 0.25, 1.0),
-            new LXFloat4(0.8, 0.6, 0.35, 1.0)
+            new LXFloat4(0x4d4033, 0.0),
+            new LXFloat4(0xb3804d, 0.25),
+            new LXFloat4(0xe6b366, 0.5),
+            new LXFloat4(0x996640, 0.75),
+            new LXFloat4(0xcc9959, 1.0)
         }, Gradient.ColorMode.RGB);
     }
     
