@@ -135,4 +135,12 @@ public class LXFloat4 {
       a.z + (b.z - a.z) * t,
       a.w + (b.w - a.w) * t);
   }
+
+  public LXFloat4 lerp(LXFloat4 other, double t) {
+    return new LXFloat4(
+      this.x + (other.x - this.x) * t,
+      this.y + (other.y - this.y) * t,
+      this.z + (other.z - this.z) * t,
+      this.w + (other.w - this.w) * t);
+  }
 }
