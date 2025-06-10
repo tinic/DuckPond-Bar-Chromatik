@@ -36,7 +36,7 @@ public class StarFieldPattern extends UmbrellaPattern {
     
     @Override
     protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
-        double stellarTime = time * 0.005;
+        double stellarTime = time * 0.15;
         double starSeed1 = Math.sin(localPos.x * 17.31 + localPos.y * 23.47) * 43758.5453;
         double starSeed2 = Math.sin(localPos.x * 29.17 + localPos.y * 31.23) * 12345.6789;
         double starSeed3 = Math.sin(localPos.len() * 19.83 + stellarTime * 0.1) * 98765.4321;

@@ -35,7 +35,7 @@ public class SunsetPlayaPattern extends UmbrellaPattern {
     
     @Override
     protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
-        double playaTime = time * 0.01;
+        double playaTime = time * 0.25;
         double horizonLayer = localPos.y + Math.sin(playaTime * 0.3) * 0.2;
         double heatWave1 = Math.sin(localPos.x * 3.0 + playaTime * 0.8) * 0.3;
         double heatWave2 = Math.cos(localPos.y * 2.5 + playaTime * 0.6) * 0.2;

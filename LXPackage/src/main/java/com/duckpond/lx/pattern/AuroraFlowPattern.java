@@ -35,7 +35,7 @@ public class AuroraFlowPattern extends UmbrellaPattern {
     
     @Override
     protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
-        double auroraTime = time * 0.012;
+        double auroraTime = time * 0.35;
         double curtain1 = Math.sin(localPos.x * 2.0 + auroraTime * 1.1) * 0.8;
         double curtain2 = Math.cos(localPos.y * 1.5 + auroraTime * 0.7) * 0.6;
         double curtain3 = Math.sin((localPos.x + localPos.y) * 1.2 + auroraTime * 0.9) * 0.7;

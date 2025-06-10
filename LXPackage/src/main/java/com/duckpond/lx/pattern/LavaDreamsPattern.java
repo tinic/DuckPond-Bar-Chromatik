@@ -35,7 +35,7 @@ public class LavaDreamsPattern extends UmbrellaPattern {
     
     @Override
     protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
-        double geologicalTime = time * 0.004;
+        double geologicalTime = time * 0.2;
         double flow1 = Math.sin(localPos.x * 1.5 + geologicalTime * 0.7) * 0.8;
         double flow2 = Math.cos(localPos.y * 1.8 + geologicalTime * 0.5) * 0.7;
         double flow3 = Math.sin(localPos.len() * 2.2 + geologicalTime * 0.6) * 0.6;

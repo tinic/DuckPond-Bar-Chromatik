@@ -34,7 +34,7 @@ public class MidnightMiragePattern extends UmbrellaPattern {
     
     @Override
     protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
-        double slowTime = time * 0.015;
+        double slowTime = time * 0.3;
         double wave1 = Math.sin(localPos.x * 1.2 + slowTime);
         double wave2 = Math.cos(localPos.y * 0.8 + slowTime * 0.7);
         double wave3 = Math.sin(localPos.len() * 2.0 + slowTime * 0.5);

@@ -36,7 +36,7 @@ public class CosmicDustPattern extends UmbrellaPattern {
     
     @Override
     protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
-        double cosmicTime = time * 0.006;
+        double cosmicTime = time * 0.2;
         double angle = Math.atan2(localPos.y, localPos.x);
         double radius = localPos.len();
         double spiralArm1 = Math.sin(angle * 2.0 + radius * 4.0 + cosmicTime * 0.8);
