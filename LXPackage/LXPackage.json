@@ -52,6 +52,18 @@
       "description": "Cycles through LEDs one at a time for testing"
     }
   ],
+  "fixtures": [
+    {
+      "file": "umbrella.lxf",
+      "name": "DuckPond Single Umbrella",
+      "description": "Single umbrella fixture for testing"
+    },
+    {
+      "file": "umbrellas.lxf", 
+      "name": "DuckPond Bar Umbrellas",
+      "description": "Complete umbrella array for DuckPond Bar installation"
+    }
+  ],
   "tags": ["umbrella", "duckpond", "bar", "lighting"],
   "repository": {
     "type": "git",

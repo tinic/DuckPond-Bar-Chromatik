@@ -6,6 +6,19 @@ An LX Package containing lighting patterns for the DuckPond Bar umbrella install
 
 This package provides 9 different lighting patterns optimized for umbrella fixtures with spoke-based LED arrays. Each pattern is designed to work with fixtures tagged as "umbrella" in the LX model.
 
+## Included Files
+
+### Patterns
+- 9 individual lighting patterns (Spring, Summer, Autumn, Winter, etc.)
+- Base UmbrellaPattern class with coordinate transformation
+
+### Fixture Definitions  
+- **umbrella.lxf** - Single umbrella fixture for testing
+- **umbrellas.lxf** - Complete 11-umbrella DuckPond Bar installation
+
+### Utilities
+- LXFloat4 and Gradient classes for color calculations
+
 ## Patterns
 
 ### Seasonal Effects
@@ -35,9 +48,19 @@ This package is designed to work with the LX Package system. To use:
 
 ## Requirements
 
-- LX Framework v1.5.0 or higher
+- LX Framework v1.1.0 or higher
 - Java 8 or higher
 - Model with fixtures tagged as "umbrella"
+
+## Using the Fixture Files
+
+The package includes two LXF fixture definition files:
+
+1. **umbrella.lxf** - Use for testing individual umbrella patterns
+2. **umbrellas.lxf** - Complete installation file with:
+   - 11 umbrella fixtures positioned as in the physical DuckPond Bar
+   - ArtNet output configuration for IP addresses 10.10.33.1-11
+   - 80 LEDs per umbrella (8 spokes × 10 LEDs)
 
 ## Fixture Requirements
 
