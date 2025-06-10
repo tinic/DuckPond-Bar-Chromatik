@@ -1,0 +1,60 @@
+{
+  "name": "DuckPond",
+  "version": "1.0.0",
+  "description": "LX lighting patterns for DuckPond Bar umbrella installation",
+  "author": "Tinic Uro",
+  "license": "MIT",
+  "lxVersion": "1.1.0",
+  "patterns": [
+    {
+      "class": "com.duckpond.lx.pattern.SpringPattern",
+      "name": "Spring",
+      "description": "Rainbow gradient with local coordinate modulation"
+    },
+    {
+      "class": "com.duckpond.lx.pattern.SummerPattern", 
+      "name": "Summer",
+      "description": "Rainbow gradient with global coordinate sparkles"
+    },
+    {
+      "class": "com.duckpond.lx.pattern.AutumnPattern",
+      "name": "Autumn", 
+      "description": "Rainy gradient with autumn colors"
+    },
+    {
+      "class": "com.duckpond.lx.pattern.WinterPattern",
+      "name": "Winter",
+      "description": "Winter gradient with rainy overlay"
+    },
+    {
+      "class": "com.duckpond.lx.pattern.AfterRainPattern",
+      "name": "After Rain",
+      "description": "Rainbow gradient with rotating motion"
+    },
+    {
+      "class": "com.duckpond.lx.pattern.SunsetSunrisePattern",
+      "name": "Sunset/Sunrise",
+      "description": "Happy gradient transitioning to evening"
+    },
+    {
+      "class": "com.duckpond.lx.pattern.DesertDreamPattern",
+      "name": "Desert Dream",
+      "description": "Desert colors with local and global movement"
+    },
+    {
+      "class": "com.duckpond.lx.pattern.InTheJunglePattern",
+      "name": "In The Jungle",
+      "description": "Jungle colors with dark light overlay"
+    },
+    {
+      "class": "com.duckpond.lx.pattern.TestStripPattern",
+      "name": "Test Strip",
+      "description": "Cycles through LEDs one at a time for testing"
+    }
+  ],
+  "tags": ["umbrella", "duckpond", "bar", "lighting"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/turo/DuckPond-Bar-Chromatik.git"
+  }
+}

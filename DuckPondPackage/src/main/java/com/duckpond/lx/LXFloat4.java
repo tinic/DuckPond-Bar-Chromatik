@@ -1,0 +1,138 @@
+/*
+Copyright 2019 Tinic Uro
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+package com.duckpond.lx;
+
+import heronarts.lx.model.LXPoint;
+
+public class LXFloat4 {
+  public double x;
+  public double y;
+  public double z;
+  public double w;
+
+  public LXFloat4(double a) {
+    this.x = a;
+    this.y = a;
+    this.z = a;
+    this.w = a;
+  }
+
+  public LXFloat4(double x, double y, double z) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.w = 0.0;
+  }
+
+  public LXFloat4(double x, double y, double z, double w) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.w = w;
+  }
+
+  public LXFloat4(int c, double w) {
+    int r = (c & 0x00ff0000) >> 16;
+    int g = (c & 0x0000ff00) >> 8;
+    int b = (c & 0x000000ff) >> 0;
+    this.x = (double)r * (1.0 / 255.0);
+    this.y = (double)g * (1.0 / 255.0);
+    this.z = (double)b * (1.0 / 255.0);
+    this.w = w;
+  }
+
+  public LXFloat4(LXPoint p) {
+    this.x = p.x;
+    this.y = p.y;
+    this.z = p.z;
+    this.w = 0.0;
+  }
+
+  public LXFloat4 rotate2d(double phi) {
+    double cos = Math.cos(phi);
+    double sin = Math.sin(phi);
+    return new LXFloat4( cos * x - sin * y,
+                sin * x + cos * y,
+                z, w);
+  }
+
+  public LXFloat4 add(LXFloat4 o) {
+    return new LXFloat4( x + o.x, y + o.y, z + o.z, w + o.w);
+  }
+
+  public LXFloat4 sub(LXFloat4 o) {
+    return new LXFloat4( x - o.x, y - o.y, z - o.z, w - o.w);
+  }
+
+  public LXFloat4 mul(double o) {
+    return new LXFloat4( x * o, y * o, z * o, w * o);
+  }
+
+  public LXFloat4 mul(LXFloat4 o) {
+    return new LXFloat4( x * o.x, y * o.y, z * o.z, w * o.w);
+  }
+
+  public LXFloat4 clamp() {
+    return new LXFloat4( 
+      Math.max(0.0, Math.min(1.0, x)),
+      Math.max(0.0, Math.min(1.0, y)),
+      Math.max(0.0, Math.min(1.0, z)),
+      Math.max(0.0, Math.min(1.0, w)));
+  }
+
+  public LXFloat4 gamma() {
+    return new LXFloat4( Math.sqrt(x), Math.sqrt(y), Math.sqrt(z), w);
+  }
+
+  public double len() {
+    return Math.sqrt(len2());
+  }
+
+  public double len2() {
+    return x * x + y * y + z * z;
+  }
+
+  public LXFloat4 max(LXFloat4 o) {
+    return new LXFloat4( 
+      Math.max(x, o.x),
+      Math.max(y, o.y),
+      Math.max(z, o.z),
+      Math.max(w, o.w));
+  }
+
+  public LXFloat4 min(LXFloat4 o) {
+    return new LXFloat4( 
+      Math.min(x, o.x),
+      Math.min(y, o.y),
+      Math.min(z, o.z),
+      Math.min(w, o.w));
+  }
+
+  public static LXFloat4 lerp(LXFloat4 a, LXFloat4 b, double t) {
+    return new LXFloat4(
+      a.x + (b.x - a.x) * t,
+      a.y + (b.y - a.y) * t,
+      a.z + (b.z - a.z) * t,
+      a.w + (b.w - a.w) * t);
+  }
+}
