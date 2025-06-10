@@ -9,43 +9,40 @@ A headless LED art installation system for DuckPond Bar, migrated to the modern 
 **Copyright:** 2019 Tinic Uro  
 **Framework:** LX LED Framework v1.1.0  
 **Language:** Java  
-**Build System:** Apache Ant  
+**Build System:** Apache Maven  
 
 ## Architecture
 
-This is a headless Java application that runs lighting patterns on physical LED fixtures:
+This is a headless Java application that runs lighting patterns on physical LED fixtures using the LX Package system:
 
 - **11 Umbrella fixtures** - Each with configurable spokes and LEDs per spoke (default: 8 spokes, 10 LEDs/spoke)
-- **Bar top fixture** - Front and back LED strips following the bar contour
+- **Bar top fixture** - Front and back LED strips following the bar contour (disabled by default)
 - **Network output** - ArtNet protocol to individual fixture IP addresses
+- **LXPackage integration** - Modular pattern system using LX framework
 
 ## Key Components
 
+### LXPackage System (`LXPackage/`)
+- **Individual Pattern Classes** - Each effect is now a separate LXPattern:
+  - `SpringPattern`, `SummerPattern`, `AutumnPattern`, `WinterPattern` (seasonal themes)
+  - `AfterRainPattern`, `SunsetSunrisePattern` (atmospheric effects)
+  - `DesertDreamPattern`, `InTheJunglePattern` (environmental themes)
+  - `TestStripPattern` (debugging/testing)
+- **Base Classes** - `UmbrellaPattern` provides common functionality and coordinate transformation
+- **Fixture Definitions** - LXF files included in package resources
+- **Build System** - Maven-based with proper LXPackage metadata
+
 ### Main Application
-- `DuckPondBarHeadless.java` - Main entry point and model builder
-- Builds 3D model from physical fixture definitions
-- Manages ArtNet network output and pattern execution
-- Can load LX project files or run default patterns
+- `DuckPondBarHeadless` - Shell script launcher
+- Uses `heronarts.lx.headless.LXHeadless` with LXPackage on classpath
+- Loads `DuckPond.lxp` project file by default
+- Automatically builds LXPackage if needed
 
-### Pattern System
-- `DuckPondBarPattern.java` - Base pattern class with 9 built-in effects
-- **Effects available:**
-  - Spring, Summer, Autumn, Winter (seasonal themes)
-  - AfterRain, SunsetSunrise (atmospheric effects)
-  - DesertDream, InTheJungle (environmental themes)
-  - TestStrip (debugging/testing)
+### Legacy Components (preserved for reference)
+- Original headless implementation in LX submodule
+- Build system updated to use LXPackage approach
 
-### Fixture Classes
-- `DuckPondFixture.java` - Abstract base fixture with coordinate mapping
-- `UmbrellaFixture.java` - Radial spoke-based LED fixtures
-- `BarTopFixture.java` - Linear strip fixtures following bar contour
-
-### Network Setup
-- `NetworkSetup.java` - Configures ArtNet output to fixture IP addresses
-- Splits fixtures into appropriate ArtNet universes
-- Handles both umbrella and bar-top fixture addressing
-
-### Utility Classes
+### Utility Classes (in LXPackage)
 - `LXFloat4.java` - 4D vector math for color and position calculations
 - `Gradient.java` - Color gradient system with RGB/HSV support
 
@@ -53,44 +50,73 @@ This is a headless Java application that runs lighting patterns on physical LED 
 
 ### Prerequisites
 - Java 8 or higher
-- Apache Ant
+- Apache Maven 3.6+
 
 ### Available Build Targets
 
 ```bash
-# Compile source code
-ant compile
+# Build entire project
+mvn clean package
 
-# Build project (compile + verification)
-ant build
+# Build only LXPackage
+mvn clean package -pl LXPackage
 
-# Run the application
-ant run
+# Run the application with default project
+mvn exec:java
 
-# Create JAR package
-ant jar
+# Run with custom project file
+mvn exec:java -Prun-project -Dproject.file=myproject.lxp
 
-# Clean, build, and package
-ant all
+# Create distribution packages
+mvn package assembly:single
 
-# Clean build directory
-ant clean
+# Clean build
+mvn clean
+```
+
+### Convenience Build Script
+
+```bash
+# Build project
+./build.sh
+
+# Run application  
+./build.sh run
+
+# Build distribution
+./build.sh distribution
+
+# Run with custom project
+./build.sh --project-file=myproject.lxp
 ```
 
 ### Runtime Usage
 
 ```bash
-# Run with default pattern using convenience script
+# Run with default project file (DuckPond.lxp)
 ./DuckPondBarHeadless
 
-# Run with project file
-./DuckPondBarHeadless DuckPond.lxp
+# Run with custom project file
+./DuckPondBarHeadless myproject.lxp
 
-# Or use ant directly
-ant run
+# Or use Maven directly
+mvn exec:java
 
-# Or use java directly
-java -cp "lib/*:build/classes" duckpond.DuckPondBarHeadless project.lxp
+# Or use build script
+./build.sh run
+```
+
+### LXPackage Development
+
+```bash
+# Build the LXPackage
+mvn clean package -pl LXPackage
+
+# Install in LX Studio (copy JAR to packages directory)
+cp LXPackage/target/duckpond-lx-1.0.0.jar /path/to/lx/packages/
+
+# Create distribution for deployment
+./build.sh distribution
 ```
 
 ## Physical Setup

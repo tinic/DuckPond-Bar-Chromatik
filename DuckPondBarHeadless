@@ -1,9 +1,7 @@
 #!/bin/sh
 
 # DuckPond Bar Chromatik Headless Script
-# Migrated from original DuckPond-Bar-LXStudio project
-
-# Use system-installed Java and Ant
+# Updated to use Maven build system
 
 # Get the directory where this script is located
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -11,17 +9,29 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 # Change to the project directory
 cd "$SCRIPT_DIR"
 
-# Build the project if JAR doesn't exist
-if [ ! -f "build/duckpond-bar-chromatik.jar" ]; then
-    echo "JAR not found, building project..."
-    ant jar
+# LXPackage path
+LXPACKAGE_JAR="LXPackage/target/duckpond-lx-1.0.0.jar"
+
+# Build the project if LXPackage doesn't exist
+if [ ! -f "$LXPACKAGE_JAR" ]; then
+    echo "LXPackage not found, building project..."
+    mvn clean package
     if [ $? -ne 0 ]; then
-        echo "Build failed!"
+        echo "Maven build failed!"
         exit 1
     fi
 fi
 
-# Run the headless application
-# Pass any command line arguments (like project file) to the Java application
-java -cp "lib/lx-1.1.0-jar-with-dependencies.jar:build/duckpond-bar-chromatik.jar" \
-     duckpond.DuckPondBarHeadless "$@"
+# Determine which project file to use
+PROJECT_FILE="DuckPond.lxp"
+if [ $# -gt 0 ]; then
+    PROJECT_FILE="$1"
+fi
+
+echo "Starting DuckPond Bar Chromatik..."
+echo "Using LXPackage: $LXPACKAGE_JAR"
+echo "Loading project: $PROJECT_FILE"
+
+# Run using DuckPond headless application
+java -cp "lib/lx-1.1.0-jar-with-dependencies.jar:$LXPACKAGE_JAR" \
+     com.duckpond.lx.DuckPondHeadless "$PROJECT_FILE"
