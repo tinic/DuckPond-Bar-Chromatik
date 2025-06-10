@@ -1,6 +1,6 @@
 {
   "version": "1.1.0",
-  "timestamp": 1749527289330,
+  "timestamp": 1749528244548,
   "model": {
     "id": 2,
     "class": "heronarts.lx.structure.LXStructure",
@@ -85,7 +85,7 @@
           "scale": 1.0,
           "selected": true,
           "deactivate": false,
-          "enabled": false,
+          "enabled": true,
           "brightness": 1.0,
           "identify": false,
           "mute": false,
@@ -981,11 +981,11 @@
               "autoCycleEnabled": true,
               "autoCycleMode": 1,
               "autoCycleMode/name": "RANDOM",
-              "autoCycleTimeSecs": 60.0,
+              "autoCycleTimeSecs": 300.0,
               "transitionEnabled": true,
               "transitionTimeSecs": 20.0,
               "transitionBlendMode": 0,
-              "focusedPattern": 2,
+              "focusedPattern": 7,
               "triggerPatternCycle": false,
               "launchPatternCycle": false
             },
@@ -1009,7 +1009,7 @@
             },
             "effects": [],
             "clips": [],
-            "patternIndex": 2,
+            "patternIndex": 5,
             "patterns": [
               {
                 "id": 48751,
@@ -1383,59 +1383,6 @@
                 "effects": []
               },
               {
-                "id": 48842,
-                "class": "com.duckpond.lx.pattern.TestStripPattern",
-                "internal": {
-                  "modulationColor": 0,
-                  "modulationControlsExpanded": true,
-                  "modulationsExpanded": true,
-                  "expanded": true,
-                  "expandedCue": true,
-                  "expandedAux": true,
-                  "modulationExpanded": false
-                },
-                "parameters": {
-                  "label": "TestStrip",
-                  "midiFilter/enabled": true,
-                  "midiFilter/channel": 16,
-                  "midiFilter/channel/name": "OMNI",
-                  "midiFilter/minNote": 0,
-                  "midiFilter/noteRange": 128,
-                  "midiFilter/minVelocity": 1,
-                  "midiFilter/velocityRange": 127,
-                  "view": 0,
-                  "viewPriority": 0,
-                  "enabled": true,
-                  "recall": false,
-                  "launch": false,
-                  "compositeMode": 0,
-                  "compositeLevel": 1.0,
-                  "hasCustomCycleTime": false,
-                  "customCycleTimeSecs": 60.0,
-                  "speed": 0.0
-                },
-                "children": {
-                  "modulation": {
-                    "id": 48843,
-                    "class": "heronarts.lx.modulation.LXModulationEngine",
-                    "internal": {
-                      "modulationColor": 0,
-                      "modulationControlsExpanded": true,
-                      "modulationsExpanded": true
-                    },
-                    "parameters": {
-                      "label": "Modulation"
-                    },
-                    "children": {},
-                    "modulators": [],
-                    "modulations": [],
-                    "triggers": []
-                  }
-                },
-                "deviceVersion": -1,
-                "effects": []
-              },
-              {
                 "id": 48855,
                 "class": "com.duckpond.lx.pattern.WinterPattern",
                 "internal": {
@@ -1624,7 +1571,7 @@
   },
   "externals": {
     "ui": {
-      "leftPaneActiveSection": 0,
+      "leftPaneActiveSection": 1,
       "audioExpanded": true,
       "envelopExpanded": true,
       "reaperExpanded": true,
@@ -1642,9 +1589,9 @@
         "depth": 2.0,
         "camera": {
           "active": false,
-          "radius": 4.2768720296553555,
-          "theta": 357.5427226573229,
-          "phi": -34.7487151324749,
+          "radius": 7.947947949946263,
+          "theta": 357.73994709551334,
+          "phi": -3.6019017696380615,
           "x": 0.0,
           "y": 1.000000238418579,
           "z": 3.0
@@ -1652,9 +1599,9 @@
         "cue": [
           {
             "active": false,
-            "radius": 4.2768720296553555,
-            "theta": 357.5427226573229,
-            "phi": -34.7487151324749,
+            "radius": 7.947947949946263,
+            "theta": 357.73994709551334,
+            "phi": -3.6019017696380615,
             "x": 0.0,
             "y": 1.000000238418579,
             "z": 3.0
