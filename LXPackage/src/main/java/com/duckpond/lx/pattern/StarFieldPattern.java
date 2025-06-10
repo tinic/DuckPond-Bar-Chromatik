@@ -93,7 +93,13 @@ public class StarFieldPattern extends UmbrellaPattern {
         double atmosphericShimmer = Math.sin(stellarTime * 5.0 + localPos.len() * 10.0 + globalPos.len() * 2.0) * 0.05 + 0.95;
         double nightSkyBreath = Math.sin(stellarTime * 0.15 + globalPos.x * 0.01) * 0.1 + 0.9;
         
-        double brightness = (totalStarlight + nebulaGlow + milkyWayBand) * nightSkyBreath * atmosphericShimmer * stellarDensity;
+        double brightness = (totalStarlight + nebulaGlow + milkyWayBand) * nightSkyBreath * atmosphericShimmer * stellarDensity * 2.5;
+        
+        // Increase contrast by enhancing the color values and making stars more prominent
+        finalColor = finalColor.mul(1.4);
+        if (totalStarlight > 0.3) {
+            finalColor = finalColor.mul(1.2); // Extra boost for bright stars
+        }
         return finalColor.mul(brightness).clamp().gamma();
     }
 }

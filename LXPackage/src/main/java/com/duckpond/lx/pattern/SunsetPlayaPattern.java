@@ -83,7 +83,10 @@ public class SunsetPlayaPattern extends UmbrellaPattern {
         double atmosphere = Math.exp(-distance * 0.5) * 0.5 + 0.5;
         atmosphere *= atmosphericRegion;
         
-        double intensity = goldenGlow * atmosphere * (0.7 + Math.abs(heatDistortion) * 0.2);
+        double intensity = goldenGlow * atmosphere * (1.4 + Math.abs(heatDistortion) * 0.4) * 2.0;
+        
+        // Increase contrast by enhancing the color values
+        finalColor = finalColor.mul(1.3);
         return finalColor.mul(intensity).clamp().gamma();
     }
 }

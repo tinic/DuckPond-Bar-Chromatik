@@ -77,8 +77,11 @@ public class DeepOceanPattern extends UmbrellaPattern {
             finalColor = finalColor.lerp(thermalGlow, thermalVent * 0.4);
         }
         
-        double intensity = oceanBreath * depthPressure * (0.6 + bioActivity * 0.3);
-        double refraction = Math.sin(oceanTime * 2.0 + oceanFlow + globalFlow) * 0.05 + 0.95;
+        double intensity = oceanBreath * depthPressure * (1.2 + bioActivity * 0.6) * 2.0;
+        double refraction = Math.sin(oceanTime * 2.0 + oceanFlow + globalFlow) * 0.08 + 0.96;
+        
+        // Increase contrast by enhancing the color values
+        finalColor = finalColor.mul(1.3);
         return finalColor.mul(intensity * refraction).clamp().gamma();
     }
 }

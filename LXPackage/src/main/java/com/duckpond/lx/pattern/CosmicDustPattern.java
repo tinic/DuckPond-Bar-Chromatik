@@ -69,8 +69,11 @@ public class CosmicDustPattern extends UmbrellaPattern {
         double spiralMix = Math.abs(spiralPattern) * depthFade * stellarRegion;
         LXFloat4 finalColor = galaxyColor.lerp(nebulaColor, spiralMix * 0.8);
         
-        double stellarDensity = 0.5 + Math.abs(spiralPattern) * 0.3 + Math.abs(dustPattern) * 0.2;
-        double brightness = stellarDensity * cosmicPulse * (0.6 + depthFade * 0.4) * stellarRegion;
+        double stellarDensity = 1.0 + Math.abs(spiralPattern) * 0.6 + Math.abs(dustPattern) * 0.4;
+        double brightness = stellarDensity * cosmicPulse * (1.2 + depthFade * 0.8) * stellarRegion * 2.0;
+        
+        // Increase contrast by enhancing the color values
+        finalColor = finalColor.mul(1.4);
         return finalColor.mul(brightness).clamp().gamma();
     }
 }

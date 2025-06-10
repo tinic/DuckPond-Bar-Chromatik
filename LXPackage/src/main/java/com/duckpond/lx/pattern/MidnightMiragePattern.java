@@ -74,7 +74,10 @@ public class MidnightMiragePattern extends UmbrellaPattern {
             finalColor = finalColor.lerp(heatColor, Math.abs(heatWave - 0.2) * 0.3);
         }
         
-        double brightness = (0.7 + Math.sin(slowTime * 0.4 + globalPos.y * 0.02) * 0.2) * atmosphericLayer;
+        double brightness = (1.4 + Math.sin(slowTime * 0.4 + globalPos.y * 0.02) * 0.4) * atmosphericLayer * 2.0;
+        
+        // Increase contrast by enhancing the color values
+        finalColor = finalColor.mul(1.3);
         return finalColor.mul(brightness).clamp().gamma();
     }
 }

@@ -88,8 +88,11 @@ public class LavaDreamsPattern extends UmbrellaPattern {
             baseColor = baseColor.lerp(bubbleColor, (bubbleHighlight - 0.3) * 0.5);
         }
         
-        double intensity = (0.4 + coreTemp * 0.5 + Math.abs(lavaFlow) * 0.1) * volcanicRegion;
-        double thermalRadiation = Math.sin(geologicalTime * 2.5 + distance * 8.0 + globalFlow * 10.0) * 0.05 + 0.95;
+        double intensity = (0.8 + coreTemp * 1.0 + Math.abs(lavaFlow) * 0.2) * volcanicRegion * 2.0;
+        double thermalRadiation = Math.sin(geologicalTime * 2.5 + distance * 8.0 + globalFlow * 10.0) * 0.08 + 0.96;
+        
+        // Increase contrast by enhancing the color values
+        baseColor = baseColor.mul(1.3);
         return baseColor.mul(intensity * thermalRadiation).clamp().gamma();
     }
 }

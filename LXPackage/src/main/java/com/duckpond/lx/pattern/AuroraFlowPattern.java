@@ -68,8 +68,11 @@ public class AuroraFlowPattern extends UmbrellaPattern {
         double auroraActivity = Math.abs(auroraFlow) * 0.7 + Math.abs(particleShimmer) * 0.3;
         LXFloat4 finalColor = mainAurora.lerp(polarGlow, auroraActivity * 0.6);
         
-        double brightness = atmosphericPulse * intensityFade * (0.8 + auroraActivity * 0.2);
-        double flicker = Math.sin(auroraTime * 3.2 + globalPos.y * 0.2) * 0.1 + 0.9;
+        double brightness = atmosphericPulse * intensityFade * (1.6 + auroraActivity * 0.4) * 2.0;
+        double flicker = Math.sin(auroraTime * 3.2 + globalPos.y * 0.2) * 0.15 + 0.95;
+        
+        // Increase contrast by enhancing the color values
+        finalColor = finalColor.mul(1.3);
         return finalColor.mul(brightness * flicker).clamp().gamma();
     }
 }

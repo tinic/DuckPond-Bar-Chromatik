@@ -66,12 +66,14 @@ public class FireBreathingPattern extends UmbrellaPattern {
         LXFloat4 flameColor = flameGradient.reflect(flameRise);
         LXFloat4 finalColor = emberColor.lerp(flameColor, flameMix * 0.7);
         
-        double intensity = (0.6 + emberBreath * 0.3 + Math.abs(flameMotion) * 0.1) * fireRegion;
+        double intensity = (1.2 + emberBreath * 0.6 + Math.abs(flameMotion) * 0.2) * fireRegion * 2.0;
         double heatGlow = Math.max(0.0, 1.0 - distanceFromCenter * 0.8);
         
         // Heat shimmer varies by global position
-        double heatShimmer = Math.sin(slowTime * 4.0 + globalPos.len() * 0.5) * 0.1 * fireRegion + 0.9;
+        double heatShimmer = Math.sin(slowTime * 4.0 + globalPos.len() * 0.5) * 0.15 * fireRegion + 0.95;
         
-        return finalColor.mul(intensity * (0.7 + heatGlow * 0.3) * heatShimmer).clamp().gamma();
+        // Increase contrast by enhancing the color values
+        finalColor = finalColor.mul(1.4);
+        return finalColor.mul(intensity * (1.4 + heatGlow * 0.6) * heatShimmer).clamp().gamma();
     }
 }
