@@ -36,28 +36,29 @@ public class MidnightMiragePattern extends UmbrellaPattern {
     protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
         double slowTime = time * 0.3;
         
-        // Global desert heat patterns - mirages appear at different locations
+        // Global desert heat patterns - mirages appear at different locations - NOW DOMINANT
         double desertAngle = Math.atan2(globalPos.y, globalPos.x);
-        double heatDistortion = Math.sin(globalPos.len() * 0.05 + slowTime * 0.1) * 0.4;
-        double globalMirage = Math.sin(desertAngle + slowTime * 0.2) * Math.cos(globalPos.x * 0.03) * 0.3;
+        double heatDistortion = Math.sin(globalPos.len() * 0.2 + slowTime * 0.4) * 1.2;
+        double globalMirage = Math.sin(desertAngle + slowTime * 0.6) * Math.cos(globalPos.x * 0.15) * 1.0;
         
-        // Atmospheric layers at different global heights
-        double atmosphericLayer = Math.sin(globalPos.y * 0.04 + slowTime * 0.15) * 0.2 + 0.8;
+        // Major heat zones that span across umbrellas
+        double heatZone = Math.sin(globalPos.x * 0.25 + slowTime * 0.3) * Math.cos(globalPos.y * 0.2 + slowTime * 0.25);
+        double atmosphericLayer = Math.sin(globalPos.y * 0.2 + slowTime * 0.4) * 0.6 + 0.6;
         
-        // Local waves influenced by global heat patterns
-        double wave1 = Math.sin(localPos.x * 1.2 + slowTime + globalMirage);
-        double wave2 = Math.cos(localPos.y * 0.8 + slowTime * 0.7 + heatDistortion);
-        double wave3 = Math.sin(localPos.len() * 2.0 + slowTime * 0.5 + globalPos.len() * 0.1);
-        double wavePattern = (wave1 + wave2 * 0.7 + wave3 * 0.5) / 2.2;
+        // Local waves heavily influenced by global heat patterns
+        double wave1 = Math.sin(localPos.x * 0.6 + slowTime + globalMirage * 3.0 + heatZone * 4.0) * 0.5;
+        double wave2 = Math.cos(localPos.y * 0.4 + slowTime * 0.7 + heatDistortion * 2.0) * 0.35;
+        double wave3 = Math.sin(localPos.len() * 1.0 + slowTime * 0.5 + globalPos.len() * 0.4) * 0.25;
+        double wavePattern = (wave1 + wave2 + wave3) / 1.1 + globalMirage * 0.8;
         
-        // Radial pulse varies across the desert
-        double radialPulse = Math.sin(slowTime * 0.3 + globalPos.x * 0.02) * 0.3;
+        // Radial pulse heavily varies across the desert
+        double radialPulse = Math.sin(slowTime * 0.3 + globalPos.x * 0.1) * 0.6;
         double distance = localPos.len() + radialPulse;
         
-        // Shimmer intensity varies by global temperature regions
-        double temperatureRegion = Math.sin(globalPos.x * 0.08) * Math.cos(globalPos.y * 0.06) * 0.3 + 0.7;
-        double shimmer = Math.sin(distance * 3.0 + slowTime * 1.2 + globalMirage * 2.0) * 0.4 + 0.6;
-        shimmer *= temperatureRegion;
+        // Shimmer intensity heavily varies by global temperature regions
+        double temperatureRegion = Math.sin(globalPos.x * 0.4) * Math.cos(globalPos.y * 0.3) * 0.7 + 0.5;
+        double shimmer = Math.sin(distance * 1.5 + slowTime * 1.2 + globalMirage * 5.0) * 0.2 + 0.3;
+        shimmer = shimmer * temperatureRegion + heatZone * 0.8;
         
         // Heat waves create different mirage qualities
         double heatWave = Math.sin(globalPos.len() * 0.1 + slowTime * 0.25) * atmosphericLayer;
@@ -74,10 +75,15 @@ public class MidnightMiragePattern extends UmbrellaPattern {
             finalColor = finalColor.lerp(heatColor, Math.abs(heatWave - 0.2) * 0.3);
         }
         
-        double brightness = (1.4 + Math.sin(slowTime * 0.4 + globalPos.y * 0.02) * 0.4) * atmosphericLayer * 2.0;
+        double brightness = (1.0 + Math.sin(slowTime * 0.4 + globalPos.y * 0.02) * 0.3) * atmosphericLayer * 1.4;
         
-        // Increase contrast by enhancing the color values
-        finalColor = finalColor.mul(1.3);
-        return finalColor.mul(brightness).clamp().gamma();
+        // Increase contrast - make mirages much brighter while keeping night areas very dark
+        double mirageIntensity = Math.max(Math.abs(shimmer - 0.6), Math.abs(heatWave)) * temperatureRegion;
+        double contrastBoost = Math.pow(mirageIntensity, 0.4);
+        finalColor = finalColor.mul(0.7 + contrastBoost * 2.0);
+        
+        // Apply contrast-enhanced brightness
+        double finalBrightness = brightness * (0.1 + contrastBoost * 0.9);
+        return finalColor.mul(finalBrightness).clamp().gamma();
     }
 }

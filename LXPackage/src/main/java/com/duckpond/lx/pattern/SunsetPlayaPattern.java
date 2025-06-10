@@ -37,30 +37,31 @@ public class SunsetPlayaPattern extends UmbrellaPattern {
     protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
         double playaTime = time * 0.25;
         
-        // Global sun position and atmospheric layers
+        // Global sun position and atmospheric layers - NOW DOMINANT
         double sunAngle = Math.atan2(globalPos.y, globalPos.x);
-        double sunDistance = globalPos.len() * 0.05;
-        double sunHeight = Math.sin(playaTime * 0.1 + sunDistance) * 0.3 + 0.4;
+        double sunDistance = globalPos.len() * 0.2;
+        double sunHeight = Math.sin(playaTime * 0.3 + sunDistance) * 0.6 + 0.5;
         
-        // Different atmospheric regions across the playa
-        double atmosphericRegion = Math.sin(globalPos.x * 0.04) * Math.cos(globalPos.y * 0.03) * 0.3 + 0.8;
+        // Major atmospheric zones that span across umbrellas
+        double atmosphericZone = Math.sin(globalPos.x * 0.2 + playaTime * 0.2) * Math.cos(globalPos.y * 0.15 + playaTime * 0.15);
+        double atmosphericRegion = Math.sin(globalPos.x * 0.2) * Math.cos(globalPos.y * 0.15) * 0.7 + 0.5;
         
-        // Horizon varies by global position
-        double globalHorizon = Math.sin(sunAngle + playaTime * 0.05) * 0.1;
-        double horizonLayer = localPos.y + globalHorizon + Math.sin(playaTime * 0.3 + globalPos.x * 0.02) * 0.2;
+        // Horizon heavily varies by global position
+        double globalHorizon = Math.sin(sunAngle + playaTime * 0.2) * 0.4;
+        double horizonLayer = localPos.y * 0.5 + globalHorizon + Math.sin(playaTime * 0.3 + globalPos.x * 0.1) * 0.6;
         
-        // Heat waves intensified by global desert conditions
-        double desertHeat = atmosphericRegion * (Math.sin(globalPos.len() * 0.06 + playaTime * 0.1) * 0.2 + 0.9);
-        double heatWave1 = Math.sin(localPos.x * 3.0 + playaTime * 0.8 + sunAngle * 0.5) * 0.3;
-        double heatWave2 = Math.cos(localPos.y * 2.5 + playaTime * 0.6 + globalPos.x * 0.1) * 0.2;
-        double heatWave3 = Math.sin(localPos.len() * 1.5 + playaTime * 0.4 + sunDistance * 5.0) * 0.25;
-        double heatDistortion = (heatWave1 + heatWave2 + heatWave3) / 2.75 * desertHeat;
+        // Heat waves heavily intensified by global desert conditions
+        double desertHeat = atmosphericRegion * (Math.sin(globalPos.len() * 0.25 + playaTime * 0.3) * 0.6 + 0.7);
+        double heatWave1 = Math.sin(localPos.x * 1.5 + playaTime * 0.8 + sunAngle * 2.0 + atmosphericZone * 3.0) * 0.15;
+        double heatWave2 = Math.cos(localPos.y * 1.25 + playaTime * 0.6 + globalPos.x * 0.5) * 0.1;
+        double heatWave3 = Math.sin(localPos.len() * 0.75 + playaTime * 0.4 + sunDistance * 15.0) * 0.125;
+        double heatDistortion = (heatWave1 + heatWave2 + heatWave3) / 0.375 * desertHeat + atmosphericZone * 0.8;
         
-        // Dust storms vary by wind patterns across the playa
-        double windDirection = sunAngle + Math.sin(globalPos.len() * 0.03 + playaTime * 0.08) * 0.5;
-        double dustSwirl1 = Math.sin(localPos.x * 1.2 + playaTime * 0.5 + windDirection) * 0.6;
-        double dustSwirl2 = Math.cos(localPos.y * 0.8 + playaTime * 0.7 + globalPos.y * 0.05) * 0.4;
-        double dustPattern = (dustSwirl1 + dustSwirl2) / 2.0;
+        // Dust storms heavily vary by wind patterns across the playa
+        double windDirection = sunAngle + Math.sin(globalPos.len() * 0.15 + playaTime * 0.25) * 1.5;
+        double dustSwirl1 = Math.sin(localPos.x * 0.6 + playaTime * 0.5 + windDirection * 2.0) * 0.3;
+        double dustSwirl2 = Math.cos(localPos.y * 0.4 + playaTime * 0.7 + globalPos.y * 0.2) * 0.2;
+        double dustPattern = (dustSwirl1 + dustSwirl2) / 0.5 + atmosphericZone * 0.6;
         
         // Sun's influence varies across the installation
         double sunInfluence = Math.exp(-Math.abs(sunAngle - Math.atan2(localPos.y, localPos.x)) * 2.0) * sunHeight;
@@ -83,10 +84,15 @@ public class SunsetPlayaPattern extends UmbrellaPattern {
         double atmosphere = Math.exp(-distance * 0.5) * 0.5 + 0.5;
         atmosphere *= atmosphericRegion;
         
-        double intensity = goldenGlow * atmosphere * (1.4 + Math.abs(heatDistortion) * 0.4) * 2.0;
+        double intensity = goldenGlow * atmosphere * (1.0 + Math.abs(heatDistortion) * 0.3) * 1.4;
         
-        // Increase contrast by enhancing the color values
-        finalColor = finalColor.mul(1.3);
-        return finalColor.mul(intensity).clamp().gamma();
+        // Increase contrast - make sunset glow much brighter while keeping distant areas darker
+        double sunsetIntensity = Math.max(sunInfluence, Math.abs(heatDistortion)) * sunsetPhase;
+        double contrastBoost = Math.pow(sunsetIntensity, 0.4);
+        finalColor = finalColor.mul(0.8 + contrastBoost * 1.7);
+        
+        // Apply contrast-enhanced brightness
+        double finalBrightness = intensity * (0.2 + contrastBoost * 0.8);
+        return finalColor.mul(finalBrightness).clamp().gamma();
     }
 }

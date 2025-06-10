@@ -37,23 +37,24 @@ public class FireBreathingPattern extends UmbrellaPattern {
     protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
         double slowTime = time * 0.4;
         
-        // Global fire wind patterns - different umbrellas have different wind directions
+        // Global fire wind patterns - different umbrellas have different wind directions - NOW DOMINANT
         double windAngle = Math.atan2(globalPos.y, globalPos.x);
-        double windStrength = Math.sin(globalPos.len() * 0.1 + slowTime * 0.2) * 0.3 + 0.7;
-        double globalWind = Math.sin(windAngle + slowTime * 0.3) * windStrength;
+        double windStrength = Math.sin(globalPos.len() * 0.4 + slowTime * 0.6) * 0.8 + 0.5;
+        double globalWind = Math.sin(windAngle + slowTime * 0.8) * windStrength * 2.0;
         
-        // Flame intensity varies across the installation
-        double fireRegion = Math.sin(globalPos.x * 0.08) * Math.cos(globalPos.y * 0.06) * 0.4 + 0.8;
+        // Major flame zones that span across umbrellas
+        double flameZone = Math.sin(globalPos.x * 0.3 + slowTime * 0.4) * Math.cos(globalPos.y * 0.25 + slowTime * 0.3);
+        double fireRegion = Math.sin(globalPos.x * 0.4) * Math.cos(globalPos.y * 0.35) * 0.8 + 0.6;
         
-        // Local flicker influenced by global wind
-        double flicker1 = Math.sin(localPos.x * 2.5 + slowTime * 1.3 + globalWind * 0.8) * 0.7;
-        double flicker2 = Math.cos(localPos.y * 1.8 + slowTime * 0.9 + windAngle * 0.5) * 0.5;
-        double flicker3 = Math.sin(localPos.len() * 1.5 + slowTime * 1.1 + globalPos.len() * 0.2) * 0.6;
-        double flameMotion = (flicker1 + flicker2 + flicker3) / 2.8;
+        // Local flicker heavily influenced by global wind
+        double flicker1 = Math.sin(localPos.x * 1.25 + slowTime * 1.3 + globalWind * 2.5 + flameZone * 4.0) * 0.35;
+        double flicker2 = Math.cos(localPos.y * 0.9 + slowTime * 0.9 + windAngle * 2.0) * 0.25;
+        double flicker3 = Math.sin(localPos.len() * 0.75 + slowTime * 1.1 + globalPos.len() * 1.0) * 0.3;
+        double flameMotion = (flicker1 + flicker2 + flicker3) / 0.9 + globalWind * 0.6;
         
         // Breathing embers synchronized across regions
-        double emberBreath = Math.sin(slowTime * 0.4 + globalPos.x * 0.05) * 0.4 + 0.6;
-        emberBreath *= fireRegion;
+        double emberBreath = Math.sin(slowTime * 0.4 + globalPos.x * 0.2) * 0.4 + 0.6;
+        emberBreath *= fireRegion + flameZone * 0.5;
         
         double distanceFromCenter = localPos.len();
         double emberCore = Math.exp(-distanceFromCenter * 1.5) * emberBreath;
@@ -66,14 +67,19 @@ public class FireBreathingPattern extends UmbrellaPattern {
         LXFloat4 flameColor = flameGradient.reflect(flameRise);
         LXFloat4 finalColor = emberColor.lerp(flameColor, flameMix * 0.7);
         
-        double intensity = (1.2 + emberBreath * 0.6 + Math.abs(flameMotion) * 0.2) * fireRegion * 2.0;
+        double intensity = (0.8 + emberBreath * 0.4 + Math.abs(flameMotion) * 0.15) * fireRegion * 1.4;
         double heatGlow = Math.max(0.0, 1.0 - distanceFromCenter * 0.8);
         
         // Heat shimmer varies by global position
-        double heatShimmer = Math.sin(slowTime * 4.0 + globalPos.len() * 0.5) * 0.15 * fireRegion + 0.95;
+        double heatShimmer = Math.sin(slowTime * 4.0 + globalPos.len() * 0.5) * 0.12 * fireRegion + 0.94;
         
-        // Increase contrast by enhancing the color values
-        finalColor = finalColor.mul(1.4);
-        return finalColor.mul(intensity * (1.4 + heatGlow * 0.6) * heatShimmer).clamp().gamma();
+        // Increase contrast - make fire core much brighter while keeping edges darker
+        double fireIntensity = emberCore + Math.abs(flameMotion) * 0.5;
+        double contrastBoost = Math.pow(fireIntensity, 0.4);
+        finalColor = finalColor.mul(1.0 + contrastBoost * 1.8);
+        
+        // Apply contrast-enhanced brightness
+        double finalBrightness = intensity * (0.8 + heatGlow * 0.4) * heatShimmer * (0.2 + contrastBoost * 0.8);
+        return finalColor.mul(finalBrightness).clamp().gamma();
     }
 }

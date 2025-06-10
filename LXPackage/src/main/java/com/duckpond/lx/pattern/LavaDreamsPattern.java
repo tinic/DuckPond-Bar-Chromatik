@@ -37,23 +37,27 @@ public class LavaDreamsPattern extends UmbrellaPattern {
     protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
         double geologicalTime = time * 0.2;
         
-        // Global volcanic activity - different regions have different activity levels
-        double volcanicRegion = Math.sin(globalPos.x * 0.06) * Math.cos(globalPos.y * 0.05) * 0.3 + 0.7;
-        double globalFlow = Math.sin(globalPos.len() * 0.08 + geologicalTime * 0.1) * volcanicRegion;
+        // Global volcanic activity - different regions have different activity levels - NOW DOMINANT
+        double volcanicRegion = Math.sin(globalPos.x * 0.3) * Math.cos(globalPos.y * 0.25) * 0.7 + 0.5;
+        double globalFlow = Math.sin(globalPos.len() * 0.3 + geologicalTime * 0.3) * volcanicRegion * 1.5;
         
-        // Lava flows influenced by global topography
-        double slope = Math.atan2(globalPos.y, globalPos.x) * 0.3;
-        double flow1 = Math.sin(localPos.x * 1.5 + geologicalTime * 0.7 + slope) * 0.8;
-        double flow2 = Math.cos(localPos.y * 1.8 + geologicalTime * 0.5 + globalFlow) * 0.7;
-        double flow3 = Math.sin(localPos.len() * 2.2 + geologicalTime * 0.6 + globalPos.len() * 0.1) * 0.6;
-        double lavaFlow = (flow1 + flow2 + flow3) / 2.9;
+        // Major volcanic features that span across umbrellas
+        double volcanicZone = Math.sin(globalPos.x * 0.15 + geologicalTime * 0.2) * Math.cos(globalPos.y * 0.12 + geologicalTime * 0.15);
+        double magmaChamber = Math.exp(-globalPos.len() * 0.2) * 1.2;
         
-        // Bubble activity varies across the volcanic field
-        double bubbleActivity = volcanicRegion * (Math.sin(globalPos.x * 0.1) * 0.3 + 0.8);
-        double bubble1 = Math.sin(localPos.x * 4.0 + geologicalTime * 1.5 + globalPos.y * 0.2) * 0.4;
-        double bubble2 = Math.cos(localPos.y * 5.0 + geologicalTime * 1.8 + globalPos.x * 0.15) * 0.3;
-        double bubble3 = Math.sin((localPos.x + localPos.y) * 3.5 + geologicalTime * 1.2 + globalFlow * 2.0) * 0.35;
-        double bubbling = (bubble1 + bubble2 + bubble3) / 1.05 * bubbleActivity;
+        // Lava flows heavily influenced by global topography
+        double slope = Math.atan2(globalPos.y, globalPos.x) * 1.2;
+        double flow1 = Math.sin(localPos.x * 0.75 + geologicalTime * 0.7 + slope * 2.0 + volcanicZone * 3.0) * 0.4;
+        double flow2 = Math.cos(localPos.y * 0.9 + geologicalTime * 0.5 + globalFlow * 2.0) * 0.35;
+        double flow3 = Math.sin(localPos.len() * 1.1 + geologicalTime * 0.6 + globalPos.len() * 0.5) * 0.3;
+        double lavaFlow = (flow1 + flow2 + flow3) / 1.05 + globalFlow * 0.8 + magmaChamber * 0.6;
+        
+        // Bubble activity heavily varies across the volcanic field
+        double bubbleActivity = volcanicRegion * (Math.sin(globalPos.x * 0.5) * 0.6 + 0.6);
+        double bubble1 = Math.sin(localPos.x * 2.0 + geologicalTime * 1.5 + globalPos.y * 1.0) * 0.2;
+        double bubble2 = Math.cos(localPos.y * 2.5 + geologicalTime * 1.8 + globalPos.x * 0.8) * 0.15;
+        double bubble3 = Math.sin((localPos.x + localPos.y) * 1.75 + geologicalTime * 1.2 + globalFlow * 5.0) * 0.175;
+        double bubbling = (bubble1 + bubble2 + bubble3) / 0.525 * bubbleActivity + volcanicZone * 0.7;
         
         // Crust formation varies by global elevation
         double elevation = globalPos.len() * 0.1;
@@ -88,11 +92,16 @@ public class LavaDreamsPattern extends UmbrellaPattern {
             baseColor = baseColor.lerp(bubbleColor, (bubbleHighlight - 0.3) * 0.5);
         }
         
-        double intensity = (0.8 + coreTemp * 1.0 + Math.abs(lavaFlow) * 0.2) * volcanicRegion * 2.0;
-        double thermalRadiation = Math.sin(geologicalTime * 2.5 + distance * 8.0 + globalFlow * 10.0) * 0.08 + 0.96;
+        double intensity = (0.6 + coreTemp * 0.7 + Math.abs(lavaFlow) * 0.15) * volcanicRegion * 1.4;
+        double thermalRadiation = Math.sin(geologicalTime * 2.5 + distance * 8.0 + globalFlow * 10.0) * 0.06 + 0.97;
         
-        // Increase contrast by enhancing the color values
-        baseColor = baseColor.mul(1.3);
-        return baseColor.mul(intensity * thermalRadiation).clamp().gamma();
+        // Increase contrast - make molten core extremely bright while keeping crust very dark
+        double moltenIntensity = Math.max(coreTemp, Math.abs(lavaFlow) * 0.5);
+        double contrastBoost = Math.pow(moltenIntensity, 0.3);
+        baseColor = baseColor.mul(0.8 + contrastBoost * 2.2);
+        
+        // Apply contrast-enhanced brightness
+        double finalBrightness = intensity * thermalRadiation * (0.1 + contrastBoost * 0.9);
+        return baseColor.mul(finalBrightness).clamp().gamma();
     }
 }

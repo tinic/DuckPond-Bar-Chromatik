@@ -38,25 +38,29 @@ public class CosmicDustPattern extends UmbrellaPattern {
     protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
         double cosmicTime = time * 0.2;
         
-        // Global galactic coordinates - each umbrella represents a different region
+        // Global galactic coordinates - each umbrella represents a different region - NOW DOMINANT
         double globalGalacticAngle = Math.atan2(globalPos.y, globalPos.x);
-        double globalRadius = globalPos.len() * 0.1;
-        double galaxyRotation = cosmicTime * 0.05 + globalGalacticAngle * 0.3;
+        double globalRadius = globalPos.len() * 0.3;
+        double galaxyRotation = cosmicTime * 0.15 + globalGalacticAngle * 1.2;
+        
+        // Major galactic features that span across umbrellas
+        double galaxyArm = Math.sin(globalPos.x * 0.2 + cosmicTime * 0.1) * Math.cos(globalPos.y * 0.15 + cosmicTime * 0.08);
+        double galaxyCore = Math.exp(-globalRadius * 0.8) * 1.5;
         
         double angle = Math.atan2(localPos.y, localPos.x);
         double radius = localPos.len();
         
-        // Spiral arms influenced by global position
-        double spiralArm1 = Math.sin(angle * 2.0 + radius * 4.0 + cosmicTime * 0.8 + galaxyRotation);
-        double spiralArm2 = Math.cos(angle * 3.0 - radius * 3.0 + cosmicTime * 0.6 + globalPos.x * 0.2);
-        double spiralArm3 = Math.sin(angle * 1.5 + radius * 5.0 - cosmicTime * 0.4 + globalPos.y * 0.15);
-        double spiralPattern = (spiralArm1 + spiralArm2 * 0.8 + spiralArm3 * 0.6) / 2.4;
+        // Spiral arms heavily influenced by global position
+        double spiralArm1 = Math.sin(angle * 1.0 + radius * 2.0 + cosmicTime * 0.8 + galaxyRotation * 2.0 + galaxyArm * 4.0) * 0.4;
+        double spiralArm2 = Math.cos(angle * 1.5 - radius * 1.5 + cosmicTime * 0.6 + globalPos.x * 1.0) * 0.32;
+        double spiralArm3 = Math.sin(angle * 0.75 + radius * 2.5 - cosmicTime * 0.4 + globalPos.y * 0.8) * 0.3;
+        double spiralPattern = (spiralArm1 + spiralArm2 + spiralArm3) / 1.02 + galaxyArm * 0.8 + galaxyCore * 0.6;
         
-        // Dust clouds vary by global position
-        double dust1 = Math.sin(localPos.x * 1.5 + cosmicTime * 0.3 + globalPos.x * 0.4) * 0.7;
-        double dust2 = Math.cos(localPos.y * 2.2 + cosmicTime * 0.5 + globalPos.y * 0.3) * 0.6;
-        double dust3 = Math.sin(localPos.len() * 1.8 + cosmicTime * 0.2 + globalRadius * 8.0) * 0.5;
-        double dustPattern = (dust1 + dust2 + dust3) / 2.8;
+        // Dust clouds heavily vary by global position
+        double dust1 = Math.sin(localPos.x * 0.8 + cosmicTime * 0.3 + globalPos.x * 1.5) * 0.35;
+        double dust2 = Math.cos(localPos.y * 1.1 + cosmicTime * 0.5 + globalPos.y * 1.2) * 0.3;
+        double dust3 = Math.sin(localPos.len() * 0.9 + cosmicTime * 0.2 + globalRadius * 15.0) * 0.25;
+        double dustPattern = (dust1 + dust2 + dust3) / 0.9 + galaxyArm * 0.7;
         
         double depthFade = Math.exp(-radius * 0.8);
         double cosmicPulse = Math.sin(cosmicTime * 0.2 + globalPos.len() * 0.1) * 0.3 + 0.7;
@@ -69,11 +73,16 @@ public class CosmicDustPattern extends UmbrellaPattern {
         double spiralMix = Math.abs(spiralPattern) * depthFade * stellarRegion;
         LXFloat4 finalColor = galaxyColor.lerp(nebulaColor, spiralMix * 0.8);
         
-        double stellarDensity = 1.0 + Math.abs(spiralPattern) * 0.6 + Math.abs(dustPattern) * 0.4;
-        double brightness = stellarDensity * cosmicPulse * (1.2 + depthFade * 0.8) * stellarRegion * 2.0;
+        double stellarDensity = 0.7 + Math.abs(spiralPattern) * 0.4 + Math.abs(dustPattern) * 0.3;
+        double brightness = stellarDensity * cosmicPulse * (0.8 + depthFade * 0.6) * stellarRegion * 1.4;
         
-        // Increase contrast by enhancing the color values
-        finalColor = finalColor.mul(1.4);
-        return finalColor.mul(brightness).clamp().gamma();
+        // Increase contrast - enhance bright star regions while keeping dark space dark
+        double starIntensity = Math.max(Math.abs(spiralPattern), Math.abs(dustPattern));
+        double contrastBoost = Math.pow(starIntensity, 0.5); // Enhance contrast curve
+        finalColor = finalColor.mul(1.1 + contrastBoost * 1.2);
+        
+        // Apply contrast-enhanced brightness
+        double finalBrightness = brightness * (0.2 + contrastBoost * 0.8);
+        return finalColor.mul(finalBrightness).clamp().gamma();
     }
 }
