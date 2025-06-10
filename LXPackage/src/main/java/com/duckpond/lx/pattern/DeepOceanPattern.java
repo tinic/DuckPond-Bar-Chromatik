@@ -36,7 +36,7 @@ public class DeepOceanPattern extends UmbrellaPattern {
     
     @Override
     protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
-        double oceanTime = time * 0.007;
+        double oceanTime = time * 0.3;
         double current1 = Math.sin(localPos.x * 1.8 + oceanTime * 0.6) * 0.7;
         double current2 = Math.cos(localPos.y * 1.2 + oceanTime * 0.8) * 0.6;
         double current3 = Math.sin(localPos.len() * 2.5 + oceanTime * 0.4) * 0.5;

@@ -35,7 +35,7 @@ public class FireBreathingPattern extends UmbrellaPattern {
     
     @Override
     protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
-        double slowTime = time * 0.008;
+        double slowTime = time * 0.4;
         double flicker1 = Math.sin(localPos.x * 2.5 + slowTime * 1.3) * 0.7;
         double flicker2 = Math.cos(localPos.y * 1.8 + slowTime * 0.9) * 0.5;
         double flicker3 = Math.sin(localPos.len() * 1.5 + slowTime * 1.1) * 0.6;
