@@ -22,7 +22,7 @@ public class AuroraFlowPattern extends UmbrellaPattern {
             new LXFloat4(0x4de680, 0.6),
             new LXFloat4(0x80cce6, 0.8),
             new LXFloat4(0x3399cc, 1.0)
-        }, Gradient.ColorMode.RGB);
+        }, Gradient.ColorMode.OKLAB);
         
         this.polarGradient = new Gradient(new LXFloat4[] {
             new LXFloat4(0x0d0d26, 0.0),
@@ -30,7 +30,7 @@ public class AuroraFlowPattern extends UmbrellaPattern {
             new LXFloat4(0x66cc99, 0.5),
             new LXFloat4(0x99e6cc, 0.75),
             new LXFloat4(0x4d80e6, 1.0)
-        }, Gradient.ColorMode.RGB);
+        }, Gradient.ColorMode.OKLAB);
     }
     
     @Override

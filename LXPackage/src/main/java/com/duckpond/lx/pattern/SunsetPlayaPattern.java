@@ -22,7 +22,7 @@ public class SunsetPlayaPattern extends UmbrellaPattern {
             new LXFloat4(0xffb34d, 0.6),
             new LXFloat4(0xcc4d1a, 0.8),
             new LXFloat4(0x662633, 1.0)
-        }, Gradient.ColorMode.RGB);
+        }, Gradient.ColorMode.OKLAB);
         
         this.dustStormGradient = new Gradient(new LXFloat4[] {
             new LXFloat4(0x4d4033, 0.0),
@@ -30,7 +30,7 @@ public class SunsetPlayaPattern extends UmbrellaPattern {
             new LXFloat4(0xe6b366, 0.5),
             new LXFloat4(0x996640, 0.75),
             new LXFloat4(0xcc9959, 1.0)
-        }, Gradient.ColorMode.RGB);
+        }, Gradient.ColorMode.OKLAB);
     }
     
     @Override

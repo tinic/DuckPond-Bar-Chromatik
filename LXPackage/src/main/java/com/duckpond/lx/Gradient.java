@@ -29,7 +29,8 @@ public class Gradient {
 
   public enum ColorMode {
     RGB,
-    HSV
+    HSV,
+    OKLAB
   }
 
   public Gradient(LXFloat4[] g, ColorMode mode) {
@@ -50,6 +51,11 @@ public class Gradient {
         LXFloat4 ga = hsv2rgb(g[s0]);
         LXFloat4 gb = hsv2rgb(g[s0 + 1]);
         gradient[c] = LXFloat4.lerp(ga, gb, a);
+      } else if (mode == ColorMode.OKLAB) {
+        LXFloat4 labA = srgb2oklab(g[s0]);
+        LXFloat4 labB = srgb2oklab(g[s0 + 1]);
+        LXFloat4 labInterp = LXFloat4.lerp(labA, labB, a);
+        gradient[c] = oklab2srgb(labInterp);
       }
     }
   }
@@ -78,6 +84,70 @@ public class Gradient {
       }
     }
     return new LXFloat4(r, g, b, hsv.w);
+  }
+
+  private static double linearize_srgb(double x) {
+    if (x <= 0.04045) {
+      return x / 12.92;
+    } else {
+      return Math.pow((x + 0.055) / 1.055, 2.4);
+    }
+  }
+
+  private static double delinearize_srgb(double x) {
+    if (x <= 0.0031308) {
+      return x * 12.92;
+    } else {
+      return 1.055 * Math.pow(x, 1.0 / 2.4) - 0.055;
+    }
+  }
+
+  private static LXFloat4 srgb2oklab(LXFloat4 srgb) {
+    double r = linearize_srgb(srgb.x);
+    double g = linearize_srgb(srgb.y);
+    double b = linearize_srgb(srgb.z);
+
+    double l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b;
+    double m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b;
+    double s = 0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b;
+
+    double l_ = Math.cbrt(l);
+    double m_ = Math.cbrt(m);
+    double s_ = Math.cbrt(s);
+
+    double L = 0.2104542553 * l_ + 0.7936177850 * m_ - 0.0040720468 * s_;
+    double a = 1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_;
+    double b_ = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_;
+
+    return new LXFloat4(L, a, b_, srgb.w);
+  }
+
+  private static LXFloat4 oklab2srgb(LXFloat4 oklab) {
+    double L = oklab.x;
+    double a = oklab.y;
+    double b = oklab.z;
+
+    double l_ = L + 0.3963377774 * a + 0.2158037573 * b;
+    double m_ = L - 0.1055613458 * a - 0.0638541728 * b;
+    double s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+
+    double l = l_ * l_ * l_;
+    double m = m_ * m_ * m_;
+    double s = s_ * s_ * s_;
+
+    double r = +4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s;
+    double g = -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s;
+    double b_ = -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s;
+
+    r = delinearize_srgb(r);
+    g = delinearize_srgb(g);
+    b_ = delinearize_srgb(b_);
+
+    r = Math.max(0.0, Math.min(1.0, r));
+    g = Math.max(0.0, Math.min(1.0, g));
+    b_ = Math.max(0.0, Math.min(1.0, b_));
+
+    return new LXFloat4(r, g, b_, oklab.w);
   }
 
   public LXFloat4 clamp(double pos) {

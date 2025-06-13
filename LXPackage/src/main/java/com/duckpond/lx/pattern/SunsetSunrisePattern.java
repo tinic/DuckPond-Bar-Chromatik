@@ -50,7 +50,7 @@ public class SunsetSunrisePattern extends UmbrellaPattern {
        new LXFloat4(0xfdbb2d,1.00)
     };
 
-    this.happyGradient = new Gradient(happyGradient, Gradient.ColorMode.RGB);
+    this.happyGradient = new Gradient(happyGradient, Gradient.ColorMode.OKLAB);
 
     LXFloat4[] eveningGradient = {
        new LXFloat4(0x000000,0.00),
@@ -60,7 +60,7 @@ public class SunsetSunrisePattern extends UmbrellaPattern {
        new LXFloat4(0xffffff,1.00)
     };
 
-    this.eveningGradient = new Gradient(eveningGradient, Gradient.ColorMode.RGB);
+    this.eveningGradient = new Gradient(eveningGradient, Gradient.ColorMode.OKLAB);
   }
   
   @Override

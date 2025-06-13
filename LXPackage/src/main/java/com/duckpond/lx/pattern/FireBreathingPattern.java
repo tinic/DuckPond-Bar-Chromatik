@@ -22,7 +22,7 @@ public class FireBreathingPattern extends UmbrellaPattern {
             new LXFloat4(0xcc661a, 0.6),
             new LXFloat4(0xff9933, 0.8),
             new LXFloat4(0xe64d00, 1.0)
-        }, Gradient.ColorMode.RGB);
+        }, Gradient.ColorMode.OKLAB);
         
         this.flameGradient = new Gradient(new LXFloat4[] {
             new LXFloat4(0x661a00, 0.0),
@@ -30,7 +30,7 @@ public class FireBreathingPattern extends UmbrellaPattern {
             new LXFloat4(0xffb31a, 0.5),
             new LXFloat4(0xffe666, 0.75),
             new LXFloat4(0xe66600, 1.0)
-        }, Gradient.ColorMode.RGB);
+        }, Gradient.ColorMode.OKLAB);
     }
     
     @Override

@@ -22,7 +22,7 @@ public class StarFieldPattern extends UmbrellaPattern {
             new LXFloat4(0x666699, 0.6),
             new LXFloat4(0xcccce6, 0.8),
             new LXFloat4(0x99b3e6, 1.0)
-        }, Gradient.ColorMode.RGB);
+        }, Gradient.ColorMode.OKLAB);
         
         this.twinkleGradient = new Gradient(new LXFloat4[] {
             new LXFloat4(0x000005, 0.0),
@@ -31,7 +31,7 @@ public class StarFieldPattern extends UmbrellaPattern {
             new LXFloat4(0xfff2cc, 0.6),
             new LXFloat4(0xe6ccff, 0.8),
             new LXFloat4(0xb3cce6, 1.0)
-        }, Gradient.ColorMode.RGB);
+        }, Gradient.ColorMode.OKLAB);
     }
     
     @Override

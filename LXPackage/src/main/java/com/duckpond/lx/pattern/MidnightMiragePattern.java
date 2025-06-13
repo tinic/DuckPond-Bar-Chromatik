@@ -22,14 +22,14 @@ public class MidnightMiragePattern extends UmbrellaPattern {
             new LXFloat4(0x4d4099, 0.6),
             new LXFloat4(0x9999cc, 0.8),
             new LXFloat4(0x332680, 1.0)
-        }, Gradient.ColorMode.RGB);
+        }, Gradient.ColorMode.OKLAB);
         
         this.mirageShimmer = new Gradient(new LXFloat4[] {
             new LXFloat4(0x1a1a33, 0.0),
             new LXFloat4(0x664db3, 0.33),
             new LXFloat4(0xb3b3e6, 0.67),
             new LXFloat4(0x4d3399, 1.0)
-        }, Gradient.ColorMode.RGB);
+        }, Gradient.ColorMode.OKLAB);
     }
     
     @Override

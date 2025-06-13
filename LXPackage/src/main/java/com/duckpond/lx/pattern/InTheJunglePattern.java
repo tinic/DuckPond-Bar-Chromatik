@@ -52,7 +52,7 @@ public class InTheJunglePattern extends UmbrellaPattern {
        new LXFloat4(0xb67b65,1.00)
     };
 
-    this.inTheJungle = new Gradient(inTheJungle, Gradient.ColorMode.RGB);
+    this.inTheJungle = new Gradient(inTheJungle, Gradient.ColorMode.OKLAB);
 
     LXFloat4[] darkLight = {
        new LXFloat4(0x000000,0.00),
@@ -62,7 +62,7 @@ public class InTheJunglePattern extends UmbrellaPattern {
        new LXFloat4(0x000000,1.00)
     };
 
-    this.darkLight = new Gradient(darkLight, Gradient.ColorMode.RGB);
+    this.darkLight = new Gradient(darkLight, Gradient.ColorMode.OKLAB);
   }
   
   @Override

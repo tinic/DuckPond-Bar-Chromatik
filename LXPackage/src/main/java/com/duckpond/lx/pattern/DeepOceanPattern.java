@@ -22,7 +22,7 @@ public class DeepOceanPattern extends UmbrellaPattern {
             new LXFloat4(0x1a6680, 0.6),
             new LXFloat4(0x338099, 0.8),
             new LXFloat4(0x1a4d73, 1.0)
-        }, Gradient.ColorMode.RGB);
+        }, Gradient.ColorMode.OKLAB);
         
         this.bioluminescentGradient = new Gradient(new LXFloat4[] {
             new LXFloat4(0x001a33, 0.0),
@@ -31,7 +31,7 @@ public class DeepOceanPattern extends UmbrellaPattern {
             new LXFloat4(0x66e6b3, 0.6),
             new LXFloat4(0x00b3e6, 0.8),
             new LXFloat4(0x4dcc80, 1.0)
-        }, Gradient.ColorMode.RGB);
+        }, Gradient.ColorMode.OKLAB);
     }
     
     @Override
