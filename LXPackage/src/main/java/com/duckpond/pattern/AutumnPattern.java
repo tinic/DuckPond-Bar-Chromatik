@@ -20,13 +20,13 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.duckpond.lx.pattern;
+package com.duckpond.pattern;
 
 import heronarts.lx.LX;
 import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
-import com.duckpond.lx.LXFloat4;
-import com.duckpond.lx.Gradient;
+import com.duckpond.LXFloat4;
+import com.duckpond.Gradient;
 
 /**
  * Autumn effect - Rainy gradient with autumn colors

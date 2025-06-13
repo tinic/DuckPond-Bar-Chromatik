@@ -20,56 +20,57 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.duckpond.lx.pattern;
+package com.duckpond.pattern;
 
 import heronarts.lx.LX;
 import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
-import com.duckpond.lx.LXFloat4;
-import com.duckpond.lx.Gradient;
+import com.duckpond.LXFloat4;
+import com.duckpond.Gradient;
 
 /**
- * Sunset/Sunrise effect - Happy gradient transitioning to evening
+ * Winter effect - Winter gradient with rainy overlay
  */
 @LXCategory("DuckPond")
-public class SunsetSunrisePattern extends UmbrellaPattern {
+public class WinterPattern extends UmbrellaPattern {
   
-  private Gradient happyGradient;
-  private Gradient eveningGradient;
+  private Gradient winterGradient;
+  private Gradient rainyGradient;
   
-  public SunsetSunrisePattern(LX lx) {
+  public WinterPattern(LX lx) {
     super(lx);
     initGradients();
   }
   
   private void initGradients() {
-    LXFloat4[] happyGradient = {
-       new LXFloat4(0x22c1c3,0.00),
-       new LXFloat4(0x4387c0,0.33),
-       new LXFloat4(0xbb6161,0.66),
-       new LXFloat4(0xfdbb2d,1.00)
+    LXFloat4[] winterGradient = {
+       new LXFloat4(0xa3eed6,0.00),
+       new LXFloat4(0xdcbcd4,0.21),
+       new LXFloat4(0xff96d0,0.39),
+       new LXFloat4(0xcb81d6,0.65),
+       new LXFloat4(0x4b51f5,1.00)
     };
 
-    this.happyGradient = new Gradient(happyGradient, Gradient.ColorMode.RGB);
+    this.winterGradient = new Gradient(winterGradient, Gradient.ColorMode.RGB);
 
-    LXFloat4[] eveningGradient = {
-       new LXFloat4(0x000000,0.00),
-       new LXFloat4(0x4387c0,0.80),
-       new LXFloat4(0xbb6161,0.90),
-       new LXFloat4(0xff9500,0.95),
-       new LXFloat4(0xffffff,1.00)
+    LXFloat4[] rainyGradient = {
+       new LXFloat4(0x000000, 0.00),
+       new LXFloat4(0x413a40, 0.20),
+       new LXFloat4(0x65718a, 0.40),
+       new LXFloat4(0x6985b9, 0.53),
+       new LXFloat4(0xffffff, 1.00)
     };
 
-    this.eveningGradient = new Gradient(eveningGradient, Gradient.ColorMode.RGB);
+    this.rainyGradient = new Gradient(rainyGradient, Gradient.ColorMode.RGB);
   }
   
   @Override
   protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
-    double a = Math.max(0.0, Math.cos(globalPos.x + Math.sin(time * 0.10))+Math.sin(globalPos.y + Math.cos(time* 0.10))-1.0);
-    LXFloat4 pos = globalPos.rotate2d(time * 0.30).add(new LXFloat4(time * 0.30, 0.0, 0.0, 0.0)).mul(0.05);
+    double x0 = Math.sin((globalPos.x + 1.0) * 0.5 + time * 0.050);
+    double y0 = Math.cos((globalPos.y + 1.0) * 0.5 + time * 0.055);
+    double x1 = Math.sin((localPos.x + 1.0) * 0.25 + time * 0.050);
+    double y1 = Math.cos((localPos.y + 1.0) * 0.25 + time * 0.055);
     double l = 1.0 - localPos.len() + 0.5;
-    LXFloat4 c0 = happyGradient.reflect(pos.x).mul(l);
-    LXFloat4 c1 = eveningGradient.clamp(a);
-    return LXFloat4.lerp(c0, c1, a);
+    return winterGradient.reflect(x1 * y1).mul(l).mul(rainyGradient.reflect(x0 * y0));
   }
 }

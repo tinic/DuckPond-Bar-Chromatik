@@ -20,23 +20,23 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.duckpond.lx.pattern;
+package com.duckpond.pattern;
 
 import heronarts.lx.LX;
 import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
-import com.duckpond.lx.LXFloat4;
-import com.duckpond.lx.Gradient;
+import com.duckpond.LXFloat4;
+import com.duckpond.Gradient;
 
 /**
- * After Rain effect - Rainbow gradient with rotating motion
+ * Spring effect - Rainbow gradient with local coordinate modulation
  */
 @LXCategory("DuckPond")
-public class AfterRainPattern extends UmbrellaPattern {
+public class SpringPattern extends UmbrellaPattern {
   
   private Gradient rainbowGradientBright;
   
-  public AfterRainPattern(LX lx) {
+  public SpringPattern(LX lx) {
     super(lx);
     initGradients();
   }
@@ -64,8 +64,9 @@ public class AfterRainPattern extends UmbrellaPattern {
   
   @Override
   protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
-    double b = (Math.sin(globalPos.x * 4.0 + time * 0.20) + Math.cos(globalPos.y * 4.0 + time * 0.20)) * 0.25;
-    LXFloat4 pos = globalPos.rotate2d(time * 0.20).add(new LXFloat4(time * 0.20, 0.0, 0.0, 0.0)).mul(0.05);
-    return rainbowGradientBright.repeat(pos.x).add(new LXFloat4(b,b,b,b));
+    double x = Math.sin((localPos.x + 1.0) * 0.25 + time * 0.050);
+    double y = Math.cos((localPos.y + 1.0) * 0.25 + time * 0.055);
+    double l = 1.0 - localPos.len() + 0.5;
+    return rainbowGradientBright.reflect(x * y).mul(l);
   }
 }

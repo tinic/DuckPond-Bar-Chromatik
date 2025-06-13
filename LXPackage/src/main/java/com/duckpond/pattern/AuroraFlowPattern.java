@@ -1,10 +1,10 @@
-package com.duckpond.lx.pattern;
+package com.duckpond.pattern;
 
 import heronarts.lx.LX;
 import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
-import com.duckpond.lx.Gradient;
-import com.duckpond.lx.LXFloat4;
+import com.duckpond.Gradient;
+import com.duckpond.LXFloat4;
 
 @LXCategory("DuckPond")
 public class AuroraFlowPattern extends UmbrellaPattern {

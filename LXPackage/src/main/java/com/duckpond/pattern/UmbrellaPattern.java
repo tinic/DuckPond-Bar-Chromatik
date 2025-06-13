@@ -20,7 +20,7 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.duckpond.lx.pattern;
+package com.duckpond.pattern;
 
 import heronarts.lx.LX;
 import heronarts.lx.LXCategory;
@@ -29,7 +29,7 @@ import heronarts.lx.model.LXModel;
 import heronarts.lx.model.LXPoint;
 import heronarts.lx.parameter.BoundedParameter;
 import heronarts.lx.parameter.LXParameter;
-import com.duckpond.lx.LXFloat4;
+import com.duckpond.LXFloat4;
 
 /**
  * Base class for umbrella patterns. Provides common functionality
@@ -77,7 +77,7 @@ public abstract class UmbrellaPattern extends LXPattern {
       LXFloat4 localPos = toLocal(globalPos, center, factor);
       
       LXFloat4 colorOklab = calculatePointColor(point, globalPos, localPos, runTime);
-      LXFloat4 colorRgb = com.duckpond.lx.Gradient.toSrgb(colorOklab);
+      LXFloat4 colorRgb = com.duckpond.Gradient.toSrgb(colorOklab);
       int r = (int) Math.max(0, Math.min(255, colorRgb.x * 255.0));
       int g = (int) Math.max(0, Math.min(255, colorRgb.y * 255.0));
       int b = (int) Math.max(0, Math.min(255, colorRgb.z * 255.0));

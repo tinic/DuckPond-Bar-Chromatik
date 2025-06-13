@@ -20,58 +20,52 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.duckpond.lx.pattern;
+package com.duckpond.pattern;
 
 import heronarts.lx.LX;
 import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
-import com.duckpond.lx.LXFloat4;
-import com.duckpond.lx.Gradient;
+import com.duckpond.LXFloat4;
+import com.duckpond.Gradient;
 
 /**
- * In The Jungle effect - Jungle colors with dark light overlay
+ * After Rain effect - Rainbow gradient with rotating motion
  */
 @LXCategory("DuckPond")
-public class InTheJunglePattern extends UmbrellaPattern {
+public class AfterRainPattern extends UmbrellaPattern {
   
-  private Gradient inTheJungle;
-  private Gradient darkLight;
+  private Gradient rainbowGradientBright;
   
-  public InTheJunglePattern(LX lx) {
+  public AfterRainPattern(LX lx) {
     super(lx);
     initGradients();
   }
   
   private void initGradients() {
-    LXFloat4[] inTheJungle = {
-       new LXFloat4(0x135e46,0.00),
-       new LXFloat4(0x478966,0.20),
-       new LXFloat4(0x73a788,0.40),
-       new LXFloat4(0xe3c6ad,0.70),
-       new LXFloat4(0xd09d7b,0.90),
-       new LXFloat4(0xb67b65,1.00)
+    LXFloat4[] rainbowGradientBright = {
+       new LXFloat4(0xff0000, 0.00),
+       new LXFloat4(0xffbd96, 0.10),
+       new LXFloat4(0xffff00, 0.17),
+       new LXFloat4(0xc3ffa9, 0.25),
+       new LXFloat4(0x00ff00, 0.33),
+       new LXFloat4(0xd1ffbf, 0.38),
+       new LXFloat4(0xaffff3, 0.44),
+       new LXFloat4(0x29fefe, 0.50),
+       new LXFloat4(0x637eff, 0.59),
+       new LXFloat4(0x0000ff, 0.67),
+       new LXFloat4(0x9c3fff, 0.75),
+       new LXFloat4(0xff00ff, 0.83),
+       new LXFloat4(0xffc2b0, 0.92),
+       new LXFloat4(0xff0000, 1.00)
     };
 
-    this.inTheJungle = new Gradient(inTheJungle, Gradient.ColorMode.RGB);
-
-    LXFloat4[] darkLight = {
-       new LXFloat4(0x000000,0.00),
-       new LXFloat4(0x135e46,0.50),
-       new LXFloat4(0x2ea61b,0.65),
-       new LXFloat4(0x478966,0.70),
-       new LXFloat4(0x000000,1.00)
-    };
-
-    this.darkLight = new Gradient(darkLight, Gradient.ColorMode.RGB);
+    this.rainbowGradientBright = new Gradient(rainbowGradientBright, Gradient.ColorMode.RGB);
   }
   
   @Override
   protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
-    double a = Math.max(0.0, Math.cos(globalPos.x + Math.sin(time * 0.10))+Math.sin(globalPos.y + Math.cos(time* 0.10))-1.0);
-    LXFloat4 pos = globalPos.rotate2d(time * 0.30).add(new LXFloat4(time * 0.30, 0.0, 0.0, 0.0)).mul(0.05);
-    double l = 1.0 - localPos.len() + 0.5;
-    LXFloat4 c0 = inTheJungle.reflect(pos.x).mul(l);
-    LXFloat4 c1 = darkLight.clamp(a);
-    return LXFloat4.lerp(c0, c1, a);
+    double b = (Math.sin(globalPos.x * 4.0 + time * 0.20) + Math.cos(globalPos.y * 4.0 + time * 0.20)) * 0.25;
+    LXFloat4 pos = globalPos.rotate2d(time * 0.20).add(new LXFloat4(time * 0.20, 0.0, 0.0, 0.0)).mul(0.05);
+    return rainbowGradientBright.repeat(pos.x).add(new LXFloat4(b,b,b,b));
   }
 }
