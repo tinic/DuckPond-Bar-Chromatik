@@ -29,7 +29,7 @@ import heronarts.lx.model.LXModel;
 import heronarts.lx.model.LXPoint;
 import heronarts.lx.parameter.BoundedParameter;
 import heronarts.lx.parameter.LXParameter;
-import com.duckpond.LXFloat4;
+import com.duckpond.Float4;
 
 /**
  * Base class for umbrella patterns. Provides common functionality
@@ -67,17 +67,17 @@ public abstract class UmbrellaPattern extends LXPattern {
    */
   protected void processUmbrella(LXModel umbrella) {
     // Calculate center and bounds for this umbrella
-    LXFloat4 center = calculateCenter(umbrella);
-    LXFloat4 size = calculateSize(umbrella);
-    LXFloat4 factor = calculateNormalizationFactor(size);
+    Float4 center = calculateCenter(umbrella);
+    Float4 size = calculateSize(umbrella);
+    Float4 factor = calculateNormalizationFactor(size);
     
     // Process each point in the umbrella
     for (LXPoint point : umbrella.points) {
-      LXFloat4 globalPos = new LXFloat4(point.x, point.y, point.z);
-      LXFloat4 localPos = toLocal(globalPos, center, factor);
+      Float4 globalPos = new Float4(point.x, point.y, point.z);
+      Float4 localPos = toLocal(globalPos, center, factor);
       
-      LXFloat4 colorOklab = calculatePointColor(point, globalPos, localPos, runTime);
-      LXFloat4 colorRgb = com.duckpond.Gradient.toSrgb(colorOklab);
+      Float4 colorOklab = calculatePointColor(point, globalPos, localPos, runTime);
+      Float4 colorRgb = com.duckpond.Gradient.toSrgb(colorOklab);
       int r = (int) Math.max(0, Math.min(255, colorRgb.x * 255.0));
       int g = (int) Math.max(0, Math.min(255, colorRgb.y * 255.0));
       int b = (int) Math.max(0, Math.min(255, colorRgb.z * 255.0));
@@ -89,13 +89,13 @@ public abstract class UmbrellaPattern extends LXPattern {
   /**
    * Calculate the color for a specific point. To be implemented by subclasses.
    */
-  protected abstract LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time);
+  protected abstract Float4 calculatePointColor(LXPoint point, Float4 globalPos, Float4 localPos, double time);
   
   /**
    * Transform global coordinates to local normalized coordinates
    */
-  protected LXFloat4 toLocal(LXFloat4 globalPos, LXFloat4 center, LXFloat4 factor) {
-    return new LXFloat4(
+  protected Float4 toLocal(Float4 globalPos, Float4 center, Float4 factor) {
+    return new Float4(
       (globalPos.x - center.x) * factor.x,
       (globalPos.y - center.y) * factor.y,
       (globalPos.z - center.z) * factor.z
@@ -105,20 +105,20 @@ public abstract class UmbrellaPattern extends LXPattern {
   /**
    * Calculate the center of an umbrella model
    */
-  protected LXFloat4 calculateCenter(LXModel umbrella) {
+  protected Float4 calculateCenter(LXModel umbrella) {
     if (umbrella.points.length == 0) {
-      return new LXFloat4(0, 0, 0);
+      return new Float4(0, 0, 0);
     }
     
-    LXFloat4 min = new LXFloat4(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE);
-    LXFloat4 max = new LXFloat4(-Float.MAX_VALUE, -Float.MAX_VALUE, -Float.MAX_VALUE);
+    Float4 min = new Float4(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE);
+    Float4 max = new Float4(-Float.MAX_VALUE, -Float.MAX_VALUE, -Float.MAX_VALUE);
     
     for (LXPoint point : umbrella.points) {
-      min = min.min(new LXFloat4(point));
-      max = max.max(new LXFloat4(point));
+      min = min.min(new Float4(point));
+      max = max.max(new Float4(point));
     }
     
-    return new LXFloat4(
+    return new Float4(
       (max.x + min.x) * 0.5,
       (max.y + min.y) * 0.5,
       (max.z + min.z) * 0.5
@@ -128,20 +128,20 @@ public abstract class UmbrellaPattern extends LXPattern {
   /**
    * Calculate the size of an umbrella model
    */
-  protected LXFloat4 calculateSize(LXModel umbrella) {
+  protected Float4 calculateSize(LXModel umbrella) {
     if (umbrella.points.length == 0) {
-      return new LXFloat4(1, 1, 1);
+      return new Float4(1, 1, 1);
     }
     
-    LXFloat4 min = new LXFloat4(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE);
-    LXFloat4 max = new LXFloat4(-Float.MAX_VALUE, -Float.MAX_VALUE, -Float.MAX_VALUE);
+    Float4 min = new Float4(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE);
+    Float4 max = new Float4(-Float.MAX_VALUE, -Float.MAX_VALUE, -Float.MAX_VALUE);
     
     for (LXPoint point : umbrella.points) {
-      min = min.min(new LXFloat4(point));
-      max = max.max(new LXFloat4(point));
+      min = min.min(new Float4(point));
+      max = max.max(new Float4(point));
     }
     
-    return new LXFloat4(
+    return new Float4(
       max.x - min.x,
       max.y - min.y,
       max.z - min.z
@@ -151,10 +151,10 @@ public abstract class UmbrellaPattern extends LXPattern {
   /**
    * Calculate normalization factor for coordinate transformation
    */
-  protected LXFloat4 calculateNormalizationFactor(LXFloat4 size) {
+  protected Float4 calculateNormalizationFactor(Float4 size) {
     double xf = size.x != 0 ? 2.0 / size.x : 1.0;
     double yf = size.y != 0 ? 2.0 / size.y : 1.0;
     double zf = size.z != 0 ? 2.0 / size.z : 1.0;
-    return new LXFloat4(xf, yf, zf);
+    return new Float4(xf, yf, zf);
   }
 }

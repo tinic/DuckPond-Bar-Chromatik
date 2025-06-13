@@ -25,7 +25,7 @@ package com.duckpond.pattern;
 import heronarts.lx.LX;
 import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
-import com.duckpond.LXFloat4;
+import com.duckpond.Float4;
 import com.duckpond.Gradient;
 
 /**
@@ -42,16 +42,16 @@ public class SummerPattern extends UmbrellaPattern {
   }
   
   private void initGradients() {
-    LXFloat4[] rainbowGradient = {
-       new LXFloat4(0.0, 1.0, 1.0, 0.00),
-       new LXFloat4(1.0, 1.0, 1.0, 1.00)
+    Float4[] rainbowGradient = {
+       new Float4(0.0, 1.0, 1.0, 0.00),
+       new Float4(1.0, 1.0, 1.0, 1.00)
     };
 
     this.rainbowGradient = new Gradient(rainbowGradient, Gradient.ColorMode.HSV);
   }
   
   @Override
-  protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
+  protected Float4 calculatePointColor(LXPoint point, Float4 globalPos, Float4 localPos, double time) {
     double x0 = Math.sin((globalPos.x + 1.0) * 0.5 + time * 0.050);
     double y0 = Math.cos((globalPos.y + 1.0) * 0.5 + time * 0.055);
     double x1 = Math.sin((globalPos.x + 1.0) * 10 + time * 0.50);

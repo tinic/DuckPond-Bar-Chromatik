@@ -25,7 +25,7 @@ package com.duckpond.pattern;
 import heronarts.lx.LX;
 import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
-import com.duckpond.LXFloat4;
+import com.duckpond.Float4;
 import com.duckpond.Gradient;
 
 /**
@@ -43,32 +43,32 @@ public class AutumnPattern extends UmbrellaPattern {
   }
   
   private void initGradients() {
-    LXFloat4[] rainyGradient = {
-       new LXFloat4(0x000000, 0.00),
-       new LXFloat4(0x413a40, 0.20),
-       new LXFloat4(0x65718a, 0.40),
-       new LXFloat4(0x6985b9, 0.53),
-       new LXFloat4(0xffffff, 1.00)
+    Float4[] rainyGradient = {
+       new Float4(0x000000, 0.00),
+       new Float4(0x413a40, 0.20),
+       new Float4(0x65718a, 0.40),
+       new Float4(0x6985b9, 0.53),
+       new Float4(0xffffff, 1.00)
     };
 
     this.rainyGradient = new Gradient(rainyGradient, Gradient.ColorMode.RGB);
 
-    LXFloat4[] autumGradient = {
-       new LXFloat4(0x000000, 0.00),
-       new LXFloat4(0x351e10, 0.13),
-       new LXFloat4(0x58321a, 0.25),
-       new LXFloat4(0x60201e, 0.41),
-       new LXFloat4(0x651420, 0.56),
-       new LXFloat4(0x7b5a54, 0.70),
-       new LXFloat4(0x9abf9e, 0.83),
-       new LXFloat4(0xffffff, 1.00)
+    Float4[] autumGradient = {
+       new Float4(0x000000, 0.00),
+       new Float4(0x351e10, 0.13),
+       new Float4(0x58321a, 0.25),
+       new Float4(0x60201e, 0.41),
+       new Float4(0x651420, 0.56),
+       new Float4(0x7b5a54, 0.70),
+       new Float4(0x9abf9e, 0.83),
+       new Float4(0xffffff, 1.00)
     };
 
     this.autumGradient = new Gradient(autumGradient, Gradient.ColorMode.RGB);
   }
   
   @Override
-  protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
+  protected Float4 calculatePointColor(LXPoint point, Float4 globalPos, Float4 localPos, double time) {
     double x0 = Math.sin((globalPos.x + 1.0) * 0.5 + time * 0.050);
     double y0 = Math.cos((globalPos.y + 1.0) * 0.5 + time * 0.055);
     double x1 = Math.sin((globalPos.x + 1.0) * 15 + time * 0.50);

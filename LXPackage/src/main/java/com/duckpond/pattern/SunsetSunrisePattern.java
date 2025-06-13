@@ -25,7 +25,7 @@ package com.duckpond.pattern;
 import heronarts.lx.LX;
 import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
-import com.duckpond.LXFloat4;
+import com.duckpond.Float4;
 import com.duckpond.Gradient;
 
 /**
@@ -43,33 +43,33 @@ public class SunsetSunrisePattern extends UmbrellaPattern {
   }
   
   private void initGradients() {
-    LXFloat4[] happyGradient = {
-       new LXFloat4(0x22c1c3,0.00),
-       new LXFloat4(0x4387c0,0.33),
-       new LXFloat4(0xbb6161,0.66),
-       new LXFloat4(0xfdbb2d,1.00)
+    Float4[] happyGradient = {
+       new Float4(0x22c1c3,0.00),
+       new Float4(0x4387c0,0.33),
+       new Float4(0xbb6161,0.66),
+       new Float4(0xfdbb2d,1.00)
     };
 
     this.happyGradient = new Gradient(happyGradient, Gradient.ColorMode.RGB);
 
-    LXFloat4[] eveningGradient = {
-       new LXFloat4(0x000000,0.00),
-       new LXFloat4(0x4387c0,0.80),
-       new LXFloat4(0xbb6161,0.90),
-       new LXFloat4(0xff9500,0.95),
-       new LXFloat4(0xffffff,1.00)
+    Float4[] eveningGradient = {
+       new Float4(0x000000,0.00),
+       new Float4(0x4387c0,0.80),
+       new Float4(0xbb6161,0.90),
+       new Float4(0xff9500,0.95),
+       new Float4(0xffffff,1.00)
     };
 
     this.eveningGradient = new Gradient(eveningGradient, Gradient.ColorMode.RGB);
   }
   
   @Override
-  protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
+  protected Float4 calculatePointColor(LXPoint point, Float4 globalPos, Float4 localPos, double time) {
     double a = Math.max(0.0, Math.cos(globalPos.x + Math.sin(time * 0.10))+Math.sin(globalPos.y + Math.cos(time* 0.10))-1.0);
-    LXFloat4 pos = globalPos.rotate2d(time * 0.30).add(new LXFloat4(time * 0.30, 0.0, 0.0, 0.0)).mul(0.05);
+    Float4 pos = globalPos.rotate2d(time * 0.30).add(new Float4(time * 0.30, 0.0, 0.0, 0.0)).mul(0.05);
     double l = 1.0 - localPos.len() + 0.5;
-    LXFloat4 c0 = happyGradient.reflect(pos.x).mul(l);
-    LXFloat4 c1 = eveningGradient.clamp(a);
-    return LXFloat4.lerp(c0, c1, a);
+    Float4 c0 = happyGradient.reflect(pos.x).mul(l);
+    Float4 c1 = eveningGradient.clamp(a);
+    return Float4.lerp(c0, c1, a);
   }
 }

@@ -25,7 +25,7 @@ package com.duckpond.pattern;
 import heronarts.lx.LX;
 import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
-import com.duckpond.LXFloat4;
+import com.duckpond.Float4;
 import com.duckpond.Gradient;
 
 /**
@@ -42,20 +42,20 @@ public class DesertDreamPattern extends UmbrellaPattern {
   }
   
   private void initGradients() {
-    LXFloat4[] desertDream = {
-       new LXFloat4(0x4d5951,0.00),
-       new LXFloat4(0x372a25,0.19),
-       new LXFloat4(0x863c25,0.41),
-       new LXFloat4(0xa15123,0.63),
-       new LXFloat4(0xd6aa68,0.84),
-       new LXFloat4(0xf7d6b4,1.00)
+    Float4[] desertDream = {
+       new Float4(0x4d5951,0.00),
+       new Float4(0x372a25,0.19),
+       new Float4(0x863c25,0.41),
+       new Float4(0xa15123,0.63),
+       new Float4(0xd6aa68,0.84),
+       new Float4(0xf7d6b4,1.00)
     };
 
     this.desertDream = new Gradient(desertDream, Gradient.ColorMode.RGB);
   }
   
   @Override
-  protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
+  protected Float4 calculatePointColor(LXPoint point, Float4 globalPos, Float4 localPos, double time) {
     double x0 = Math.sin((globalPos.x + 1.0) * 0.5 + time * 0.050);
     double y0 = Math.cos((globalPos.y + 1.0) * 0.5 + time * 0.055);
     double x1 = Math.sin((localPos.x + 1.0) * 0.25 + time * 0.050);

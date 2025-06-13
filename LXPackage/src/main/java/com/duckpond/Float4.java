@@ -24,34 +24,34 @@ package com.duckpond;
 
 import heronarts.lx.model.LXPoint;
 
-public class LXFloat4 {
+public class Float4 {
   public double x;
   public double y;
   public double z;
   public double w;
 
-  public LXFloat4(double a) {
+  public Float4(double a) {
     this.x = a;
     this.y = a;
     this.z = a;
     this.w = a;
   }
 
-  public LXFloat4(double x, double y, double z) {
+  public Float4(double x, double y, double z) {
     this.x = x;
     this.y = y;
     this.z = z;
     this.w = 0.0;
   }
 
-  public LXFloat4(double x, double y, double z, double w) {
+  public Float4(double x, double y, double z, double w) {
     this.x = x;
     this.y = y;
     this.z = z;
     this.w = w;
   }
 
-  public LXFloat4(int c, double w) {
+  public Float4(int c, double w) {
     int r = (c & 0x00ff0000) >> 16;
     int g = (c & 0x0000ff00) >> 8;
     int b = (c & 0x000000ff) >> 0;
@@ -61,47 +61,47 @@ public class LXFloat4 {
     this.w = w;
   }
 
-  public LXFloat4(LXPoint p) {
+  public Float4(LXPoint p) {
     this.x = p.x;
     this.y = p.y;
     this.z = p.z;
     this.w = 0.0;
   }
 
-  public LXFloat4 rotate2d(double phi) {
+  public Float4 rotate2d(double phi) {
     double cos = Math.cos(phi);
     double sin = Math.sin(phi);
-    return new LXFloat4( cos * x - sin * y,
+    return new Float4( cos * x - sin * y,
                 sin * x + cos * y,
                 z, w);
   }
 
-  public LXFloat4 add(LXFloat4 o) {
-    return new LXFloat4( x + o.x, y + o.y, z + o.z, w + o.w);
+  public Float4 add(Float4 o) {
+    return new Float4( x + o.x, y + o.y, z + o.z, w + o.w);
   }
 
-  public LXFloat4 sub(LXFloat4 o) {
-    return new LXFloat4( x - o.x, y - o.y, z - o.z, w - o.w);
+  public Float4 sub(Float4 o) {
+    return new Float4( x - o.x, y - o.y, z - o.z, w - o.w);
   }
 
-  public LXFloat4 mul(double o) {
-    return new LXFloat4( x * o, y * o, z * o, w * o);
+  public Float4 mul(double o) {
+    return new Float4( x * o, y * o, z * o, w * o);
   }
 
-  public LXFloat4 mul(LXFloat4 o) {
-    return new LXFloat4( x * o.x, y * o.y, z * o.z, w * o.w);
+  public Float4 mul(Float4 o) {
+    return new Float4( x * o.x, y * o.y, z * o.z, w * o.w);
   }
 
-  public LXFloat4 clamp() {
-    return new LXFloat4( 
+  public Float4 clamp() {
+    return new Float4( 
       Math.max(0.0, Math.min(1.0, x)),
       Math.max(0.0, Math.min(1.0, y)),
       Math.max(0.0, Math.min(1.0, z)),
       Math.max(0.0, Math.min(1.0, w)));
   }
 
-  public LXFloat4 gamma() {
-    return new LXFloat4( Math.sqrt(x), Math.sqrt(y), Math.sqrt(z), w);
+  public Float4 gamma() {
+    return new Float4( Math.sqrt(x), Math.sqrt(y), Math.sqrt(z), w);
   }
 
   public double len() {
@@ -112,32 +112,32 @@ public class LXFloat4 {
     return x * x + y * y + z * z;
   }
 
-  public LXFloat4 max(LXFloat4 o) {
-    return new LXFloat4( 
+  public Float4 max(Float4 o) {
+    return new Float4( 
       Math.max(x, o.x),
       Math.max(y, o.y),
       Math.max(z, o.z),
       Math.max(w, o.w));
   }
 
-  public LXFloat4 min(LXFloat4 o) {
-    return new LXFloat4( 
+  public Float4 min(Float4 o) {
+    return new Float4( 
       Math.min(x, o.x),
       Math.min(y, o.y),
       Math.min(z, o.z),
       Math.min(w, o.w));
   }
 
-  public static LXFloat4 lerp(LXFloat4 a, LXFloat4 b, double t) {
-    return new LXFloat4(
+  public static Float4 lerp(Float4 a, Float4 b, double t) {
+    return new Float4(
       a.x + (b.x - a.x) * t,
       a.y + (b.y - a.y) * t,
       a.z + (b.z - a.z) * t,
       a.w + (b.w - a.w) * t);
   }
 
-  public LXFloat4 lerp(LXFloat4 other, double t) {
-    return new LXFloat4(
+  public Float4 lerp(Float4 other, double t) {
+    return new Float4(
       this.x + (other.x - this.x) * t,
       this.y + (other.y - this.y) * t,
       this.z + (other.z - this.z) * t,

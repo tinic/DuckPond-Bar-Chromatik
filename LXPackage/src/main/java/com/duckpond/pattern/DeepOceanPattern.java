@@ -4,7 +4,7 @@ import heronarts.lx.LX;
 import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
 import com.duckpond.Gradient;
-import com.duckpond.LXFloat4;
+import com.duckpond.Float4;
 
 @LXCategory("DuckPond")
 public class DeepOceanPattern extends UmbrellaPattern {
@@ -15,27 +15,27 @@ public class DeepOceanPattern extends UmbrellaPattern {
     public DeepOceanPattern(LX lx) {
         super(lx);
         
-        this.oceanDepthGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0x000d26, 0.0),
-            new LXFloat4(0x00264d, 0.2),
-            new LXFloat4(0x0d4066, 0.4),
-            new LXFloat4(0x1a6680, 0.6),
-            new LXFloat4(0x338099, 0.8),
-            new LXFloat4(0x1a4d73, 1.0)
+        this.oceanDepthGradient = new Gradient(new Float4[] {
+            new Float4(0x000d26, 0.0),
+            new Float4(0x00264d, 0.2),
+            new Float4(0x0d4066, 0.4),
+            new Float4(0x1a6680, 0.6),
+            new Float4(0x338099, 0.8),
+            new Float4(0x1a4d73, 1.0)
         }, Gradient.ColorMode.RGB);
         
-        this.bioluminescentGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0x001a33, 0.0),
-            new LXFloat4(0x1a99cc, 0.2),
-            new LXFloat4(0x33cc99, 0.4),
-            new LXFloat4(0x66e6b3, 0.6),
-            new LXFloat4(0x00b3e6, 0.8),
-            new LXFloat4(0x4dcc80, 1.0)
+        this.bioluminescentGradient = new Gradient(new Float4[] {
+            new Float4(0x001a33, 0.0),
+            new Float4(0x1a99cc, 0.2),
+            new Float4(0x33cc99, 0.4),
+            new Float4(0x66e6b3, 0.6),
+            new Float4(0x00b3e6, 0.8),
+            new Float4(0x4dcc80, 1.0)
         }, Gradient.ColorMode.RGB);
     }
     
     @Override
-    protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
+    protected Float4 calculatePointColor(LXPoint point, Float4 globalPos, Float4 localPos, double time) {
         double oceanTime = time * 0.3;
         
         // Global ocean currents - creating different flow patterns across umbrellas - NOW DOMINANT
@@ -71,13 +71,13 @@ public class DeepOceanPattern extends UmbrellaPattern {
         
         double oceanBreath = Math.sin(oceanTime * 0.2 + globalPos.x * 0.05) * 0.25 + 0.75;
         
-        LXFloat4 oceanColor = oceanDepthGradient.reflect(oceanFlow * 0.5 + 0.5);
-        LXFloat4 bioColor = bioluminescentGradient.reflect(bioluminescence * 0.5 + 0.5);
+        Float4 oceanColor = oceanDepthGradient.reflect(oceanFlow * 0.5 + 0.5);
+        Float4 bioColor = bioluminescentGradient.reflect(bioluminescence * 0.5 + 0.5);
         double bioActivity = Math.abs(bioluminescence) * depthPressure;
-        LXFloat4 finalColor = oceanColor.lerp(bioColor, bioActivity * 0.7);
+        Float4 finalColor = oceanColor.lerp(bioColor, bioActivity * 0.7);
         
         if (thermalVent > 0.0) {
-            LXFloat4 thermalGlow = com.duckpond.Gradient.rgbToOklab(0.3, 0.6, 0.8, 1.0);
+            Float4 thermalGlow = com.duckpond.Gradient.rgbToOklab(0.3, 0.6, 0.8, 1.0);
             finalColor = finalColor.lerp(thermalGlow, thermalVent * 0.4);
         }
         

@@ -24,7 +24,7 @@ package com.duckpond;
 
 public class Gradient {
 
-  private LXFloat4[] gradient;
+  private Float4[] gradient;
   private int gradientCount = 256;
 
   public enum ColorMode {
@@ -32,8 +32,8 @@ public class Gradient {
     HSV
   }
 
-  public Gradient(LXFloat4[] g, ColorMode mode) {
-    gradient = new LXFloat4[gradientCount];
+  public Gradient(Float4[] g, ColorMode mode) {
+    gradient = new Float4[gradientCount];
     for (int c = 0; c < gradientCount; c++) {
       double pos = (double)c / (double)(gradientCount - 1);
       int s0 = 0;
@@ -45,20 +45,20 @@ public class Gradient {
       }
       double a = (pos - g[s0].w) / (g[s0 + 1].w - g[s0].w);
       if (mode == ColorMode.RGB) {
-        LXFloat4 labA = srgb2oklab(g[s0]);
-        LXFloat4 labB = srgb2oklab(g[s0 + 1]);
-        gradient[c] = LXFloat4.lerp(labA, labB, a);
+        Float4 labA = srgb2oklab(g[s0]);
+        Float4 labB = srgb2oklab(g[s0 + 1]);
+        gradient[c] = Float4.lerp(labA, labB, a);
       } else if (mode == ColorMode.HSV) {
-        LXFloat4 ga = hsv2rgb(g[s0]);
-        LXFloat4 gb = hsv2rgb(g[s0 + 1]);
-        LXFloat4 labA = srgb2oklab(ga);
-        LXFloat4 labB = srgb2oklab(gb);
-        gradient[c] = LXFloat4.lerp(labA, labB, a);
+        Float4 ga = hsv2rgb(g[s0]);
+        Float4 gb = hsv2rgb(g[s0 + 1]);
+        Float4 labA = srgb2oklab(ga);
+        Float4 labB = srgb2oklab(gb);
+        gradient[c] = Float4.lerp(labA, labB, a);
       }
     }
   }
 
-  private static LXFloat4 hsv2rgb(LXFloat4 hsv) {
+  private static Float4 hsv2rgb(Float4 hsv) {
     double h = hsv.x;
     double s = hsv.y;
     double v = hsv.z;
@@ -81,7 +81,7 @@ public class Gradient {
         case 5: r = v; g = p; b = q; break;
       }
     }
-    return new LXFloat4(r, g, b, hsv.w);
+    return new Float4(r, g, b, hsv.w);
   }
 
   private static double linearize_srgb(double x) {
@@ -100,7 +100,7 @@ public class Gradient {
     }
   }
 
-  private static LXFloat4 srgb2oklab(LXFloat4 srgb) {
+  private static Float4 srgb2oklab(Float4 srgb) {
     double r = linearize_srgb(srgb.x);
     double g = linearize_srgb(srgb.y);
     double b = linearize_srgb(srgb.z);
@@ -117,10 +117,10 @@ public class Gradient {
     double a = 1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_;
     double b_ = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_;
 
-    return new LXFloat4(L, a, b_, srgb.w);
+    return new Float4(L, a, b_, srgb.w);
   }
 
-  private static LXFloat4 oklab2srgb(LXFloat4 oklab) {
+  private static Float4 oklab2srgb(Float4 oklab) {
     double L = oklab.x;
     double a = oklab.y;
     double b = oklab.z;
@@ -145,40 +145,40 @@ public class Gradient {
     g = Math.max(0.0, Math.min(1.0, g));
     b_ = Math.max(0.0, Math.min(1.0, b_));
 
-    return new LXFloat4(r, g, b_, oklab.w);
+    return new Float4(r, g, b_, oklab.w);
   }
 
-  public LXFloat4 clamp(double pos) {
+  public Float4 clamp(double pos) {
     int posInt = (int)((Math.max(0.0, Math.min(1.0, pos))) * (double)(gradientCount - 1));
     return gradient[posInt];
   }
 
-  public LXFloat4 repeat(double pos) {
+  public Float4 repeat(double pos) {
     double pp = pos - Math.floor(pos);
     int posInt = (int)(pp * (double)(gradientCount - 1));
     return gradient[posInt];
   }
 
-  public LXFloat4 reflect(double pos) {
+  public Float4 reflect(double pos) {
     double pp = pos - Math.floor(pos);
     pp = (((int)Math.floor(pos) & 1) == 1) ? (1.0 - pp) : pp;
     int posInt = (int)(pp * (double)(gradientCount - 1));
     return gradient[posInt];
   }
   
-  public static LXFloat4 toOklab(LXFloat4 srgb) {
+  public static Float4 toOklab(Float4 srgb) {
     return srgb2oklab(srgb);
   }
   
-  public static LXFloat4 toSrgb(LXFloat4 oklab) {
+  public static Float4 toSrgb(Float4 oklab) {
     return oklab2srgb(oklab);
   }
   
-  public static LXFloat4 rgbToOklab(double r, double g, double b) {
-    return srgb2oklab(new LXFloat4(r, g, b, 1.0));
+  public static Float4 rgbToOklab(double r, double g, double b) {
+    return srgb2oklab(new Float4(r, g, b, 1.0));
   }
   
-  public static LXFloat4 rgbToOklab(double r, double g, double b, double a) {
-    return srgb2oklab(new LXFloat4(r, g, b, a));
+  public static Float4 rgbToOklab(double r, double g, double b, double a) {
+    return srgb2oklab(new Float4(r, g, b, a));
   }
 }

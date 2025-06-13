@@ -4,7 +4,7 @@ import heronarts.lx.LX;
 import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
 import com.duckpond.Gradient;
-import com.duckpond.LXFloat4;
+import com.duckpond.Float4;
 
 @LXCategory("DuckPond")
 public class AuroraFlowPattern extends UmbrellaPattern {
@@ -15,26 +15,26 @@ public class AuroraFlowPattern extends UmbrellaPattern {
     public AuroraFlowPattern(LX lx) {
         super(lx);
         
-        this.auroraGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0x001a33, 0.0),
-            new LXFloat4(0x006699, 0.2),
-            new LXFloat4(0x1ab34d, 0.4),
-            new LXFloat4(0x4de680, 0.6),
-            new LXFloat4(0x80cce6, 0.8),
-            new LXFloat4(0x3399cc, 1.0)
+        this.auroraGradient = new Gradient(new Float4[] {
+            new Float4(0x001a33, 0.0),
+            new Float4(0x006699, 0.2),
+            new Float4(0x1ab34d, 0.4),
+            new Float4(0x4de680, 0.6),
+            new Float4(0x80cce6, 0.8),
+            new Float4(0x3399cc, 1.0)
         }, Gradient.ColorMode.RGB);
         
-        this.polarGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0x0d0d26, 0.0),
-            new LXFloat4(0x334db3, 0.25),
-            new LXFloat4(0x66cc99, 0.5),
-            new LXFloat4(0x99e6cc, 0.75),
-            new LXFloat4(0x4d80e6, 1.0)
+        this.polarGradient = new Gradient(new Float4[] {
+            new Float4(0x0d0d26, 0.0),
+            new Float4(0x334db3, 0.25),
+            new Float4(0x66cc99, 0.5),
+            new Float4(0x99e6cc, 0.75),
+            new Float4(0x4d80e6, 1.0)
         }, Gradient.ColorMode.RGB);
     }
     
     @Override
-    protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
+    protected Float4 calculatePointColor(LXPoint point, Float4 globalPos, Float4 localPos, double time) {
         double auroraTime = time * 0.35;
         
         // Global wave patterns that vary across the installation - NOW DOMINANT
@@ -66,10 +66,10 @@ public class AuroraFlowPattern extends UmbrellaPattern {
         double distance = localPos.len();
         double intensityFade = Math.exp(-distance * 0.6) * 0.7 + 0.3;
         
-        LXFloat4 mainAurora = auroraGradient.reflect(auroraPattern * 0.5 + 0.5);
-        LXFloat4 polarGlow = polarGradient.reflect(verticalFlow * 0.5 + 0.5);
+        Float4 mainAurora = auroraGradient.reflect(auroraPattern * 0.5 + 0.5);
+        Float4 polarGlow = polarGradient.reflect(verticalFlow * 0.5 + 0.5);
         double auroraActivity = Math.abs(auroraFlow) * 0.7 + Math.abs(particleShimmer) * 0.3;
-        LXFloat4 finalColor = mainAurora.lerp(polarGlow, auroraActivity * 0.6);
+        Float4 finalColor = mainAurora.lerp(polarGlow, auroraActivity * 0.6);
         
         double brightness = atmosphericPulse * intensityFade * (1.1 + auroraActivity * 0.3) * 1.4;
         double flicker = Math.sin(auroraTime * 3.2 + globalPos.y * 0.2) * 0.12 + 0.94;

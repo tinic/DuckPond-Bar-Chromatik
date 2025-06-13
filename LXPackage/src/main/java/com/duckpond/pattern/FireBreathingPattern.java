@@ -4,7 +4,7 @@ import heronarts.lx.LX;
 import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
 import com.duckpond.Gradient;
-import com.duckpond.LXFloat4;
+import com.duckpond.Float4;
 
 @LXCategory("DuckPond")
 public class FireBreathingPattern extends UmbrellaPattern {
@@ -15,26 +15,26 @@ public class FireBreathingPattern extends UmbrellaPattern {
     public FireBreathingPattern(LX lx) {
         super(lx);
         
-        this.emberGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0x1a0500, 0.0),
-            new LXFloat4(0x4d1a00, 0.2),
-            new LXFloat4(0x99330d, 0.4),
-            new LXFloat4(0xcc661a, 0.6),
-            new LXFloat4(0xff9933, 0.8),
-            new LXFloat4(0xe64d00, 1.0)
+        this.emberGradient = new Gradient(new Float4[] {
+            new Float4(0x1a0500, 0.0),
+            new Float4(0x4d1a00, 0.2),
+            new Float4(0x99330d, 0.4),
+            new Float4(0xcc661a, 0.6),
+            new Float4(0xff9933, 0.8),
+            new Float4(0xe64d00, 1.0)
         }, Gradient.ColorMode.RGB);
         
-        this.flameGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0x661a00, 0.0),
-            new LXFloat4(0xcc4d00, 0.25),
-            new LXFloat4(0xffb31a, 0.5),
-            new LXFloat4(0xffe666, 0.75),
-            new LXFloat4(0xe66600, 1.0)
+        this.flameGradient = new Gradient(new Float4[] {
+            new Float4(0x661a00, 0.0),
+            new Float4(0xcc4d00, 0.25),
+            new Float4(0xffb31a, 0.5),
+            new Float4(0xffe666, 0.75),
+            new Float4(0xe66600, 1.0)
         }, Gradient.ColorMode.RGB);
     }
     
     @Override
-    protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
+    protected Float4 calculatePointColor(LXPoint point, Float4 globalPos, Float4 localPos, double time) {
         double slowTime = time * 0.4;
         
         // Global fire wind patterns - different umbrellas have different wind directions - NOW DOMINANT
@@ -63,9 +63,9 @@ public class FireBreathingPattern extends UmbrellaPattern {
         double flameRise = Math.sin(distanceFromCenter * 2.0 + slowTime + flameMotion + globalWind) * 0.5 + 0.5;
         double flameMix = Math.pow(flameRise, 2.0) * (1.0 - distanceFromCenter * 0.3) * fireRegion;
         
-        LXFloat4 emberColor = emberGradient.reflect(emberCore + flameMotion * 0.3);
-        LXFloat4 flameColor = flameGradient.reflect(flameRise);
-        LXFloat4 finalColor = emberColor.lerp(flameColor, flameMix * 0.7);
+        Float4 emberColor = emberGradient.reflect(emberCore + flameMotion * 0.3);
+        Float4 flameColor = flameGradient.reflect(flameRise);
+        Float4 finalColor = emberColor.lerp(flameColor, flameMix * 0.7);
         
         double intensity = (0.8 + emberBreath * 0.4 + Math.abs(flameMotion) * 0.15) * fireRegion * 1.4;
         double heatGlow = Math.max(0.0, 1.0 - distanceFromCenter * 0.8);

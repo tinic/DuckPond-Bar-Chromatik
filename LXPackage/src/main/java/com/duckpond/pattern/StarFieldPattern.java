@@ -4,7 +4,7 @@ import heronarts.lx.LX;
 import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
 import com.duckpond.Gradient;
-import com.duckpond.LXFloat4;
+import com.duckpond.Float4;
 
 @LXCategory("DuckPond")
 public class StarFieldPattern extends UmbrellaPattern {
@@ -15,27 +15,27 @@ public class StarFieldPattern extends UmbrellaPattern {
     public StarFieldPattern(LX lx) {
         super(lx);
         
-        this.starFieldGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0x00000d, 0.0),
-            new LXFloat4(0x0d0d26, 0.2),
-            new LXFloat4(0x26264d, 0.4),
-            new LXFloat4(0x666699, 0.6),
-            new LXFloat4(0xcccce6, 0.8),
-            new LXFloat4(0x99b3e6, 1.0)
+        this.starFieldGradient = new Gradient(new Float4[] {
+            new Float4(0x00000d, 0.0),
+            new Float4(0x0d0d26, 0.2),
+            new Float4(0x26264d, 0.4),
+            new Float4(0x666699, 0.6),
+            new Float4(0xcccce6, 0.8),
+            new Float4(0x99b3e6, 1.0)
         }, Gradient.ColorMode.RGB);
         
-        this.twinkleGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0x000005, 0.0),
-            new LXFloat4(0xe6e6f2, 0.2),
-            new LXFloat4(0xcce6ff, 0.4),
-            new LXFloat4(0xfff2cc, 0.6),
-            new LXFloat4(0xe6ccff, 0.8),
-            new LXFloat4(0xb3cce6, 1.0)
+        this.twinkleGradient = new Gradient(new Float4[] {
+            new Float4(0x000005, 0.0),
+            new Float4(0xe6e6f2, 0.2),
+            new Float4(0xcce6ff, 0.4),
+            new Float4(0xfff2cc, 0.6),
+            new Float4(0xe6ccff, 0.8),
+            new Float4(0xb3cce6, 1.0)
         }, Gradient.ColorMode.RGB);
     }
     
     @Override
-    protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
+    protected Float4 calculatePointColor(LXPoint point, Float4 globalPos, Float4 localPos, double time) {
         double stellarTime = time * 0.15;
         
         // Global star field coordinates - different sky regions for each umbrella - NOW DOMINANT
@@ -85,10 +85,10 @@ public class StarFieldPattern extends UmbrellaPattern {
         double milkyWayBand = Math.cos(milkyWayAngle * 2.0 + stellarTime * 0.1 + globalPos.len() * 0.5) * 0.075 + 0.425;
         milkyWayBand = Math.pow(Math.max(0.0, milkyWayBand - 0.35), 2.0) * milkyWayIntensity + constellationZone * 0.3;
         
-        LXFloat4 starColor = starFieldGradient.reflect(totalStarlight);
-        LXFloat4 twinkleColor = twinkleGradient.reflect(twinklingBright);
+        Float4 starColor = starFieldGradient.reflect(totalStarlight);
+        Float4 twinkleColor = twinkleGradient.reflect(twinklingBright);
         double starBrightness = Math.max(twinklingBright, Math.max(twinklingMedium, twinklingDim));
-        LXFloat4 finalColor = starColor.lerp(twinkleColor, starBrightness * 0.8);
+        Float4 finalColor = starColor.lerp(twinkleColor, starBrightness * 0.8);
         
         finalColor = finalColor.add(Gradient.rgbToOklab(nebulaGlow * 0.3, nebulaGlow * 0.2, nebulaGlow * 0.5, 1.0));
         finalColor = finalColor.add(Gradient.rgbToOklab(milkyWayBand * 0.15, milkyWayBand * 0.15, milkyWayBand * 0.2, 1.0));

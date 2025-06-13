@@ -4,7 +4,7 @@ import heronarts.lx.LX;
 import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
 import com.duckpond.Gradient;
-import com.duckpond.LXFloat4;
+import com.duckpond.Float4;
 
 @LXCategory("DuckPond")
 public class CosmicDustPattern extends UmbrellaPattern {
@@ -15,27 +15,27 @@ public class CosmicDustPattern extends UmbrellaPattern {
     public CosmicDustPattern(LX lx) {
         super(lx);
         
-        this.galaxyGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0x05050d, 0.0),
-            new LXFloat4(0x1a0d33, 0.2),
-            new LXFloat4(0x4d1a66, 0.4),
-            new LXFloat4(0x334d99, 0.6),
-            new LXFloat4(0x9933cc, 0.8),
-            new LXFloat4(0x1a66b3, 1.0)
+        this.galaxyGradient = new Gradient(new Float4[] {
+            new Float4(0x05050d, 0.0),
+            new Float4(0x1a0d33, 0.2),
+            new Float4(0x4d1a66, 0.4),
+            new Float4(0x334d99, 0.6),
+            new Float4(0x9933cc, 0.8),
+            new Float4(0x1a66b3, 1.0)
         }, Gradient.ColorMode.RGB);
         
-        this.nebulaGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0x0d051a, 0.0),
-            new LXFloat4(0x661a99, 0.2),
-            new LXFloat4(0xb34de6, 0.4),
-            new LXFloat4(0x4d99e6, 0.6),
-            new LXFloat4(0xcc66e6, 0.8),
-            new LXFloat4(0x3380cc, 1.0)
+        this.nebulaGradient = new Gradient(new Float4[] {
+            new Float4(0x0d051a, 0.0),
+            new Float4(0x661a99, 0.2),
+            new Float4(0xb34de6, 0.4),
+            new Float4(0x4d99e6, 0.6),
+            new Float4(0xcc66e6, 0.8),
+            new Float4(0x3380cc, 1.0)
         }, Gradient.ColorMode.RGB);
     }
     
     @Override
-    protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
+    protected Float4 calculatePointColor(LXPoint point, Float4 globalPos, Float4 localPos, double time) {
         double cosmicTime = time * 0.2;
         
         // Global galactic coordinates - each umbrella represents a different region - NOW DOMINANT
@@ -68,10 +68,10 @@ public class CosmicDustPattern extends UmbrellaPattern {
         // Stellar density varies across the installation
         double stellarRegion = Math.sin(globalPos.x * 0.2) * Math.cos(globalPos.y * 0.15) * 0.3 + 0.7;
         
-        LXFloat4 galaxyColor = galaxyGradient.reflect(spiralPattern * 0.5 + 0.5);
-        LXFloat4 nebulaColor = nebulaGradient.reflect(dustPattern * 0.5 + 0.5);
+        Float4 galaxyColor = galaxyGradient.reflect(spiralPattern * 0.5 + 0.5);
+        Float4 nebulaColor = nebulaGradient.reflect(dustPattern * 0.5 + 0.5);
         double spiralMix = Math.abs(spiralPattern) * depthFade * stellarRegion;
-        LXFloat4 finalColor = galaxyColor.lerp(nebulaColor, spiralMix * 0.8);
+        Float4 finalColor = galaxyColor.lerp(nebulaColor, spiralMix * 0.8);
         
         double stellarDensity = 0.7 + Math.abs(spiralPattern) * 0.4 + Math.abs(dustPattern) * 0.3;
         double brightness = stellarDensity * cosmicPulse * (0.8 + depthFade * 0.6) * stellarRegion * 1.4;

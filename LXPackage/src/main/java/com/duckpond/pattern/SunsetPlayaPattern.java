@@ -4,7 +4,7 @@ import heronarts.lx.LX;
 import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
 import com.duckpond.Gradient;
-import com.duckpond.LXFloat4;
+import com.duckpond.Float4;
 
 @LXCategory("DuckPond")
 public class SunsetPlayaPattern extends UmbrellaPattern {
@@ -15,26 +15,26 @@ public class SunsetPlayaPattern extends UmbrellaPattern {
     public SunsetPlayaPattern(LX lx) {
         super(lx);
         
-        this.desertSunsetGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0x331a4d, 0.0),
-            new LXFloat4(0x993366, 0.2),
-            new LXFloat4(0xe66633, 0.4),
-            new LXFloat4(0xffb34d, 0.6),
-            new LXFloat4(0xcc4d1a, 0.8),
-            new LXFloat4(0x662633, 1.0)
+        this.desertSunsetGradient = new Gradient(new Float4[] {
+            new Float4(0x331a4d, 0.0),
+            new Float4(0x993366, 0.2),
+            new Float4(0xe66633, 0.4),
+            new Float4(0xffb34d, 0.6),
+            new Float4(0xcc4d1a, 0.8),
+            new Float4(0x662633, 1.0)
         }, Gradient.ColorMode.RGB);
         
-        this.dustStormGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0x4d4033, 0.0),
-            new LXFloat4(0xb3804d, 0.25),
-            new LXFloat4(0xe6b366, 0.5),
-            new LXFloat4(0x996640, 0.75),
-            new LXFloat4(0xcc9959, 1.0)
+        this.dustStormGradient = new Gradient(new Float4[] {
+            new Float4(0x4d4033, 0.0),
+            new Float4(0xb3804d, 0.25),
+            new Float4(0xe6b366, 0.5),
+            new Float4(0x996640, 0.75),
+            new Float4(0xcc9959, 1.0)
         }, Gradient.ColorMode.RGB);
     }
     
     @Override
-    protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
+    protected Float4 calculatePointColor(LXPoint point, Float4 globalPos, Float4 localPos, double time) {
         double playaTime = time * 0.25;
         
         // Global sun position and atmospheric layers - NOW DOMINANT
@@ -71,11 +71,11 @@ public class SunsetPlayaPattern extends UmbrellaPattern {
         double sunsetPhase = Math.sin(playaTime * 0.15 + globalPos.x * 0.01) * 0.5 + 0.5;
         sunsetPhase *= atmosphericRegion;
         
-        LXFloat4 sunsetColor = desertSunsetGradient.reflect(sunsetPosition * 0.5 + 0.5);
-        LXFloat4 dustColor = dustStormGradient.reflect(dustPattern * 0.5 + 0.5);
+        Float4 sunsetColor = desertSunsetGradient.reflect(sunsetPosition * 0.5 + 0.5);
+        Float4 dustColor = dustStormGradient.reflect(dustPattern * 0.5 + 0.5);
         
         double dustMix = Math.abs(dustPattern) * 0.4 + sunsetPhase * 0.3;
-        LXFloat4 finalColor = sunsetColor.lerp(dustColor, dustMix);
+        Float4 finalColor = sunsetColor.lerp(dustColor, dustMix);
         
         // Golden hour glow varies by proximity to "sun"
         double goldenGlow = (Math.sin(playaTime * 0.2 + globalPos.y * 0.01) * 0.2 + 0.8) * (0.7 + sunInfluence * 0.3);

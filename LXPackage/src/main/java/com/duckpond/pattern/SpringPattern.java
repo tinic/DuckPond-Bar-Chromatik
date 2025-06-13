@@ -25,7 +25,7 @@ package com.duckpond.pattern;
 import heronarts.lx.LX;
 import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
-import com.duckpond.LXFloat4;
+import com.duckpond.Float4;
 import com.duckpond.Gradient;
 
 /**
@@ -42,28 +42,28 @@ public class SpringPattern extends UmbrellaPattern {
   }
   
   private void initGradients() {
-    LXFloat4[] rainbowGradientBright = {
-       new LXFloat4(0xff0000, 0.00),
-       new LXFloat4(0xffbd96, 0.10),
-       new LXFloat4(0xffff00, 0.17),
-       new LXFloat4(0xc3ffa9, 0.25),
-       new LXFloat4(0x00ff00, 0.33),
-       new LXFloat4(0xd1ffbf, 0.38),
-       new LXFloat4(0xaffff3, 0.44),
-       new LXFloat4(0x29fefe, 0.50),
-       new LXFloat4(0x637eff, 0.59),
-       new LXFloat4(0x0000ff, 0.67),
-       new LXFloat4(0x9c3fff, 0.75),
-       new LXFloat4(0xff00ff, 0.83),
-       new LXFloat4(0xffc2b0, 0.92),
-       new LXFloat4(0xff0000, 1.00)
+    Float4[] rainbowGradientBright = {
+       new Float4(0xff0000, 0.00),
+       new Float4(0xffbd96, 0.10),
+       new Float4(0xffff00, 0.17),
+       new Float4(0xc3ffa9, 0.25),
+       new Float4(0x00ff00, 0.33),
+       new Float4(0xd1ffbf, 0.38),
+       new Float4(0xaffff3, 0.44),
+       new Float4(0x29fefe, 0.50),
+       new Float4(0x637eff, 0.59),
+       new Float4(0x0000ff, 0.67),
+       new Float4(0x9c3fff, 0.75),
+       new Float4(0xff00ff, 0.83),
+       new Float4(0xffc2b0, 0.92),
+       new Float4(0xff0000, 1.00)
     };
 
     this.rainbowGradientBright = new Gradient(rainbowGradientBright, Gradient.ColorMode.RGB);
   }
   
   @Override
-  protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
+  protected Float4 calculatePointColor(LXPoint point, Float4 globalPos, Float4 localPos, double time) {
     double x = Math.sin((localPos.x + 1.0) * 0.25 + time * 0.050);
     double y = Math.cos((localPos.y + 1.0) * 0.25 + time * 0.055);
     double l = 1.0 - localPos.len() + 0.5;

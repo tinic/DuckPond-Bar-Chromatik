@@ -43,7 +43,7 @@ This is a headless Java application that runs lighting patterns on physical LED 
 - Build system updated to use LXPackage approach
 
 ### Utility Classes (in LXPackage)
-- `LXFloat4.java` - 4D vector math for color and position calculations
+- `Float4.java` - 4D vector math for color and position calculations
 - `Gradient.java` - Color gradient system with RGB/HSV support
 
 ## Build Instructions
@@ -185,7 +185,7 @@ Each fixture implements `calc(Effect effect, int index, double time, LXFloat4 po
 
 ### Performance
 - Headless operation for production deployment
-- Optimized vector math in `LXFloat4` class
+- Optimized vector math in `Float4` class
 - Efficient gradient lookups with 256-point resolution
 
 ## Dependencies

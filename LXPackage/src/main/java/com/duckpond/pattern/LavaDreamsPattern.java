@@ -4,7 +4,7 @@ import heronarts.lx.LX;
 import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
 import com.duckpond.Gradient;
-import com.duckpond.LXFloat4;
+import com.duckpond.Float4;
 
 @LXCategory("DuckPond")
 public class LavaDreamsPattern extends UmbrellaPattern {
@@ -15,26 +15,26 @@ public class LavaDreamsPattern extends UmbrellaPattern {
     public LavaDreamsPattern(LX lx) {
         super(lx);
         
-        this.moltenGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0x260500, 0.0),
-            new LXFloat4(0x661a00, 0.2),
-            new LXFloat4(0xcc3300, 0.4),
-            new LXFloat4(0xff801a, 0.6),
-            new LXFloat4(0xffcc4d, 0.8),
-            new LXFloat4(0xe64d0d, 1.0)
+        this.moltenGradient = new Gradient(new Float4[] {
+            new Float4(0x260500, 0.0),
+            new Float4(0x661a00, 0.2),
+            new Float4(0xcc3300, 0.4),
+            new Float4(0xff801a, 0.6),
+            new Float4(0xffcc4d, 0.8),
+            new Float4(0xe64d0d, 1.0)
         }, Gradient.ColorMode.RGB);
         
-        this.crustGradient = new Gradient(new LXFloat4[] {
-            new LXFloat4(0x140d05, 0.0),
-            new LXFloat4(0x331a0d, 0.25),
-            new LXFloat4(0x66260d, 0.5),
-            new LXFloat4(0x99401a, 0.75),
-            new LXFloat4(0x4d1f08, 1.0)
+        this.crustGradient = new Gradient(new Float4[] {
+            new Float4(0x140d05, 0.0),
+            new Float4(0x331a0d, 0.25),
+            new Float4(0x66260d, 0.5),
+            new Float4(0x99401a, 0.75),
+            new Float4(0x4d1f08, 1.0)
         }, Gradient.ColorMode.RGB);
     }
     
     @Override
-    protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
+    protected Float4 calculatePointColor(LXPoint point, Float4 globalPos, Float4 localPos, double time) {
         double geologicalTime = time * 0.2;
         
         // Global volcanic activity - different regions have different activity levels - NOW DOMINANT
@@ -75,20 +75,20 @@ public class LavaDreamsPattern extends UmbrellaPattern {
         double coreTemp = heatIntensity * volcanicPulse;
         double surfaceTemp = (1.0 - heatIntensity) * 0.7;
         
-        LXFloat4 moltenColor = moltenGradient.reflect(lavaFlow * 0.5 + 0.5);
-        LXFloat4 crustColor = crustGradient.reflect(crustPattern * 0.5 + 0.5);
+        Float4 moltenColor = moltenGradient.reflect(lavaFlow * 0.5 + 0.5);
+        Float4 crustColor = crustGradient.reflect(crustPattern * 0.5 + 0.5);
         double moltenMix = coreTemp * (0.7 + Math.abs(bubbling) * 0.3);
-        LXFloat4 baseColor = moltenColor.lerp(crustColor, 1.0 - moltenMix);
+        Float4 baseColor = moltenColor.lerp(crustColor, 1.0 - moltenMix);
         
         double heatGlow = Math.max(0.0, coreTemp - 0.3) * 1.5 * volcanicRegion;
         if (heatGlow > 0.0) {
-            LXFloat4 glowColor = Gradient.rgbToOklab(1.0, 0.6, 0.2, 1.0);
+            Float4 glowColor = Gradient.rgbToOklab(1.0, 0.6, 0.2, 1.0);
             baseColor = baseColor.lerp(glowColor, heatGlow * 0.4);
         }
         
         double bubbleHighlight = Math.max(0.0, bubbling) * coreTemp;
         if (bubbleHighlight > 0.3) {
-            LXFloat4 bubbleColor = Gradient.rgbToOklab(1.0, 0.8, 0.4, 1.0);
+            Float4 bubbleColor = Gradient.rgbToOklab(1.0, 0.8, 0.4, 1.0);
             baseColor = baseColor.lerp(bubbleColor, (bubbleHighlight - 0.3) * 0.5);
         }
         
