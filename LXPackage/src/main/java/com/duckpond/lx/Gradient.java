@@ -29,8 +29,7 @@ public class Gradient {
 
   public enum ColorMode {
     RGB,
-    HSV,
-    OKLAB
+    HSV
   }
 
   public Gradient(LXFloat4[] g, ColorMode mode) {
@@ -54,10 +53,6 @@ public class Gradient {
         LXFloat4 gb = hsv2rgb(g[s0 + 1]);
         LXFloat4 labA = srgb2oklab(ga);
         LXFloat4 labB = srgb2oklab(gb);
-        gradient[c] = LXFloat4.lerp(labA, labB, a);
-      } else if (mode == ColorMode.OKLAB) {
-        LXFloat4 labA = srgb2oklab(g[s0]);
-        LXFloat4 labB = srgb2oklab(g[s0 + 1]);
         gradient[c] = LXFloat4.lerp(labA, labB, a);
       }
     }

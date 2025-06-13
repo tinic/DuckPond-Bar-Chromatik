@@ -22,7 +22,7 @@ public class LavaDreamsPattern extends UmbrellaPattern {
             new LXFloat4(0xff801a, 0.6),
             new LXFloat4(0xffcc4d, 0.8),
             new LXFloat4(0xe64d0d, 1.0)
-        }, Gradient.ColorMode.OKLAB);
+        }, Gradient.ColorMode.RGB);
         
         this.crustGradient = new Gradient(new LXFloat4[] {
             new LXFloat4(0x140d05, 0.0),
@@ -30,7 +30,7 @@ public class LavaDreamsPattern extends UmbrellaPattern {
             new LXFloat4(0x66260d, 0.5),
             new LXFloat4(0x99401a, 0.75),
             new LXFloat4(0x4d1f08, 1.0)
-        }, Gradient.ColorMode.OKLAB);
+        }, Gradient.ColorMode.RGB);
     }
     
     @Override

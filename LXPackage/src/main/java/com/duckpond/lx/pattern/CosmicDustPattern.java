@@ -22,7 +22,7 @@ public class CosmicDustPattern extends UmbrellaPattern {
             new LXFloat4(0x334d99, 0.6),
             new LXFloat4(0x9933cc, 0.8),
             new LXFloat4(0x1a66b3, 1.0)
-        }, Gradient.ColorMode.OKLAB);
+        }, Gradient.ColorMode.RGB);
         
         this.nebulaGradient = new Gradient(new LXFloat4[] {
             new LXFloat4(0x0d051a, 0.0),
@@ -31,7 +31,7 @@ public class CosmicDustPattern extends UmbrellaPattern {
             new LXFloat4(0x4d99e6, 0.6),
             new LXFloat4(0xcc66e6, 0.8),
             new LXFloat4(0x3380cc, 1.0)
-        }, Gradient.ColorMode.OKLAB);
+        }, Gradient.ColorMode.RGB);
     }
     
     @Override

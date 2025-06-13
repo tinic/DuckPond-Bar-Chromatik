@@ -51,7 +51,7 @@ public class WinterPattern extends UmbrellaPattern {
        new LXFloat4(0x4b51f5,1.00)
     };
 
-    this.winterGradient = new Gradient(winterGradient, Gradient.ColorMode.OKLAB);
+    this.winterGradient = new Gradient(winterGradient, Gradient.ColorMode.RGB);
 
     LXFloat4[] rainyGradient = {
        new LXFloat4(0x000000, 0.00),
@@ -61,7 +61,7 @@ public class WinterPattern extends UmbrellaPattern {
        new LXFloat4(0xffffff, 1.00)
     };
 
-    this.rainyGradient = new Gradient(rainyGradient, Gradient.ColorMode.OKLAB);
+    this.rainyGradient = new Gradient(rainyGradient, Gradient.ColorMode.RGB);
   }
   
   @Override

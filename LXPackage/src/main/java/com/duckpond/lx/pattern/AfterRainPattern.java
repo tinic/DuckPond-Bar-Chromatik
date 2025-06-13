@@ -59,7 +59,7 @@ public class AfterRainPattern extends UmbrellaPattern {
        new LXFloat4(0xff0000, 1.00)
     };
 
-    this.rainbowGradientBright = new Gradient(rainbowGradientBright, Gradient.ColorMode.OKLAB);
+    this.rainbowGradientBright = new Gradient(rainbowGradientBright, Gradient.ColorMode.RGB);
   }
   
   @Override

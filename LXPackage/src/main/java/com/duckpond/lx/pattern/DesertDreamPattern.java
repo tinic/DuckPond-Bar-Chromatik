@@ -51,7 +51,7 @@ public class DesertDreamPattern extends UmbrellaPattern {
        new LXFloat4(0xf7d6b4,1.00)
     };
 
-    this.desertDream = new Gradient(desertDream, Gradient.ColorMode.OKLAB);
+    this.desertDream = new Gradient(desertDream, Gradient.ColorMode.RGB);
   }
   
   @Override
