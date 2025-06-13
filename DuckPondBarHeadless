@@ -33,5 +33,6 @@ echo "Using LXPackage: $LXPACKAGE_JAR"
 echo "Loading project: $PROJECT_FILE"
 
 # Run using DuckPond headless application
-java -cp "lib/lx-1.1.0-jar-with-dependencies.jar:$LXPACKAGE_JAR" \
+java --enable-native-access=ALL-UNNAMED \
+     -cp "lib/lx-1.1.0-jar-with-dependencies.jar:$LXPACKAGE_JAR" \
      com.duckpond.DuckPondHeadless "$PROJECT_FILE"
