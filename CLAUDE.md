@@ -195,9 +195,9 @@ Each fixture implements `calc(Effect effect, int index, double time, LXFloat4 po
 
 ## Migration Notes
 
-This project has been migrated from the original `heronarts.lx.headless.duckpond` package structure to the simplified `duckpond` package for easier maintenance. Key improvements:
+This project has been migrated from the original `heronarts.lx.headless.duckpond` package structure to the simplified `com.duckpond` package for easier maintenance. Key improvements:
 
-- **Simplified package structure:** All classes now in `duckpond` package
+- **Simplified package structure:** All classes now in `com.duckpond` package
 - **Modern LX API usage:** Updated to LX framework v1.1.0 APIs with proper parameter registration
 - **Parameter naming:** Renamed `effect` parameter to `visualMode` to avoid LX framework conflicts
 - **Deprecation fixes:** Updated from deprecated `addParameter(parameter)` to modern `addParameter(path, parameter)`
