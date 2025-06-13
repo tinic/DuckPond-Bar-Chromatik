@@ -34,4 +34,4 @@ echo "Loading project: $PROJECT_FILE"
 
 # Run using DuckPond headless application
 java -cp "lib/lx-1.1.0-jar-with-dependencies.jar:$LXPACKAGE_JAR" \
-     com.duckpond.lx.DuckPondHeadless "$PROJECT_FILE"
+     com.duckpond.DuckPondHeadless "$PROJECT_FILE"
