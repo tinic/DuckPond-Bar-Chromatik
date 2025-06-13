@@ -73,6 +73,6 @@ public class AutumnPattern extends UmbrellaPattern {
     double y0 = Math.cos((globalPos.y + 1.0) * 0.5 + time * 0.055);
     double x1 = Math.sin((globalPos.x + 1.0) * 15 + time * 0.50);
     double y1 = Math.cos((globalPos.y + 1.0) * 15 + time * 0.55);
-    return rainyGradient.clamp(x1 * y1).add(autumGradient.reflect(x0 * y0).mul(new LXFloat4(0.5,0.5,0.5))).clamp();
+    return rainyGradient.clamp(x1 * y1).add(autumGradient.reflect(x0 * y0).mul(Gradient.rgbToOklab(0.5,0.5,0.5))).clamp();
   }
 }

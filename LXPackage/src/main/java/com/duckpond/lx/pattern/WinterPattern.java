@@ -71,6 +71,6 @@ public class WinterPattern extends UmbrellaPattern {
     double x1 = Math.sin((localPos.x + 1.0) * 0.25 + time * 0.050);
     double y1 = Math.cos((localPos.y + 1.0) * 0.25 + time * 0.055);
     double l = 1.0 - localPos.len() + 0.5;
-    return winterGradient.reflect(x1 * y1).mul(l).mul(rainyGradient.reflect(x0 * y0)).clamp().gamma();
+    return winterGradient.reflect(x1 * y1).mul(l).mul(rainyGradient.reflect(x0 * y0));
   }
 }

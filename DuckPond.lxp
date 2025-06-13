@@ -1,6 +1,6 @@
 {
   "version": "1.1.0",
-  "timestamp": 1749532441714,
+  "timestamp": 1749803758880,
   "model": {
     "id": 2,
     "class": "heronarts.lx.structure.LXStructure",
@@ -67,7 +67,7 @@
       {
         "jsonFixtureType": "umbrellas",
         "jsonParameters": {},
-        "id": 48638,
+        "id": 49419,
         "class": "heronarts.lx.structure.JsonFixture",
         "internal": {
           "modulationColor": 0,
@@ -982,10 +982,10 @@
               "autoCycleMode": 1,
               "autoCycleMode/name": "RANDOM",
               "autoCycleTimeSecs": 300.0,
-              "transitionEnabled": true,
+              "transitionEnabled": false,
               "transitionTimeSecs": 20.0,
               "transitionBlendMode": 0,
-              "focusedPattern": 13,
+              "focusedPattern": 11,
               "triggerPatternCycle": false,
               "launchPatternCycle": false
             },
@@ -1009,7 +1009,7 @@
             },
             "effects": [],
             "clips": [],
-            "patternIndex": 13,
+            "patternIndex": 4,
             "patterns": [
               {
                 "id": 48751,
@@ -1277,7 +1277,7 @@
                 "effects": []
               },
               {
-                "id": 48816,
+                "id": 49614,
                 "class": "com.duckpond.lx.pattern.SummerPattern",
                 "internal": {
                   "modulationColor": 0,
@@ -1310,7 +1310,7 @@
                 },
                 "children": {
                   "modulation": {
-                    "id": 48817,
+                    "id": 49615,
                     "class": "heronarts.lx.modulation.LXModulationEngine",
                     "internal": {
                       "modulationColor": 0,
@@ -1330,7 +1330,7 @@
                 "effects": []
               },
               {
-                "id": 48829,
+                "id": 49627,
                 "class": "com.duckpond.lx.pattern.SunsetSunrisePattern",
                 "internal": {
                   "modulationColor": 0,
@@ -1363,7 +1363,7 @@
                 },
                 "children": {
                   "modulation": {
-                    "id": 48830,
+                    "id": 49628,
                     "class": "heronarts.lx.modulation.LXModulationEngine",
                     "internal": {
                       "modulationColor": 0,

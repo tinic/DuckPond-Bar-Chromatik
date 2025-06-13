@@ -77,7 +77,7 @@ public class DeepOceanPattern extends UmbrellaPattern {
         LXFloat4 finalColor = oceanColor.lerp(bioColor, bioActivity * 0.7);
         
         if (thermalVent > 0.0) {
-            LXFloat4 thermalGlow = new LXFloat4(0.3, 0.6, 0.8, 1.0);
+            LXFloat4 thermalGlow = com.duckpond.lx.Gradient.rgbToOklab(0.3, 0.6, 0.8, 1.0);
             finalColor = finalColor.lerp(thermalGlow, thermalVent * 0.4);
         }
         
@@ -90,6 +90,6 @@ public class DeepOceanPattern extends UmbrellaPattern {
         
         // Apply contrast-enhanced brightness
         double finalBrightness = intensity * refraction * (0.1 + luminescentBoost * 0.9);
-        return finalColor.mul(finalBrightness).clamp().gamma();
+        return finalColor.mul(finalBrightness);
     }
 }

@@ -82,13 +82,13 @@ public class LavaDreamsPattern extends UmbrellaPattern {
         
         double heatGlow = Math.max(0.0, coreTemp - 0.3) * 1.5 * volcanicRegion;
         if (heatGlow > 0.0) {
-            LXFloat4 glowColor = new LXFloat4(1.0, 0.6, 0.2, 1.0);
+            LXFloat4 glowColor = Gradient.rgbToOklab(1.0, 0.6, 0.2, 1.0);
             baseColor = baseColor.lerp(glowColor, heatGlow * 0.4);
         }
         
         double bubbleHighlight = Math.max(0.0, bubbling) * coreTemp;
         if (bubbleHighlight > 0.3) {
-            LXFloat4 bubbleColor = new LXFloat4(1.0, 0.8, 0.4, 1.0);
+            LXFloat4 bubbleColor = Gradient.rgbToOklab(1.0, 0.8, 0.4, 1.0);
             baseColor = baseColor.lerp(bubbleColor, (bubbleHighlight - 0.3) * 0.5);
         }
         
@@ -102,6 +102,6 @@ public class LavaDreamsPattern extends UmbrellaPattern {
         
         // Apply contrast-enhanced brightness
         double finalBrightness = intensity * thermalRadiation * (0.1 + contrastBoost * 0.9);
-        return baseColor.mul(finalBrightness).clamp().gamma();
+        return baseColor.mul(finalBrightness);
     }
 }

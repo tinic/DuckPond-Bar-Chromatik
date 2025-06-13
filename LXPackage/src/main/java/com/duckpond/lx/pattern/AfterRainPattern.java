@@ -66,6 +66,6 @@ public class AfterRainPattern extends UmbrellaPattern {
   protected LXFloat4 calculatePointColor(LXPoint point, LXFloat4 globalPos, LXFloat4 localPos, double time) {
     double b = (Math.sin(globalPos.x * 4.0 + time * 0.20) + Math.cos(globalPos.y * 4.0 + time * 0.20)) * 0.25;
     LXFloat4 pos = globalPos.rotate2d(time * 0.20).add(new LXFloat4(time * 0.20, 0.0, 0.0, 0.0)).mul(0.05);
-    return rainbowGradientBright.repeat(pos.x).add(new LXFloat4(b,b,b,b)).clamp().gamma();
+    return rainbowGradientBright.repeat(pos.x).add(new LXFloat4(b,b,b,b));
   }
 }

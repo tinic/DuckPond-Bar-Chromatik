@@ -68,7 +68,7 @@ public class SunsetSunrisePattern extends UmbrellaPattern {
     double a = Math.max(0.0, Math.cos(globalPos.x + Math.sin(time * 0.10))+Math.sin(globalPos.y + Math.cos(time* 0.10))-1.0);
     LXFloat4 pos = globalPos.rotate2d(time * 0.30).add(new LXFloat4(time * 0.30, 0.0, 0.0, 0.0)).mul(0.05);
     double l = 1.0 - localPos.len() + 0.5;
-    LXFloat4 c0 = happyGradient.reflect(pos.x).mul(l).clamp().gamma();
+    LXFloat4 c0 = happyGradient.reflect(pos.x).mul(l);
     LXFloat4 c1 = eveningGradient.clamp(a);
     return LXFloat4.lerp(c0, c1, a);
   }

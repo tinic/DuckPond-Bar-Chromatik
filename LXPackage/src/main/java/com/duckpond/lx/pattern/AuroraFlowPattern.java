@@ -80,6 +80,6 @@ public class AuroraFlowPattern extends UmbrellaPattern {
         
         // Apply contrast-enhanced brightness
         double finalBrightness = brightness * flicker * (0.3 + contrastBoost * 0.7);
-        return finalColor.mul(finalBrightness).clamp().gamma();
+        return finalColor.mul(finalBrightness);
     }
 }

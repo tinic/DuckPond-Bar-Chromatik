@@ -46,16 +46,19 @@ public class Gradient {
       }
       double a = (pos - g[s0].w) / (g[s0 + 1].w - g[s0].w);
       if (mode == ColorMode.RGB) {
-        gradient[c] = LXFloat4.lerp(g[s0], g[s0 + 1], a);
+        LXFloat4 labA = srgb2oklab(g[s0]);
+        LXFloat4 labB = srgb2oklab(g[s0 + 1]);
+        gradient[c] = LXFloat4.lerp(labA, labB, a);
       } else if (mode == ColorMode.HSV) {
         LXFloat4 ga = hsv2rgb(g[s0]);
         LXFloat4 gb = hsv2rgb(g[s0 + 1]);
-        gradient[c] = LXFloat4.lerp(ga, gb, a);
+        LXFloat4 labA = srgb2oklab(ga);
+        LXFloat4 labB = srgb2oklab(gb);
+        gradient[c] = LXFloat4.lerp(labA, labB, a);
       } else if (mode == ColorMode.OKLAB) {
         LXFloat4 labA = srgb2oklab(g[s0]);
         LXFloat4 labB = srgb2oklab(g[s0 + 1]);
-        LXFloat4 labInterp = LXFloat4.lerp(labA, labB, a);
-        gradient[c] = oklab2srgb(labInterp);
+        gradient[c] = LXFloat4.lerp(labA, labB, a);
       }
     }
   }
@@ -166,5 +169,21 @@ public class Gradient {
     pp = (((int)Math.floor(pos) & 1) == 1) ? (1.0 - pp) : pp;
     int posInt = (int)(pp * (double)(gradientCount - 1));
     return gradient[posInt];
+  }
+  
+  public static LXFloat4 toOklab(LXFloat4 srgb) {
+    return srgb2oklab(srgb);
+  }
+  
+  public static LXFloat4 toSrgb(LXFloat4 oklab) {
+    return oklab2srgb(oklab);
+  }
+  
+  public static LXFloat4 rgbToOklab(double r, double g, double b) {
+    return srgb2oklab(new LXFloat4(r, g, b, 1.0));
+  }
+  
+  public static LXFloat4 rgbToOklab(double r, double g, double b, double a) {
+    return srgb2oklab(new LXFloat4(r, g, b, a));
   }
 }

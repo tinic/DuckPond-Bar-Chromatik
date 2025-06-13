@@ -56,6 +56,6 @@ public class SummerPattern extends UmbrellaPattern {
     double y0 = Math.cos((globalPos.y + 1.0) * 0.5 + time * 0.055);
     double x1 = Math.sin((globalPos.x + 1.0) * 10 + time * 0.50);
     double y1 = Math.cos((globalPos.y + 1.0) * 10 + time * 0.55);
-    return rainbowGradient.reflect(x0 * y0).add(new LXFloat4(1.0,1.0,1.0).mul(x1 * y1).clamp()).clamp();
+    return rainbowGradient.reflect(x0 * y0).add(com.duckpond.lx.Gradient.rgbToOklab(1.0,1.0,1.0).mul(x1 * y1)).clamp();
   }
 }

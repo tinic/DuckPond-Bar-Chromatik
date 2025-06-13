@@ -76,13 +76,11 @@ public abstract class UmbrellaPattern extends LXPattern {
       LXFloat4 globalPos = new LXFloat4(point.x, point.y, point.z);
       LXFloat4 localPos = toLocal(globalPos, center, factor);
       
-      // Calculate the effect color for this point
-      LXFloat4 color = calculatePointColor(point, globalPos, localPos, runTime);
-      
-      // Convert to RGB and set color
-      int r = (int) Math.max(0, Math.min(255, color.x * 255.0));
-      int g = (int) Math.max(0, Math.min(255, color.y * 255.0));
-      int b = (int) Math.max(0, Math.min(255, color.z * 255.0));
+      LXFloat4 colorOklab = calculatePointColor(point, globalPos, localPos, runTime);
+      LXFloat4 colorRgb = com.duckpond.lx.Gradient.toSrgb(colorOklab);
+      int r = (int) Math.max(0, Math.min(255, colorRgb.x * 255.0));
+      int g = (int) Math.max(0, Math.min(255, colorRgb.y * 255.0));
+      int b = (int) Math.max(0, Math.min(255, colorRgb.z * 255.0));
       
       colors[point.index] = LX.rgb(r, g, b);
     }

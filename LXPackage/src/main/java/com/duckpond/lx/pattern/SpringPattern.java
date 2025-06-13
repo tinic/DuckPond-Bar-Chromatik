@@ -67,6 +67,6 @@ public class SpringPattern extends UmbrellaPattern {
     double x = Math.sin((localPos.x + 1.0) * 0.25 + time * 0.050);
     double y = Math.cos((localPos.y + 1.0) * 0.25 + time * 0.055);
     double l = 1.0 - localPos.len() + 0.5;
-    return rainbowGradientBright.reflect(x * y).mul(l).clamp().gamma();
+    return rainbowGradientBright.reflect(x * y).mul(l);
   }
 }

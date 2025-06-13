@@ -71,7 +71,7 @@ public class MidnightMiragePattern extends UmbrellaPattern {
         
         // Add heat distortion effect
         if (Math.abs(heatWave) > 0.2) {
-            LXFloat4 heatColor = new LXFloat4(0.6, 0.5, 0.9, 1.0);
+            LXFloat4 heatColor = Gradient.rgbToOklab(0.6, 0.5, 0.9, 1.0);
             finalColor = finalColor.lerp(heatColor, Math.abs(heatWave - 0.2) * 0.3);
         }
         
@@ -84,6 +84,6 @@ public class MidnightMiragePattern extends UmbrellaPattern {
         
         // Apply contrast-enhanced brightness
         double finalBrightness = brightness * (0.1 + contrastBoost * 0.9);
-        return finalColor.mul(finalBrightness).clamp().gamma();
+        return finalColor.mul(finalBrightness);
     }
 }

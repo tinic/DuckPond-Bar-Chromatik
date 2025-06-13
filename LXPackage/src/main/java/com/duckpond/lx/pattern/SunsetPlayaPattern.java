@@ -93,6 +93,6 @@ public class SunsetPlayaPattern extends UmbrellaPattern {
         
         // Apply contrast-enhanced brightness
         double finalBrightness = intensity * (0.2 + contrastBoost * 0.8);
-        return finalColor.mul(finalBrightness).clamp().gamma();
+        return finalColor.mul(finalBrightness);
     }
 }
