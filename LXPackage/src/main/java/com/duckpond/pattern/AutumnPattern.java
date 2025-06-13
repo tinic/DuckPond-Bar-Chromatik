@@ -27,6 +27,7 @@ import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
 import com.duckpond.Float4;
 import com.duckpond.Gradient;
+import com.duckpond.ColorSpace;
 
 /**
  * Autumn effect - Rainy gradient with autumn colors
@@ -73,6 +74,6 @@ public class AutumnPattern extends UmbrellaPattern {
     double y0 = Math.cos((globalPos.y + 1.0) * 0.5 + time * 0.055);
     double x1 = Math.sin((globalPos.x + 1.0) * 15 + time * 0.50);
     double y1 = Math.cos((globalPos.y + 1.0) * 15 + time * 0.55);
-    return rainyGradient.clamp(x1 * y1).add(autumGradient.reflect(x0 * y0).mul(Gradient.rgbToOklab(0.5,0.5,0.5))).clamp();
+    return rainyGradient.clamp(x1 * y1).add(autumGradient.reflect(x0 * y0).mul(ColorSpace.rgbToOklab(0.5,0.5,0.5))).clamp();
   }
 }

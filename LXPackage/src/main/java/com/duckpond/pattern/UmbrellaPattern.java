@@ -77,7 +77,7 @@ public abstract class UmbrellaPattern extends LXPattern {
       Float4 localPos = toLocal(globalPos, center, factor);
       
       Float4 colorOklab = calculatePointColor(point, globalPos, localPos, runTime);
-      Float4 colorRgb = com.duckpond.Gradient.toSrgb(colorOklab);
+      Float4 colorRgb = com.duckpond.ColorSpace.toSrgb(colorOklab);
       int r = (int) Math.max(0, Math.min(255, colorRgb.x * 255.0));
       int g = (int) Math.max(0, Math.min(255, colorRgb.y * 255.0));
       int b = (int) Math.max(0, Math.min(255, colorRgb.z * 255.0));

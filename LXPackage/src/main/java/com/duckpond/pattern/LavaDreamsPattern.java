@@ -5,6 +5,7 @@ import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
 import com.duckpond.Gradient;
 import com.duckpond.Float4;
+import com.duckpond.ColorSpace;
 
 @LXCategory("DuckPond")
 public class LavaDreamsPattern extends UmbrellaPattern {
@@ -82,13 +83,13 @@ public class LavaDreamsPattern extends UmbrellaPattern {
         
         double heatGlow = Math.max(0.0, coreTemp - 0.3) * 1.5 * volcanicRegion;
         if (heatGlow > 0.0) {
-            Float4 glowColor = Gradient.rgbToOklab(1.0, 0.6, 0.2, 1.0);
+            Float4 glowColor = ColorSpace.rgbToOklab(1.0, 0.6, 0.2, 1.0);
             baseColor = baseColor.lerp(glowColor, heatGlow * 0.4);
         }
         
         double bubbleHighlight = Math.max(0.0, bubbling) * coreTemp;
         if (bubbleHighlight > 0.3) {
-            Float4 bubbleColor = Gradient.rgbToOklab(1.0, 0.8, 0.4, 1.0);
+            Float4 bubbleColor = ColorSpace.rgbToOklab(1.0, 0.8, 0.4, 1.0);
             baseColor = baseColor.lerp(bubbleColor, (bubbleHighlight - 0.3) * 0.5);
         }
         

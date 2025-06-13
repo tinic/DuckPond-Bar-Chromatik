@@ -27,6 +27,7 @@ import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
 import com.duckpond.Float4;
 import com.duckpond.Gradient;
+import com.duckpond.ColorSpace;
 
 /**
  * Summer effect - Rainbow gradient with global coordinate sparkles
@@ -56,6 +57,6 @@ public class SummerPattern extends UmbrellaPattern {
     double y0 = Math.cos((globalPos.y + 1.0) * 0.5 + time * 0.055);
     double x1 = Math.sin((globalPos.x + 1.0) * 10 + time * 0.50);
     double y1 = Math.cos((globalPos.y + 1.0) * 10 + time * 0.55);
-    return rainbowGradient.reflect(x0 * y0).add(com.duckpond.Gradient.rgbToOklab(1.0,1.0,1.0).mul(x1 * y1)).clamp();
+    return rainbowGradient.reflect(x0 * y0).add(ColorSpace.rgbToOklab(1.0,1.0,1.0).mul(x1 * y1)).clamp();
   }
 }

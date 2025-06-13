@@ -44,6 +44,7 @@ This is a headless Java application that runs lighting patterns on physical LED 
 
 ### Utility Classes (in LXPackage)
 - `Float4.java` - 4D vector math for color and position calculations
+- `ColorSpace.java` - Color space conversion utilities (HSV↔RGB, sRGB↔Oklab)
 - `Gradient.java` - Color gradient system with RGB/HSV support
 
 ## Build Instructions

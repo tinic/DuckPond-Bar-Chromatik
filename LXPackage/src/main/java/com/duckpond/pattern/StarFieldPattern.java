@@ -5,6 +5,7 @@ import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
 import com.duckpond.Gradient;
 import com.duckpond.Float4;
+import com.duckpond.ColorSpace;
 
 @LXCategory("DuckPond")
 public class StarFieldPattern extends UmbrellaPattern {
@@ -90,8 +91,8 @@ public class StarFieldPattern extends UmbrellaPattern {
         double starBrightness = Math.max(twinklingBright, Math.max(twinklingMedium, twinklingDim));
         Float4 finalColor = starColor.lerp(twinkleColor, starBrightness * 0.8);
         
-        finalColor = finalColor.add(Gradient.rgbToOklab(nebulaGlow * 0.3, nebulaGlow * 0.2, nebulaGlow * 0.5, 1.0));
-        finalColor = finalColor.add(Gradient.rgbToOklab(milkyWayBand * 0.15, milkyWayBand * 0.15, milkyWayBand * 0.2, 1.0));
+        finalColor = finalColor.add(ColorSpace.rgbToOklab(nebulaGlow * 0.3, nebulaGlow * 0.2, nebulaGlow * 0.5, 1.0));
+        finalColor = finalColor.add(ColorSpace.rgbToOklab(milkyWayBand * 0.15, milkyWayBand * 0.15, milkyWayBand * 0.2, 1.0));
         
         double atmosphericShimmer = Math.sin(stellarTime * 5.0 + localPos.len() * 10.0 + globalPos.len() * 2.0) * 0.05 + 0.95;
         double nightSkyBreath = Math.sin(stellarTime * 0.15 + globalPos.x * 0.01) * 0.1 + 0.9;

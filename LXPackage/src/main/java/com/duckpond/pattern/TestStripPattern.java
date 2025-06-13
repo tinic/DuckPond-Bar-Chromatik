@@ -28,6 +28,7 @@ import heronarts.lx.model.LXModel;
 import heronarts.lx.model.LXPoint;
 import com.duckpond.Float4;
 import com.duckpond.Gradient;
+import com.duckpond.ColorSpace;
 
 /**
  * Test Strip pattern - Cycles through LEDs one at a time for testing
@@ -103,6 +104,6 @@ public class TestStripPattern extends UmbrellaPattern {
   @Override
   protected Float4 calculatePointColor(LXPoint point, Float4 globalPos, Float4 localPos, double time) {
     // Not used in test pattern
-    return Gradient.rgbToOklab(0, 0, 0);
+    return ColorSpace.rgbToOklab(0, 0, 0);
   }
 }

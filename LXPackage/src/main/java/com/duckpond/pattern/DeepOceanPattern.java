@@ -5,6 +5,7 @@ import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
 import com.duckpond.Gradient;
 import com.duckpond.Float4;
+import com.duckpond.ColorSpace;
 
 @LXCategory("DuckPond")
 public class DeepOceanPattern extends UmbrellaPattern {
@@ -77,7 +78,7 @@ public class DeepOceanPattern extends UmbrellaPattern {
         Float4 finalColor = oceanColor.lerp(bioColor, bioActivity * 0.7);
         
         if (thermalVent > 0.0) {
-            Float4 thermalGlow = com.duckpond.Gradient.rgbToOklab(0.3, 0.6, 0.8, 1.0);
+            Float4 thermalGlow = ColorSpace.rgbToOklab(0.3, 0.6, 0.8, 1.0);
             finalColor = finalColor.lerp(thermalGlow, thermalVent * 0.4);
         }
         

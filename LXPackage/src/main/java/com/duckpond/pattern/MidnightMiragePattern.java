@@ -5,6 +5,7 @@ import heronarts.lx.LXCategory;
 import heronarts.lx.model.LXPoint;
 import com.duckpond.Gradient;
 import com.duckpond.Float4;
+import com.duckpond.ColorSpace;
 
 @LXCategory("DuckPond")
 public class MidnightMiragePattern extends UmbrellaPattern {
@@ -71,7 +72,7 @@ public class MidnightMiragePattern extends UmbrellaPattern {
         
         // Add heat distortion effect
         if (Math.abs(heatWave) > 0.2) {
-            Float4 heatColor = Gradient.rgbToOklab(0.6, 0.5, 0.9, 1.0);
+            Float4 heatColor = ColorSpace.rgbToOklab(0.6, 0.5, 0.9, 1.0);
             finalColor = finalColor.lerp(heatColor, Math.abs(heatWave - 0.2) * 0.3);
         }
         
